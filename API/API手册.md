@@ -11,12 +11,27 @@
 - **ResourceSpec**: 被用户定义用来描述系统的期望状态, 在创建对象或更新对象时填写.
 - **ResourceStatus**: 报告系统当前状态, 被server填写, 通常情况下用户不需要修改这个.
 
-## (3)相关操作:
-- **创建**: 创建操作会在后端存储创建资源, 资源创建后系统会apply到期望状态.
-- **更新**: 两种形式: Replace和Patch.
-- **读取**: 三种形式: Get,List和Watch. Get: 根据name来获取指定资源对象; List: 返回在一个namespace内指定类型的所有资源对象; Watch: Watch will stream results for an object(s) as it is updated.
-- **删除**
-- **额外操作**: Rollback, Read/Write Scale, Read/Write Status.
-
-## (4)备注:
+## (3)备注:
 - https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
+
+# 二 操作:
+## (1)创建:
+- 创建操作会在后端存储创建资源, 资源创建后系统会apply到期望状态.
+
+## (2)更新:
+- 两种形式: Replace和Patch.
+- **Replace**: 通过使用提供的spec来替换已存在的spec来更新资源.
+- **Patch**: 将一个变化apply到一个特定field.
+
+## (3)读取:
+- 三种形式: Get,List和Watch. 
+- **Get**: 根据name来获取指定资源对象.
+- **List**: 返回在一个namespace内指定类型的所有资源对象.
+- **Watch**: Watch will stream results for an object(s) as it is updated.
+
+## (4)删除
+
+## (5)其它操作:
+- Rollback.
+- Read/Write Scale.
+- Read/Write Status.
