@@ -51,7 +51,7 @@
 
 ## (8)其它:
 - alpha: Commands for features in alpha.
-- api-resources: Print the supported API resources on the server.
+- api-resources: 显示支持的API资源类型.
 - api-versions: Print the supported API versions on the server, in the form of "group/version".
 - config: 修改kubeconfig文件.
 - plugin: Provides utilities for interacting with plugins.
@@ -60,3 +60,34 @@
 ## (9)备注:
 - Use "kubectl <command> --help" for more information about a given command.
 - Use "kubectl options" for a list of global command-line options (applies to all commands).
+
+# 二 全局选项:
+## (1)概述:
+- kubectl options: 查询global命令行选项.
+
+# 三 kubectl get:
+## (1)功能:
+- 显示一个或多个资源相关信息.
+- 可通过**--selector**来过滤列表; 若查询的资源类型是命名空间化的, 则只能看到当前namespace的, 除非指定--all-namespaces.
+- 默认情况, 未初始化的对象不会显示, 除非指定--include-uninitialized.
+- 可通过**kubectl api-resources**来查询支持资源的完整列表.
+
+## (2)常用选项:
+- --all-namespaces=false
+- --field-selector="": 属性选择器, 支持=,==和!=, 只支持有限数量的属性查询.
+- -l,--selector: 标签选择器.
+- -L,--lable-columns=[]: Accepts a comma separated list of labels that are going to be presented as columns.
+- -w,--watch=false: 在list/get请求对象后, watch后续的changes.
+- --watch-only=false: watch请求对象的changes, 不用首先list/get.
+- --chunk-size=500: 分块返回大的list, 传0则一次性返回.
+- --allow-missing-template-keys=true
+- --export=false
+- -f,--filename=[]
+- --ignore-not-found=false
+- --include-uninitialized=false
+- --no-headers=false
+- -o,--output='': 输出格式, 支持:json,yaml等.
+- --raw=''
+- --recursive=false
+- --sort-by=''
+- --template

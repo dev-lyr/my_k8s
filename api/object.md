@@ -2,13 +2,14 @@
 ## (1)概述:
 - K8s对象是K8s系统中的持久化实体(persistent entities), k8s用这些实体来表示集群的状态. 例如: 描述在运行中的容器化应用是什么, 这些应用使用的资源, 以及容器的行为策略(重启策略, 升级和容错)等.
 - 对象的增删改查通过**k8s API**完成, kubectl底层也是通过调用API.
+- 可通过**kubectl api-resources**查询所有资源类型.
 
-## (2)Kubernetes对象包括:
+## (2)基本对象:
 - Pod
 - Service
 - Volume
 - Namespace
-- 等等.
+- 等等
 
 ## (3)Controllers:
 - ReplicaSet
