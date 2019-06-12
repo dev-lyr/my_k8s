@@ -1,10 +1,15 @@
 # 一 概述:
-## (1)将pod assign给Node的方案:
+## (1)概述
+- kube-scheduler: watch新创建的且未分配node的Pod, 为这些pod选择一个pod运行.
+- 调度影响因素包括: 个别和集体资源需要, 硬件/软件/策略约束, affinity/anti-affinity, 数据locality, inter-workload和deadlines.
+
+
+## (2)将pod assign给Node的方案:
 - 可以通过一些方法来限制pod只能够或优先运行在特定的node上, 推荐使用**lable selectors**.
 - 其它方案: Affinity/Anti-Affinity, nodeName(最简单,但限制多很少使用).
 - 备注: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 
-## (2)Taints和Tolerations:
+## (3)Taints和Tolerations:
 - 与Node Affinity相反, Taints和Tolerations一起使用保证pods不会被调度到不合适的node上.
 - 备注: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 

@@ -1,5 +1,6 @@
 # 一 概述:
 ## (1)概述:
+- 默认情况下,k8s集群中容器有unbounded计算资源(cpu和mem)可使用, 使用**ResourceQuota**, 集群管理员可以限制一个namespace的资源消费和创建; 使用**LimitRange**可以限制namespace内pod或容器的资源.
 - Pod的内存和cpu资源的request和limit是Pod内所有container的总和.
 - Pod的调度是基于资源的**request**.
 
@@ -7,7 +8,33 @@
 - 可压缩资源(compressible resources): 当资源不足时, 只会饥饿, 不会退出, 例如:CPU.
 - 不可压缩资源(incompressible resources): 例如:内存, 当资源不住时, 会OOM被杀死.
 
-# 二 内存资源:
+# 二 LimitRange对象:
+## (1)功能:
+- 限制一个namespace内每个Pod或容器的最小和最大计算资源使用量.
+- 限制一个namespace内每个PersistentVolumeClaim的最小和最大存储请求.
+- 限制一个namespace内request和limit的ratio.
+- 设置一个namespace内默认的计算资源的request/limit, 并在运行时自动将它们inject到容器.
+
+## (2)备注:
+- https://kubernetes.io/docs/concepts/policy/limit-range/
+
+# 三 ResourceQuota对象:
+## (1)功能:
+- 资源quota使用**ResourceQuota**对象来定义, 约束每个namespace可使用的资源量.
+- 可以限制namespace内每种对象类型可以创建的对象数量.
+- Resource Quota默认是开启的, 当apiserver --enable-admission-plugins flag有ResourceQuota参数时开启.
+
+## (2)使用场景:
+- 不同团队在不同namespace内工作.
+- 管理员为每个namespace创建ResourceQuota.
+- 用户在namespace内创建资源(pod,服务等), quota系统跟踪使用量, 并确保它不会超过ResourceQuota定义的硬资源限制.
+- 若创建或更新一个资源超过quota限制, 则请求会以HTTP 403 FORBIDDEN返回失败.
+- 若在namespace针对计算资源(cpu和mem)开启ResourceQuota, 用户必须指定这些值的request或limit, 否则quota系统将拒绝pod创建.
+
+## (3)备注:
+- https://kubernetes.io/docs/concepts/policy/resource-quotas/
+
+# 四 内存资源:
 ## (1)概述:
 - resource:requests:memory: 一个容器的内存资源请求.
 - resource:limits:memory: 一个容器的内存资源限制.
@@ -27,7 +54,7 @@
 - 配置一个小的内存请求, 可以让Pod更多机会被调度.
 - 通过配置大于请求的内存限制, 可以让Pod在burst时有内存可用; 同时又将内存限制在一个合理的数量.
 
-# 三 cpu资源:
+# 五 cpu资源:
 ## (1)概述:
 - resource:request:cpu: 设置一个容器的cpu请求.
 - resource:limit:cpu: 设置一个容器的cpu限制.
@@ -46,7 +73,7 @@
 - 配置一个小的cpu请求, 可以让Pod更多机会被调度.
 - 通过配置大于请求的cpu限制, 可以让Pod在burst时有cpu可用; 同时又将cpu限制在一个合理的数量.
 
-# 四 Pod的QoS:
+# 六 Pod的QoS:
 ## (1)QoS类型:
 - Guaranteed: Pod内的每个容器都必须有内存和cpu请求和限制, 且请求和限制值相等.
 - Busrtable: 不满足Guaranteed, Pod内至少有一个容器有内存或cpu请求.
