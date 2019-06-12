@@ -12,7 +12,7 @@
 
 ## (2)安装kubeadm,kubectl和kubelet:
 - 使用阿里云的源.
-`cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
@@ -21,15 +21,15 @@ gpgcheck=0
 repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
         http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF`
+EOF
+        
 - setenforce 0
 - yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 - systemctl enable kubelet && systemctl start kubelet`
 - 备注: 注意对齐版本, 可使用yum list kubelet --showduplicates | sort -r, 查找版本对齐.
 
 ## (3)镜像替换:
-`
-#!/bin/bash
+`#!/bin/bash
 images=(
     kube-apiserver-amd64:v1.11.2
     kube-controller-manager-amd64:v1.11.2
@@ -50,7 +50,7 @@ images=(
 for imageName in ${images[@]} ; do
     docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName
     docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName k8s.gcr.io/$imageName
-done
+done`
 
 ## (4)启动前一些配置设置:
 - export KUBECONFIG=/etc/kubernetes/admin.conf
