@@ -15,7 +15,7 @@
 
 ## (3)部署命令:
 - rollout: Manage the rollout of a resource.
-- scale: 为Deployment, ReplicaSet, Replication Controller 或者 Job 设置一个新的副本数量.
+- scale: 为Deployment, ReplicaSet, Replication Controller或者Job设置一个新的副本数量.
 - autoscale: 自动调整一个Deployment, ReplicaSet, 或者 ReplicationController 的副本数量.
 
 ## (4)集群管理:
@@ -61,33 +61,62 @@
 - Use "kubectl <command> --help" for more information about a given command.
 - Use "kubectl options" for a list of global command-line options (applies to all commands).
 
-# 二 全局选项:
-## (1)概述:
-- kubectl options: 查询global命令行选项.
-
-# 三 kubectl get:
-## (1)功能:
-- 显示一个或多个资源相关信息.
+# 二 基本命令:
+## (1)get:
+- 功能: 显示一个或多个资源相关信息.
 - 可通过**--selector**来过滤列表; 若查询的资源类型是命名空间化的, 则只能看到当前namespace的, 除非指定--all-namespaces.
 - 默认情况, 未初始化的对象不会显示, 除非指定--include-uninitialized.
 - 可通过**kubectl api-resources**来查询支持资源的完整列表.
 
-## (2)常用选项:
-- --all-namespaces=false
-- --field-selector="": 属性选择器, 支持=,==和!=, 只支持有限数量的属性查询.
-- -l,--selector: 标签选择器.
-- -L,--lable-columns=[]: Accepts a comma separated list of labels that are going to be presented as columns.
-- -w,--watch=false: 在list/get请求对象后, watch后续的changes.
-- --watch-only=false: watch请求对象的changes, 不用首先list/get.
-- --chunk-size=500: 分块返回大的list, 传0则一次性返回.
-- --allow-missing-template-keys=true
-- --export=false
-- -f,--filename=[]
-- --ignore-not-found=false
-- --include-uninitialized=false
-- --no-headers=false
-- -o,--output='': 输出格式, 支持:json,yaml等.
-- --raw=''
-- --recursive=false
-- --sort-by=''
-- --template
+## (2)explain:
+- 功能: 显示API资源详情, 包括属性字段等.
+- 用法: kubectl explain RESOURCE [options]
+- 默认只显示一层属性, 可使用--recursive=true来显示所有层次.
+
+# 三 部署命令
+
+# 四 集群管理
+
+# 五 定位和debug命令:
+## (1)describe:
+- 功能: 描述指定resource或group的resource的详情.
+- 用法: kubectl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) [options]
+
+## (2)logs:
+- 功能: 打印pod或指定资源中container的日志, 若pod只有一个container, 则container名字是可选的.
+- 用法: kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] [options]
+
+## (3)attach:
+- 功能: attach到已存在容器内运行的一个进程.
+- Attach to a process that is already running inside an existing container.
+
+## (4)exec:
+- 功能: 在pod内一个容器内执行命令.
+- 用法: kubectl exec POD [-c CONTAINER] -- COMMAND [args...] [options]
+
+## (5)cp:
+- 功能: 向容器或从容器向外复制文件.
+
+# 六 高级命令:
+## (1)apply:
+- 功能: 通过文件名或标准输入流(stdin)对资源进行配置.
+- 用法: kubectl apply (-f FILENAME | -k DIRECTORY) [options].
+
+## (2)patch:
+- 功能: 使用strategic merge patch更新一个资源的field(s).
+- 用法: kubectl patch (-f FILENAME | TYPE NAME) -p PATCH [options]
+
+## (3)replace:
+- 功能: 通过filename或者stdin替换一个资源.
+- 用法: kubectl replace -f FILENAME [options].
+- 可使用kubectl get 导出完整列表, 修改后调用kubectl replace.
+
+# 七 设置命令:
+## (1)lable:
+- 功能: 更新一个资源的label.
+- 用法: kubectl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version] [options]
+- 默认--overwrite=false不允许更新已存在label, 可设置为true来更新.
+
+## (2)annotate:
+- 功能: 更新一个资源的注解.
+- 用法: kubectl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version] [options]

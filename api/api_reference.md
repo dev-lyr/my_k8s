@@ -21,7 +21,7 @@
 ## (2)更新:
 - 两种形式: Replace和Patch.
 - **Replace**: 通过使用提供的spec来替换已存在的spec来更新资源.
-- **Patch**: 将一个变化apply到一个特定field.
+- **Patch**: Patch will apply a change to a specific field. How the change is merged is defined per field. Lists may either be replaced or merged.
 
 ## (3)读取:
 - 三种形式: Get,List和Watch. 
