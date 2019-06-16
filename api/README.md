@@ -25,13 +25,16 @@
 - Beta: 例如v2beta3
 - Stable: 例如vX, X是整数.
 
+## (3)备注:
+- 可使用kuectl api-verisons查询.
+
 # 三 API group:
 ## (1)概述:
 - API组使扩展k8s API更加容易, API组在REST path中指定.
 
 ## (2)当前使用的API组:
-- 核心组: **/api/版本**, 不用组名.
-- 命名组: **/apis/组名/版本**
+- 核心组(core): **/api/版本**, 不用组名.
+- 命名组(named group): **/apis/组名/版本**
 - 备注: 可在API手册看具体属于哪个组.
 
 ## (3)开启API组和资源:

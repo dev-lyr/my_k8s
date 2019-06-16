@@ -9,3 +9,6 @@
 - plugin/pkg/client/auth: 包含可选的authentication插件.
 - transport: 建立auth和开始一个连接.
 - tools/cache: 用来实现contoller.
+
+## (3)备注:
+- https://github.com/kubernetes/client-go
