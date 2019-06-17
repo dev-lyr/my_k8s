@@ -23,6 +23,7 @@
 ## (6)备注:
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
 - https://github.com/kubernetes/kubernetes/blob/v1.14.0/pkg/kubelet/dockershim/network/plugins.go
+- https://chrislovecnm.com/kubernetes/cni/choosing-a-cni-provider/
 
 # 二 NetworkPolicy:
 ## (1)概述:
