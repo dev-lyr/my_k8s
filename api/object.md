@@ -109,6 +109,12 @@
 - 可通过标签(label)和注解(annotation)attach metadata到k8s对象, 标签用来选择对象和找到满足特定条件的对象集合.
 - 注解与标签不同, 不是用来标记和选择资源, 注解中的metadata可以大或小, 结构化或非结构化, 注解中可以包含在标签中不允许的字符.
 
+## (3)规范:
+- 注解是键值对.
+- 键的格式为: prefix(可选)/name, name的格式为[a-z0-9A-Z],-_.的组合, 最长63字符. prefix是可选的, 若指定则必须是DNS subdomain: 用.分隔的一些DNS labels, 长度不能超过253字节.
+- 若不指定prefix, 则注解key被认为是user私有的.
+- **kubernetes.io/和k8s.io/两个prefix是kubernetes核心组件预留.
+
 # 七 Field Selectors:
 ## (1)概述:
 - **属性选择器**可以通过一个或多个资源属性来选择k8s资源.
