@@ -65,7 +65,7 @@
 # 四 Init容器:
 ## (1)概述:
 - Init容器是一种在app容器之前运行的, 包含一些在app镜像中不包含的工具(utilities)或启动(setup)脚本.
-- 一个Pod可以有一个或多个Init容器, 当Pod内的一个Init容器失败, 则k8s会重复重启该Pod直至Init容器成功, 除非Pod的restartPolicy设置为Never.
+- 一个Pod可以有一个或多个Init容器, 当Pod内的一个Init容器失败, 则k8s会重复重启该Pod直至Init容器成功, 除非Pod的restartPolicy设置为Nerver.
 - 若在Pod内指定多个Init容器, 则这些容器在顺序执行, 同一时刻只能运行一个, 且必须运行成功才会运行下一个. 当所有Init容器都执行完成, K8s初始化Pod并运行应用容器.
 
 ## (2)Init容器和普通容器区别:
