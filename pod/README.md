@@ -12,9 +12,13 @@
 - ReplicaSet: 下一代Replication Controller.
 - Deployments
 - 等等.
+- 备注: 推荐使用合适的controller来创建Pods, 而不是直接创建Pod, 因为当Node失败时, 单独创建的Pod不会被恢复.
 
 ## (3)PodSpec:
 - https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#podspec-v1-core
+
+## (4)备注:
+- https://kubernetes.io/docs/concepts/workloads/pods/pod-overview
 
 # 二 Pod管理容器:
 ## (1)概述:
@@ -35,34 +39,7 @@
 - https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns
 - https://kubernetes.io/blog/2016/06/container-design-patterns.
 
-
-
-# 三 Pod生命周期:
-## (1)概述:
-- Pod的**status**属性是一个**PodStatus**对象, 该对象有一个**phase**属性.
-
-## (2)PodStatus对象属性:
-- condition: PodCondition数组.
-- phase
-
-## (3)phase的值:
-- **Pending**: k8s系统已经接受Pod, 但是容器镜像还没有创建, 包含被调度前的时间,通过网络下载镜像需要点时间.
-- **Running**: Pod已经绑定到Node, 所有容器已经被创建, 至少一个容器在运行, 或处于启动或重启过程中.
-- **Successed**: Pod内所有容器已经成功结束, 不会被重启.
-- **Failed**: Pod内所有容器已经终止, 且至少一个容器终止失败, 容器以非0退出或被系统终止.
-- **Unknown**: 由于一些原因不能获得Pod的状态, 通常是和Pod的Node通信失败.
-- **Completed**: Pod由于没有事情做而运行完成, 例如: Completerd Jobs.
-- **CrashLoopBackOff**: Pod内的一个容器非预期退出, 并且可能基于重启策略重启也报非0错误.
-
-## (4)PodCondition
-
-## (5)容器probes
-
-## (6)ContainerStatus
-
-## (7)容器state
-
-# 四 Init容器:
+# 三 Init容器:
 ## (1)概述:
 - Init容器是一种在app容器之前运行的, 包含一些在app镜像中不包含的工具(utilities)或启动(setup)脚本.
 - 一个Pod可以有一个或多个Init容器, 当Pod内的一个Init容器失败, 则k8s会重复重启该Pod直至Init容器成功, 除非Pod的restartPolicy设置为Never.
@@ -78,6 +55,14 @@
 - 应用镜像的builder和deployer可以独立工作, 不需要仅仅构建一个单独的app镜像.
 - 使用Linux Namespace, 所以可以有不同于应用容器的文件系统, 可以用于访问一些app容器不能访问的私有数据.
 - 在app容器启动前执行, app容器是并行运行的, 所以Init容器提供一种block或delay应用容器启动的方法, 直至满足指定preconditions.
+
+# 四 Pause容器:
+## (1)概述:
+- 扮演pod内容器的"父容器", 两个主要功能: 共享namespace; 当pid空间共享开启时, 作为每个pod的PID 1并且回收僵尸进程.
+- 又叫infra容器.
+
+## (2)备注:
+- https://www.ianlewis.org/en/almighty-pause-container
 
 # 五 Pod Preset:
 ## (1)概述:

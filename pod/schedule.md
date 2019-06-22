@@ -3,7 +3,6 @@
 - kube-scheduler: watch新创建的且未分配node的Pod, 为这些pod选择一个pod运行.
 - 调度影响因素包括: 个别和集体资源需要, 硬件/软件/策略约束, affinity/anti-affinity, 数据locality, inter-workload和deadlines.
 
-
 ## (2)将pod assign给Node的方案:
 - 可以通过一些方法来限制pod只能够或优先运行在特定的node上, 推荐使用**lable selectors**.
 - 其它方案: Affinity/Anti-Affinity, nodeName(最简单,但限制多很少使用).

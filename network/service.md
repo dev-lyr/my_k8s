@@ -3,25 +3,27 @@
 - Pod是不稳定的, 例如ReplicaSets可以动态的创建和销毁pod(例如:扩容或缩容时), 虽然每个pod可以有自己的IP地址, 但是这些IP地址是不稳定的.
 - **服务**: 定义了一个逻辑的Pod集合和一个访问它们的策略, Service通常通过**标签选择器**来选择Pod集.
 - Service解耦了前端用户和后端服务, 当后端服务pod集合变化时, 前端用户不需要感知.
-- Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoint**.
-- 针对kubernetes-native应用, kubernetes提供一个简单的**Endpoints** API, 当Service中Pod变化时被更新. 
 - 对于非Kubernetes-native应用, kubernetes提供一个virtual-IP-based网桥来把服务redirect到后端Pods.
 
-## (2)服务创建:
+## (2)Endpoints资源:
+- Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoint**.
+- 针对kubernetes-native应用, kubernetes提供一个简单的**Endpoints** API, 当Service中Pod变化时被更新. 
+
+## (3)服务创建:
 - 服务是一个REST对象, 和其它REST对象(例如Pod)一样, 通过将服务的定义POST给apiserver来创建服务实例.
 - 服务被分配一个IP地址(有时称为**cluster IP**), 用来进行服务代理.
 - 服务的selector会被持续计算且结果会被POST给一个**Endpoints**对象;当服务没有selector时不会创建Endpoints对象(可以自己创建一个endpoint,并将服务映射过去).
 - 服务可以将incoming端口映射到一个**targetPort**, 默认情况下**targetPort**和**port**一样.
 - 支持协议: TCP(默认), UDP, HTTP等, 只能给一个服务设置一个port和protocol.
 
-## (3)属性:
+## (4)属性:
 - apiVersion
 - kind
 - metadata
 - spec
 - status: 只读,最近的服务的状态,由系统来填充.
 
-## (4)备注:
+## (5)备注:
 - 连接集群外部的服务方法: 自定义Endpoint或创建ExternalName类型服务.
 
 # 二 spec属性:
@@ -82,7 +84,7 @@
 
 ## (4)ipvs模式:
 - kube-proxy观察**Service**和**Endpoints**, 调用**netlink**接口来创建ipvs规则并周期性向Services和Endpoints同步.
-- 当Service被访问时, 流量被重定向到后端Pods.
+-当Service被访问时, 流量被重定向到后端Pods.
 - 与iptable类似, ipvs基于netfilter hook函数, 但是要hash表作为底层数据结构并且工作在内核空间, 即ipvs重定向速度更快, 在同步proxy rules时性能更好, ipvs也提供更多的load balance方法.
 
 # 四 服务发现(discovery):
