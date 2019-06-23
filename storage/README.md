@@ -30,12 +30,14 @@
 - 和Pod有同样的生命周期, 当Pod被从node上删除时, emptyDir中的数据也被删除.
 - emptyDir卷可以存储在后端node上的任何媒介上, 例如: disk,SSD或网络存储, 也可以设置emptyDir.midium为Memory告诉k8s挂载一个tmpfs使用.
 
-# 三 configMap:
+# 三 hostPath:
+
+# 四 configMap:
 ## (1)概述:
 - configMap资源提供一种向Pod内注入配置数据的方式.
 - 数据存储在ConfigMap对象中, 可通过configMap类型卷来引用, 被运行在Pod内的容器化应用消费.
 
-# 四 downward API:
+# 五 downward API:
 ## (1)使用场景:
 - 使用configMap和secret卷应用传递Pod调度,运行前的数据是可行的, 但对于不能预先知道的数据, 比如: Pod的Ip,主机名或Pod自身的名字名称等, 则需要使用downward API来解决.
 - downward API允许用户通过环境变量或文件(downward API卷)来将Pod和容器的元数据传递给它们内部运行的进程.
@@ -47,7 +49,7 @@
 - Pod标签和注解
 - 备注: Pod标签和注解只能通过downward API卷来暴露, 其它的可以使用环境变量或downward API卷来暴露.
 
-# 五 secret:
+# 六 secret:
 ## (1)概述:
 - 用于向Pod传送敏感数据, 例如:密码等.
 - secret后端是tmpfs, 不会被写入non-volatile存储.

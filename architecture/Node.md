@@ -11,3 +11,6 @@
 
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/
+
+# 二 监控node监控:
+- https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health/

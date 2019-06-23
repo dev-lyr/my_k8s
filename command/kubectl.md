@@ -74,9 +74,25 @@
 - 用法: kubectl explain RESOURCE [options]
 - 默认只显示一层属性, 可使用--recursive=true来显示所有层次.
 
-# 三 部署命令
+# 三 部署命令:
+## (1)rollout:
+- 管理资源的rollout, 合法的资源类型: deployments, daemonsets和statefulsets.
+- 用法:  kubectl rollout SUBCOMMAND [options]
+- SUBCOMMAND: history(显示rollout历史), pause(标记提供的资源为中止状态), resume(继续一个中止的资源), status(显示rollout的状态), undo(撤销上一次rollout).
+
+## (2)scale:
+- 为Deployment, ReplicaSet, Replication Controller或StatefulSet设置一个新的大小(副本数量).
+- 用法: kubectl scale [--resource-version=version] [--current-replicas=count] --replicas=COUNT (-f FILENAME | TYPE NAME) [options]
+
+## (3)autoscale:
+- 根据一个name来查找Deployment, ReplicaSet, StatefulSet或ReplicationContoller并创建一个autoscaler, 该autoscaler根据系统需要自动增加和减少pod的数量.
+- 用法: kubectl autoscale (-f FILENAME | TYPE NAME | TYPE/NAME) [--min=MINPODS] --max=MAXPODS [--cpu-percent=CPU] [options]
 
 # 四 集群管理
+## (1)cluster-info:
+- 显示master和标签为kuberbetes.io/cluster-service=true的服务的地址.
+
+## (2)top
 
 # 五 定位和debug命令:
 ## (1)describe:

@@ -11,8 +11,11 @@
 - **CronJob**
 
 ## (2)选择:
-- Deployment是一个对象,可以拥有ReplicaSets和通过声明(declarative),服务侧rolling更新来更新它们和他们的pod, 虽然ReplicaSet可以独立使用, 但是现在主要被Deployment用来作为编排pod创建,删除和更新的机制, 使用Deployment不用担心管理ReplicaSets, Deployment负责管理ReplicaSets, 所以推荐使用Deployments.
+- Deployment是一个高层次API对象, 通过类似kubectl rolling update形式来更新底层ReplicateSet和Pods, 若需要rolling update则推荐使用Deployment, 与kubectl rolling-update不同, Deployment是声明式,服务侧的且有其它特性.
 - ReplicaSet是ReplicationController的继承, 目的类似, ReplicaSet支持基于集合的选择器, 因此优先使用ReplicaSet.
+- Bare Pods: 不建议直接创建Pod, 使用controller创建的Pod在节点失败时候可以在其它节点重新启动, 而直接创建的Pod不支持. 即使应用只需要一个Pod, 此种情况下controller类似进程supervisor.
+- Job: 当期望程序自己执行完终止(例如:批量jobs), 应该使用Job替换ReplicaSet.
+- DaemonSet: 当需要Pod提供一个机器级别功能时使用DaemonSet替换ReplicaSet, 例如: 监控和日志.
 
 # 二 ReplicationController:
 ## (1)功能:
