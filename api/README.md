@@ -14,6 +14,7 @@
 
 ## (3)备注:
 - https://kubernetes.io/docs/concepts/overview/kubernetes-api/
+- https://kubernetes.io/docs/reference/using-api/api-concepts/#alternate-representations-of-resources
 - API手册: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
 
 # 二 API version:
@@ -44,21 +45,19 @@
 ## (4)备注:
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
 
-# 四 相关概念:
+# 四 资源变更的检测(watch):
 ## (1)概述:
-- https://kubernetes.io/docs/reference/using-api/api-concepts/#alternate-representations-of-resources
-
-## (2)标准API术语
-
-## (3)资源变更的检测:
 - 为了让client可以构建集群当前的状态模型, 所有k8s对象资源类型支持**一致性list(consistent list)**和**增量更新通知(watch)**.
 - 每个k8s对象都有一个**resourceVersion**属性表示当前资源在底层存储的版本, 该字段通过服务器返回, 可用于初始化watch中的版本.
 - 服务器会返回在指定resourceVersion之后的所有修改(创建,删除和更新).
 - 该特性允许客户获取当前状态, 并且不会丢失任何修改.
 - 若客户端watch断开, 则可以从最近的resourceVersion重新一个新的watch, 或者执行一个新的连接.
-- 问题1: k8s只会保存有限时间的历史变更, etcd3默认保存5分钟, 因此watch时候带的resourceVersion太旧就会返回失败, 客户端则必须通过状态码410 Gone识别出来, 清理本地cache, 执行list, 然后根据list返回的resourceVersion重新watch, 多数client库提供该逻辑的, 例如:client-go中的Reflector.
 
-## (4)分块获取大量结果:
+## (2)相关问题:
+- k8s只会保存有限时间的历史变更, etcd3默认保存5分钟, 因此watch时候带的resourceVersion太旧就会返回失败, 客户端则必须通过状态码410 Gone识别出来, 清理本地cache, 执行list, 然后根据list返回的resourceVersion重新watch, 多数client库提供该逻辑的, 例如:client-go中的Reflector.
+
+# 五 分批查询:
+## (1)概述:
 - 背景: 为了防止一些资源类型的集合查询返回数据太大影响client和server, 例如:pod数据太大.
-- k8s 1.9后开始支持将一个大的集合请求划分为多个小的chunks,同时保证一致性, 通过两个参数**limit**和**continue**来支持, 请求时使用limit和continue, 返回时metadata属性中返回continue属性.
-
+- k8s 1.9后开始支持将一个大的集合请求划分为多个小的chunks,同时保证一致性, 通过两个参数**limit**和**continue**来支持, 请求时使用limit和continue, 返回时metadata属性中返回continue属性, 当continue为空是表示没有更多资源返回.
+- 在每次分批查询的请求中, resourceVersion不变(一致性读), 在resourceVersion之后的修改并不会返回.
