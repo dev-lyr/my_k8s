@@ -27,4 +27,4 @@
 - 备注: 错误码1-99不要使用, 除非在CNI规范中定义了用途.
 
 ## (5)备注:
-- https://github.com/containernetworking/cni/blob/master/SPEC.md#network-configuration
+- https://github.com/containernetworking/cni/blob/master/SPEC.md
