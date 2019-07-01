@@ -36,6 +36,7 @@
 - adapter容器: 用于标准化和统一输出. 例如: 为了监控N个不通应用, 监控系统期望它监控的数据是一致的数据模型, 但是不通应用有自己export监控数据的方式, 因此可以使用adapter容器将不通应用的监控数据转换为一致统一的表示方式.
 
 ## (4)备注:
+- https://www.usenix.org/system/files/conference/hotcloud16/hotcloud16_burns.pdf
 - https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns
 - https://kubernetes.io/blog/2016/06/container-design-patterns.
 
