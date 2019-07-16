@@ -2,7 +2,7 @@
 ## (1)背景:
 - 容器中磁盘上文件是临时的, 当容器crash时, kublet会重启它, 但是文件内容会丢失(新启动的容器是clean状态).
 - Pod内的容器需要在容器间共享文件.
-- Docker也有卷的概念, 但Docker中的卷管理松散, 只是磁盘上或其他容器内的一个目录, Docker虽然提供了卷driver, 但目前功能有限.
+- Docker也有卷的概念, 但Docker中的卷管理松散, 只是磁盘上或其他容器内的一个目录, Docker虽然提供了卷driver, 但目前功能有限(目前官方只有local volume driver).
 - K8s使用卷(volume)来解决上面的问题.
 
 ## (2)k8s的卷:
@@ -18,6 +18,7 @@
 - **configMap**: 提供一种将配置数据注入Pods的方式.
 - **dowmwardAPI**: 使downward API数据对应用可见.
 - **secret**: 用于向Pod传送敏感信息, 例如:密码.
+- **persistentVolumeClaim**
 - **gitRepo**: 已废弃.
 - **CSI**: 重要, 后续单独介绍.
 - **nfs**: 挂载到Pod中的NFS共享卷.
