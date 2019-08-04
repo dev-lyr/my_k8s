@@ -8,6 +8,7 @@
 ## (2)Endpoints资源:
 - Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoint**.
 - 针对kubernetes-native应用, kubernetes提供一个简单的**Endpoints** API, 当Service中Pod变化时被更新. 
+- 当定义service没有指定selector时不会自动创建endpoint, 随后可以根据不同情况手动创建.
 
 ## (3)服务创建:
 - 服务是一个REST对象, 和其它REST对象(例如Pod)一样, 通过将服务的定义POST给apiserver来创建服务实例.
@@ -23,8 +24,13 @@
 - spec
 - status: 只读,最近的服务的状态,由系统来填充.
 
-## (5)备注:
-- 连接集群外部的服务方法: 自定义Endpoint或创建ExternalName类型服务.
+## (5)访问外部服务方法:
+- 自定义Endpoint
+- 创建ExternalName类型服务
+
+## (6)创建方式:
+- kubectl expose
+- kubectl create
 
 # 二 spec属性:
 ## (1)clusterIP:
@@ -39,6 +45,7 @@
 
 ## (3)externalName:
 - externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
+- 为外部服务创建一个别名, Pod可以使用别名而不是外部服务的实际FQDN来访问外部服务, 隐藏了实际服务的名称以及使用该服务的pod的位置, 运行修改服务定义.
 
 ## (4)externalTrafficPolicy
 
@@ -60,7 +67,7 @@
 - sessionAffinityConfig
 
 ## (10)type:
-- ClusterIP: 默认,以集群内部IP的形式暴露服务, 因此服务只在集群内部可访问.
+- ClusterIP: 默认,以集群内部IP的形式暴露服务, 因此服务只在集群内部(内部pod)可访问.
 - ExternalName: 将服务映射到**externalName**属性的内容, 可用于为外部服务创建别名等.
 - NodePort: 集群中每个节点上都打开一个端口, 并将端口上接收到的流量重定向到后端服务.
 - LoadBalancer: 是NodePort的一种扩展, 使得服务可以通过专门的负载平衡器来访问, 由k8s运行的云基础设施提供, 客户端通过负载均衡器的IP地址来连接到服务, 负载均衡器有一个公开的访问IP地址.
@@ -111,7 +118,7 @@
 - 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
 
 ## (2)使用selectors:
-- 针对定义了selectors的headless服务, endpoint控制器会创建Endpoints记录, 并且会修改DNS配置来返回直接指向服务后端Pods的A记录.
+- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的A记录.
 
 ## (3)不使用selectors:
 - CNAME records for ExternalName-type services.
@@ -127,6 +134,7 @@
 - ExternalName: 将服务映射到**externalName**属性的内容, 可用于为外部服务创建别名等.
 - NodePort: 集群中每个节点上都打开一个端口, 并将端口上接收到的流量重定向到后端服务.
 - LoadBalancer: 是NodePort的一种扩展, 使得服务可以通过专门的负载平衡器来访问, 由k8s运行的云基础设施提供, 客户端通过负载均衡器的IP地址来连接到服务, 负载均衡器有一个公开的访问IP地址.
+- 备注: 也可以使用Ingress来对外暴露服务.
 
 ## (3)ClusterIP和NodePort区别:
 - ClusterIP只能集群内部访问.

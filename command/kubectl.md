@@ -69,7 +69,10 @@
 - 可通过指定-o [yaml|json|...]等格式来获得详细信息.
 - 可通过**kubectl api-resources**来查询支持资源的完整列表.
 
-## (2)explain:
+## (2)run:
+- 功能: 创建一个deployment或job来管理容器(s).
+
+## (3)explain:
 - 功能: 显示API资源详情, 包括属性字段等.
 - 用法: kubectl explain RESOURCE [options]
 - 默认只显示一层属性, 可使用--recursive=true来显示所有层次.
