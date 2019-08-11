@@ -10,6 +10,10 @@
 ## (4)使用场景:
 - 金丝雀部署(Canary Deployment).
 
+## (5)kubectl rolling-update:
+- 缺点: 会直接修改对象的配置; kubectl客户端负责执行滚动升级的复杂逻辑, 当出现网络断开等情况会处于中间状态.
+- 备注: 已过时, 不建议使用, Deployment首选.
+
 # 二 Deployment的spec:
 ## (1)Pod相关:
 - spec.template: 指定pod模板, 除了Pod必须的属性外, Deployment中的pod模板还需指定合适的label和restart策略.

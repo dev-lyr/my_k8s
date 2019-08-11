@@ -50,19 +50,37 @@
 ## (2)探测类型:
 - livenessProbe: 表示容器是否在运行中, 若探测失败, kubelet会kill容器, 并根据restart policy来决定如何操作, 若容器不提供livenessProbe探测则默认状态为Success.
 - readinessProbe: 表示容器是否准备好接收请求, 若探测失败, 则**endpoint控制器**会从所有服务的endpoints中删除pod的ip地址.readiness在init delay之前的默认状态为Failure, 若不提供readiness探测则默认state为Success.
+- 备注: 对应Probe资源.
 
 ## (3)handler类型:
 - ExecAction: 在容器内执行一个指定命令, 若退出码为0则表明诊断执行成功.
 - TCPSocketAction: 在容器IP地址上指定Port执行一个TCP检查, 若port是打开则表示诊断成功.
 - HTTPGetAction: 在容器IP地址上指定port和路径上执行一个Get请求, 若返回码>=200且<400则表示诊断成功.
 
-## (4)ReadinessGate
+## (4)ReadinessGate:
+- 是一个PodReadinessGate数组, 若指定, 则Pod只有在所有容器都是Ready且所有ReadinessGate中的条件都等于true时候才算是ready的.
 
 ## (5)使用场景:
 - 若希望容器在测探失败时被kill并且重启, 则提供一个liveness probe, 且指定restartPolicy为Always或OnFailure.
 - 若希望在探测成功后再发生请求给Pod, 则提供一个readiness probe.
 
-## (6)备注:
+## (6)Probe资源属性:
+- exec: ExecAction.
+- httpGet: HTTPGetAction.
+- tcpSocket: TCPSocketActon.
+- initialDelaySeconds: 容器启动指定时间后再出发探测.
+- periodSeconds: 探测间隔, 默认10s, 最小1.
+- failureThreshold: 默认为3,最小为1,经过指定次数的连续probe失败才被认为是失败.
+- successThreshold: 默认是1, 针对liveness必须为1, 经过连续多次探测成功才算成功.
+- timeoutSeconds: 探测的超时时间, 默认1s.
+
+## (7)存活探针经验:
+- 对于生产中的Pod一定要定义一个存活探针, 没有存活探针, kubernete不会知道应用是否还活着, 只要进程还在运行, kubernete就认为Pod是健康的.
+- 存活探针不应该消耗太多计算资源, 且运行时间不应该太长, 默认情况下, 探针的执行比较频繁, 必须在一秒内执行完成.
+- 无需再探针中实现重试循环.
+- 容器崩溃或存活探针失败, Pod所在节点的kubelet会重启容器, k8s的控制面板组件不参与该操作; 若节点崩溃, kubelet则无法执行相关操作, 因此需要使用各种Pod Controller.
+
+## (8)备注:
 - https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 
 # 五 容器状态:

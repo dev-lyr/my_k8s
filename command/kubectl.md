@@ -10,7 +10,7 @@
 - set: 为objects设置一个指定的特征.
 - explain: 查看资源的文档.
 - get: 显示一个或更多resources.
-- edit: 在服务器上编辑一个资源.
+- edit: 在服务器上编辑一个资源, 使用默认编辑器打开资源配置, 修改保存后资源对象会被更新.
 - delete: Delete resources by filenames, stdin, resources and names, or by resources and label selector.
 
 ## (3)部署命令:
@@ -38,9 +38,9 @@
 - auth: Inspect authorization.
 
 ## (6)高级命令:
-- apply: 通过文件名或标准输入流(stdin)对资源进行配置.
-- patch: 使用strategic merge patch更新一个资源的field(s).
-- replace: 通过filename或者stdin替换一个资源.
+- apply: 通过文件名或标准输入流(stdin)对资源进行配置, 通过一个完整的YAML或JSON文件, 应用其中的值来更新对象, 若对象不存在则会被创建.
+- patch: 使用strategic merge patch更新一个资源的field(s), 修改单个资源属性, 不用编辑配置文件.
+- replace: 通过filename或者stdin替换一个资源, 将对象替换为YAML/JSON文件中定义的新对象, 若对象不存在, 会报错.
 - wait: Experimental: Wait for a specific condition on one or many resources..
 - convert: 在不同的API versions转换配置文件.
 
