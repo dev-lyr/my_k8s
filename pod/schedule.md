@@ -28,7 +28,6 @@
 
 ## (3)Node isolation/restriction:
 
-
 # 三 Affinity/Anti-Affinity:
 ## (1)概述:
 - nodeSelector提供使用指定label来约束pod调度到node的方式, affinity/anti-affinity特性则扩展了可以表达的约束类型.

@@ -1,6 +1,6 @@
 # 一 概述:
 ## (1)背景:
-- 容器中磁盘上文件是临时的, 当容器crash时, kublet会重启它, 但是文件内容会丢失(新启动的容器是clean状态).
+- 容器中磁盘上文件是临时的, 当容器crash时, kubelet会重启它, 但是文件内容会丢失(新启动的容器是clean状态).
 - Pod内的容器需要在容器间共享文件.
 - Docker也有卷的概念, 但Docker中的卷管理松散, 只是磁盘上或其他容器内的一个目录, Docker虽然提供了卷driver, 但目前功能有限(目前官方只有local volume driver).
 - K8s使用卷(volume)来解决上面的问题.
@@ -31,27 +31,35 @@
 - 和Pod有同样的生命周期, 当Pod被从node上删除时, emptyDir中的数据也被删除.
 - emptyDir卷可以存储在后端node上的任何媒介上, 例如: disk,SSD或网络存储, 也可以设置emptyDir.midium为Memory告诉k8s挂载一个tmpfs使用.
 
-# 三 hostPath:
+# 三 hostPath
 
 # 四 configMap:
 ## (1)概述:
 - configMap资源提供一种向Pod内注入配置数据的方式.
 - 数据存储在ConfigMap对象中, 可通过configMap类型卷来引用, 被运行在Pod内的容器化应用消费.
 
+## (2)使用方式:
+- 通过环境变量形式传递给容器.
+- 通过configMap卷.
+
+## (3)configMap和secret:
+- 采用configMap来存储非敏感的文件配置数据.
+- secret存储敏感的数据, 若配置文件同时包含敏感和不敏感数据, 则该文件应该被存储到secret中.
+
 # 五 downward API:
 ## (1)使用场景:
-- 使用configMap和secret卷应用传递Pod调度,运行前的数据是可行的, 但对于不能预先知道的数据, 比如: Pod的Ip,主机名或Pod自身的名字名称等, 则需要使用downward API来解决.
-- downward API允许用户通过环境变量或文件(downward API卷)来将Pod和容器的元数据传递给它们内部运行的进程.
+- 使用configMap和secret卷应用传递Pod调度, 运行前的数据是可行的, 但对于不能预先知道的数据, 比如: Pod的Ip,主机名或Pod自身的名字名称等, 则需要使用downward API来解决.
+- downward API允许用户通过**环境变量**或**文件(downward API卷)**来将Pod和容器的元数据传递给它们内部运行的进程.
 - 详细: https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/
 
 ## (2)downward API可传暴露递的数据:
 - pod的名称,ip,所在namespace,运行节点的名称,所归属服务账号的名称.
 - 每个容器请求的CPU和内存使用量, CPU和内存的限制.
-- Pod标签和注解
-- 备注: Pod标签和注解只能通过downward API卷来暴露, 其它的可以使用环境变量或downward API卷来暴露.
+- Pod标签和注解.
+- 备注: Pod标签和注解只能通过downward API**卷**来暴露, 其它的可以使用环境变量或downward API卷来暴露.
 
 # 六 secret:
 ## (1)概述:
 - 用于向Pod传送敏感数据, 例如:密码等.
-- secret后端是tmpfs, 不会被写入non-volatile存储.
+- secret后端是tmpfs, 只会存储在节点内存中, 不会被持久化.
 - 详细: https://kubernetes.io/docs/concepts/configuration/secret/

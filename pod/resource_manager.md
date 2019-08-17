@@ -20,7 +20,7 @@
 
 # 三 ResourceQuota对象:
 ## (1)功能:
-- 资源quota使用**ResourceQuota**对象来定义, 约束每个namespace可使用的资源量.
+- 资源quota使用**ResourceQuota**对象来定义, 约束每个**namespace**可使用的资源量.
 - 可以限制namespace内每种对象类型可以创建的对象数量.
 - Resource Quota默认是开启的, 当apiserver --enable-admission-plugins flag有ResourceQuota参数时开启.
 

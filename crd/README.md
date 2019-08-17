@@ -23,7 +23,16 @@
 ## (1)概述:
 - CustomResourceDefinition(CRD) API资源允许用户定义自定义资源, 定义一个CRD对象创建一个自定义资源(name和scheme), kubernetes API提供和处理自定义资源的存储.
 
-## (2)备注:
+## (2)CustomResourceDefinitionSpec:
+- names
+- group
+- scope: 默认是namespaced.
+- validation: 描述CustomResource的validation方法.
+- conversion
+- version: 废弃, 优先使用versions.
+- versions
+
+## (3)备注:
 - https://github.com/kubernetes/sample-controller
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definition-versioning/

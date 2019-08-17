@@ -91,7 +91,7 @@
 
 ## (4)ipvs模式:
 - kube-proxy观察**Service**和**Endpoints**, 调用**netlink**接口来创建ipvs规则并周期性向Services和Endpoints同步.
--当Service被访问时, 流量被重定向到后端Pods.
+- 当Service被访问时, 流量被重定向到后端Pods.
 - 与iptable类似, ipvs基于netfilter hook函数, 但是要hash表作为底层数据结构并且工作在内核空间, 即ipvs重定向速度更快, 在同步proxy rules时性能更好, ipvs也提供更多的load balance方法.
 
 # 四 服务发现(discovery):
