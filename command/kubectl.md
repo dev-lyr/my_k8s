@@ -119,7 +119,7 @@
 
 # 六 高级命令:
 ## (1)apply:
-- 功能: 通过文件名或标准输入流(stdin)对资源进行配置.
+- 功能: 通过文件名或标准输入流(stdin)对资源进行配置, 若不存在会创建.
 - 用法: kubectl apply (-f FILENAME | -k DIRECTORY) [options].
 
 ## (2)patch:
@@ -127,7 +127,7 @@
 - 用法: kubectl patch (-f FILENAME | TYPE NAME) -p PATCH [options]
 
 ## (3)replace:
-- 功能: 通过filename或者stdin替换一个资源.
+- 功能: 通过filename或者stdin替换一个资源, 若资源不存在会报错.
 - 用法: kubectl replace -f FILENAME [options].
 - 可使用kubectl get 导出完整列表, 修改后调用kubectl replace.
 
