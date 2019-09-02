@@ -28,7 +28,7 @@
 - --log-dir: 若非空, 写入该目录下日志文件.
 - --log-file: 若非空, 使用该日志文件.
 - --log-flush-frequency: 默认5s, 日志刷新的最大时间.
-- --logtostderr: 默认为true, 将日志写入stderr而不是文件, 默认为true.
+- --logtostderr: 默认为true, 将日志写入stderr而不是文件.
 - --alsologtostderr: 将日志同时写入stderr和文件.
 
 ## (4)cgroup相关:
