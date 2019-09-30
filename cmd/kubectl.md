@@ -1,7 +1,7 @@
 # 一 概述:
-## (1)功能:
-- kubectl controls the Kubernetes cluster manager.
-- 参考: https://kubernetes.io/docs/reference/kubectl/overview/
+## (1)配置:
+- 默认情况下, kubectl以$HOME/.kube目录下的config文件作为配置文件, 可通过通过KUBECONFIG环境变量或设置--kubeconfig flag来设置.
+- https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
 
 ## (2)基本命令:
 - create: Create a resource from a file or from stdin.
@@ -60,6 +60,7 @@
 ## (9)备注:
 - Use "kubectl <command> --help" for more information about a given command.
 - Use "kubectl options" for a list of global command-line options (applies to all commands).
+- 参考: https://kubernetes.io/docs/reference/kubectl/overview/
 
 # 二 基本命令:
 ## (1)get:

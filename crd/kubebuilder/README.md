@@ -6,7 +6,7 @@
 - go.mod
 - Makefile: build和deploy自定义controller.
 - PROJECT
-- config: 包含启动配置,CRD,RBAR配置,WebHook配置等.
+- config: 包含启动配置,CRD,RBAC配置,WebHook配置等.
 - main.go
 - 等等.
 

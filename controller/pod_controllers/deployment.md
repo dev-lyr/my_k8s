@@ -54,7 +54,7 @@
 # 四 更新:
 ## (1)概述:
 - 只有在Deployment的pod template更新时才会触发Deployment的rollout.
-- 通过更新Deployment的PodTemplateSpec来声明Pods的新状态, 此时一个新的ReplicaSet会被创建, Deployment以可控的速度将Pods从旧的ReplicaSet移动到新的.
+- 通过更新Deployment的PodTemplateSpec来声明Pods的新状态, 此时一个**新的ReplicaSet会被创建**, Deployment以可控的速度将Pods从旧的ReplicaSet移动到新的.
 
 ## (2)修改方式:
 - kubectl set

@@ -23,3 +23,15 @@
 - Namespace控制器
 - PersistentVolume控制器
 - 等等.
+
+# 二 kube-controller-manager
+## (1)概述:
+- kube-controller-manager是一个包含kube核心控制循环的daemon.
+- 用法: kube-controller
+
+## (2)常用
+
+## (3)controller并发相关:
+- --concurrent-endpoint-syncs: 默认5.
+- --concurrent-deployment-syncs: 默认5.
+- 等等.

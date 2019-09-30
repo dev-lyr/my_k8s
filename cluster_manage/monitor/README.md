@@ -12,15 +12,15 @@
 
 # 二 资源metrics pipeline:
 ## (1)概述:
-- resource metrics pipeline为集群组件(例如:HorizontalPodAutoscaler控制器)提供有限的metrics集.
-- metrics通过**metrics-servler**来收集并通过**metrics.k8s.io** API暴露出来.
+- resource metrics pipeline为集群组件(例如:HorizontalPodAutoscaler控制器)提供有限的metrics集; 用户也可以通过kubectl top命令来直接访问.
+- metrics通过**metrics-server**来收集并通过**metrics.k8s.io** API暴露出来.
 - metrics server发现集群中的所有node并向kubelet查询CPU和内存使用量; kubelet通过**cAdvisor**来获取数据.
 
 ## (2)metrics server:
 - 替代Heapster.
 
 ## (3)cAdvisor:
-- 是一个开源的容器资源使用量和性能分析**agent**, aAdvisor集成与kubelet的二进制文件中.
+- 是一个开源的容器资源使用量和性能分析**agent**, cAdvisor集成与kubelet的二进制文件中.
 
 ## (4)参考:
 - https://github.com/kubernetes/metrics/blob/master/pkg/apis/metrics/v1beta1/types.go

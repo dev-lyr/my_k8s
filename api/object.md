@@ -26,7 +26,24 @@
 - **metadata(必选)**: 用来唯一标识一个对象, 包括**name**, **UID**和**可选的namespace**.
 - **spec**: 每个k8s对象的格式不同, 包含特定对象的嵌套属性, 参考: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/.
 
-## (5)备注:
+## (5)metadata:
+- annotations
+- name
+- uid
+- namespace: 空的等同于default空间.
+- selfLink: 是一个表示对象的URL.
+- resourceVersion
+- lables
+- clusterName: 对象属于的cluster的name, 用于区分在不同cluster内的同一namespace和name的资源.
+- creationTimestamp: 表示对象创建时server的时间的一个时间戳.
+- deletionGracePeriodSeconds: 对象在被从系统移除之前运行的平滑终止的时间(秒为单位), 只有在deletionTimestamp被设置的时候才设置.
+- deletionTimestamp: 表示资源会被删除日期和时间.
+- finalizers: 对象被删除前必须为空.
+- generateName: 是一个被server使用的可选的prefix, 用来在name属性没设置时产生一个唯一的name.
+- generation
+- ownerReferences: 该对象依赖的对象的列表, 若列表中所有对象都已被删除, 该对象会被gc.
+
+## (6)备注:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/
 
 # 二 对象spec和status:

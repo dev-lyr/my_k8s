@@ -40,7 +40,10 @@
 - message: transition的细节.
 - reason: transition的原因.
 - status: 字符串, 可能值"True", "False"和"Unknown".
-- type: PodScheduled(Pod已被调度到一个node); Ready(Pod可以接收请求并且可以被添加到负载均衡pool); Initialized(所有init容器已经成功启动); UnSchedulable(调度器当前不能调度Pod, 例如:缺少资源或其它限制); ContainersReady(Pod内所有容器都已经ready).
+- type: PodScheduled(Pod已被调度到一个node); Ready(Pod可以接收请求并且可以被添加到负载均衡pool); Initialized(所有init容器已经成功启动); UnSchedulable(调度器当前不能调度Pod, 例如:缺少资源或其它限制); ContainersReady(Pod内所有容器都已经ready); 在ReadinessGate指定的额外的类型.
+
+## (3)备注:
+- You can use the new field **ReadinessGate** in the PodSpec to specify additional conditions to be evaluated for Pod readiness. If Kubernetes cannot find such a condition in the status.conditions field of a Pod, the status of the condition is default to “False”.
 
 # 四 容器probes:
 ## (1)概述:
@@ -57,8 +60,9 @@
 - TCPSocketAction: 在容器IP地址上指定Port执行一个TCP检查, 若port是打开则表示诊断成功.
 - HTTPGetAction: 在容器IP地址上指定port和路径上执行一个Get请求, 若返回码>=200且<400则表示诊断成功.
 
-## (4)ReadinessGate:
+## (4)ReadinessGate(PodSpec):
 - 是一个PodReadinessGate数组, 若指定, 则Pod只有在所有容器都是Ready且所有ReadinessGate中的条件都等于true时候才算是ready的.
+- PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
 
 ## (5)使用场景:
 - 若希望容器在测探失败时被kill并且重启, 则提供一个liveness probe, 且指定restartPolicy为Always或OnFailure.

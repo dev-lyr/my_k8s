@@ -6,7 +6,7 @@
 - 对于非Kubernetes-native应用, kubernetes提供一个virtual-IP-based网桥来把服务redirect到后端Pods.
 
 ## (2)Endpoints资源:
-- Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoint**.
+- Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoints**, Endpoint和Service的name一样.
 - 针对kubernetes-native应用, kubernetes提供一个简单的**Endpoints** API, 当Service中Pod变化时被更新. 
 - 当定义service没有指定selector时不会自动创建endpoint, 随后可以根据不同情况手动创建.
 
@@ -123,11 +123,11 @@
 - 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
 
 ## (2)使用selectors:
-- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的A记录.
+- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的**A记录**.
 
 ## (3)不使用selectors:
-- CNAME records for ExternalName-type services.
-- A records for any Endpoints that share a name with the service, for all other types.
+- **CNAME** records for **ExternalName-type** services.
+- **A records** for any Endpoints that **share a name** with the service, for all other types.
 
 # 六 发布服务:
 ## (1)概述:
