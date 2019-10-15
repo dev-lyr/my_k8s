@@ -97,6 +97,6 @@
 - globlaDefault: 表示该PriorityClass的值作为没有指定priorityClassName的pod的默认值, 系统只能存在一个globalDefault的priorityClass对象, 若不指定, 则没有PriorityClassName的Pod的优先级为0.
 
 ## (4)Pod优先级:
-- 创建Pod在spec指定了priorityClassName, 则**priority admission controller*8使用priorityClassName属性并填入(populate)priority的整数值.
+- 创建Pod在spec指定了priorityClassName, 则**priority admission controller**使用priorityClassName属性并填入(populate)priority的整数值.
 
 ## (5)抢占.
