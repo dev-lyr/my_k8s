@@ -1,6 +1,7 @@
 # 一 概述:
 ## (1)功能:
 - https://godoc.org/sigs.k8s.io/controller-runtime
+- https://github.com/kubernetes-sigs/controller-runtime.git
 
 ## (2)Managers
 - 每个controller和webhook最后都通过一个Manager(pkg/manager)来运行.
@@ -16,7 +17,6 @@
 ## (5)Client和Caches:
 - Reconcilers使用Clients(pkg/client)来访问API对象.
 - manager默认提供的client从local shared cache(pkg/cache)中读取对象且直接写入API Server, 但是client也可以构造成直接访问API Server, 不使用cache.
-- The Cache will auto-populate with watched objects, as well as when other structured objects are requested.
 
 ## (6)Schemes:
 - Clients, Caches, and many other things in Kubernetes use Schemes (pkg/scheme) to associate Go types to Kubernetes API Kinds (Group-Version-Kinds, to be specific).

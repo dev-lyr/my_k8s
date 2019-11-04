@@ -57,7 +57,13 @@
 - plugin: Provides utilities for interacting with plugins.
 - version: 输出client和server的版本信息.
 
-## (9)备注:
+## (9)选项:
+- --kubeconfig: kubectl使用的kubeconfig文件.
+- -n,--namespace: kubectl请求的ns范围.
+- -v,--v=0: 日志的级别.
+- 其它.
+
+## (10)备注:
 - Use "kubectl <command> --help" for more information about a given command.
 - Use "kubectl options" for a list of global command-line options (applies to all commands).
 - 参考: https://kubernetes.io/docs/reference/kubectl/overview/

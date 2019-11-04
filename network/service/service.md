@@ -10,34 +10,20 @@
 - 针对kubernetes-native应用, kubernetes提供一个简单的**Endpoints** API, 当Service中Pod变化时被更新. 
 - 当定义service没有指定selector时不会自动创建endpoint, 随后可以根据不同情况手动创建.
 
-## (3)服务创建:
-- 服务是一个REST对象, 和其它REST对象(例如Pod)一样, 通过将服务的定义POST给apiserver来创建服务实例.
-- 服务被分配一个IP地址(有时称为**cluster IP**), 用来进行服务代理.
-- 服务的selector会被持续计算且结果会被POST给一个**Endpoints**对象;当服务没有selector时不会创建Endpoints对象(可以自己创建一个endpoint,并将服务映射过去).
-- 服务可以将incoming端口映射到一个**targetPort**, 默认情况下**targetPort**和**port**一样.
-- 支持协议: TCP(默认), UDP, HTTP等, 只能给一个服务设置一个port和protocol.
+## (3)创建方式:
+- kubectl expose
+- kubectl create
 
-## (4)属性:
-- apiVersion
-- kind
-- metadata
-- spec
-- status: 只读,最近的服务的状态,由系统来填充.
-
-## (5)集群内访问外部服务方法:
+## (4)集群内访问外部服务方法:
 - 自定义Endpoint
 - 创建ExternalName类型服务
 
-## (6)外部访问服务的方法:
+## (5)外部访问服务的方法:
 - NodePort
 - LoadBalancer
 - Ingress
 
-## (7)创建方式:
-- kubectl expose
-- kubectl create
-
-# 二 spec属性:
+# 二 ServiceSpec
 ## (1)clusterIP:
 - 服务的IP地址,通常由master随机分配, 若手动指定IP则需保证没有被其它使用, 该属性不能通过update来改变.
 - 合法值: **None**, 空字符串("")或一个合法ip地址.
@@ -47,6 +33,7 @@
 - a list of IP addresses for which nodes in the cluster will also accept traffic for this service.
 - These IPs are not managed by Kubernetes. The user is responsible for ensuring that traffic arrives at a node with this IP.
 - A common example is external load-balancers that are not part of the Kubernetes system.
+- 备注: 适用于所有服务type.
 
 ## (3)externalName:
 - externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
@@ -56,16 +43,22 @@
 
 ## (5)healthCheckNodePort
 
-## (6)ports:
+## (6)ports(ServicePort数组):
 - 服务暴露的端口列表.
+- name: pod在服务中的name, 在spec中需唯一, 若只有一个ServicePort则不填. 
+- nodePort: 服务type是NodePort或LoadBalancer时在每个node上暴露的端口, 通常由系统分配.
+- port: 服务暴露的端口.
+- protocol: 默认是TCP, 支持TCP, UDP和SCTP.
+- targetPort: pod的端口的数字或name.
 
 ## (7)selector:
 - 将服务的流量路由到和选择器标签key和值match的pod.
 - 若为空或者不指定, 则k8s会认为服务有有一个外部进程管理它的endpoints, 此时不会做修改.
 
 ## (8)负载平衡相关:
-- loadBalancerIP
+- loadBalancerIP: 只用于type=LoadBalancer, 部分云厂商支持指定该属性, 则会根据指定的loadbalanerIP来创建load-balancer, 若云提供商不支持, 则该忽略该属性.
 - loadBalancerSourceRanges
+- 相关: ServiceStatus.
 
 ## (9)session相关:
 - sessionAffinity
@@ -77,59 +70,7 @@
 - NodePort: 集群中每个节点上都打开一个端口, 并将端口上接收到的流量重定向到后端服务.
 - LoadBalancer: 是NodePort的一种扩展, 使得服务可以通过专门的负载平衡器来访问, 由k8s运行的云基础设施提供, 客户端通过负载均衡器的IP地址来连接到服务, 负载均衡器有一个公开的访问IP地址.
 
-# 三 服务代理(proxy):
-## (1)概述:
-- k8s集群中每个node上都运行一个**kube-proxy**, 它负责为服务实现一种虚拟IP(virtual IP).
-- 在k8s 1.0服务是四层构造(TCP/UDP over IP), proxy是完全在用户空间(userspace).
-- 在k8s 1.1中, **Ingress**API被加入来表示七层(HTTP)服务, iptables proxy被加入, 并且作为默认的操作模式(从1.2起).
-- 在k8s 1.8中, ipvs代理被加入.
-- Proxy-mode: **userspace**, **iptables**, **ipvs**.
-
-## (2)userspace模式:
-- kube-proxy观察k8s master对**Service**和**Endpoints**对象的创建和删除.
-- 在本地节点上, kube-proxy会为每个Service打开一个端口(随机选择), 任何到该代理端口的连接都会被proxy搭配服务的后端Pods(由EndPoints上报).
-- 选择哪个Pod是基于Service的SessionAffinity.
-
-## (3)iptables模式:
-- kube-proxy观察k8s master对**Service**和**Endpoints**对象的创建和删除.
-- 针对每个服务, 安装iptable规则用来capture到服务ClusterIP和Port的流量, 将这些流量redirect到Service后端集合.
-
-## (4)ipvs模式:
-- kube-proxy观察**Service**和**Endpoints**, 调用**netlink**接口来创建ipvs规则并周期性向Services和Endpoints同步.
-- 当Service被访问时, 流量被重定向到后端Pods.
-- 与iptable类似, ipvs基于netfilter hook函数, 但是要hash表作为底层数据结构并且工作在内核空间, 即ipvs重定向速度更快, 在同步proxy rules时性能更好, ipvs也提供更多的load balance方法.
-
-# 四 服务发现(discovery):
-## (1)概述:
-- K8s支持两种主要类型的服务发现: **环境变量**和**DNS**(推荐).
-
-## (2)环境变量:
-- 在pod开始运行时, k8s会初始化一系列环境变量指向**已存在的服务**.
-
-## (3)DNS:
-- DNS服务器watch创建Service的k8s API, 并且创建为每个服务创建一个DNS记录集.
-- 若集群中开启DNS, 则所有Pod可以自动做Service的命名解析.
-- DNS server是唯一的一种访问**ExternalName**类型服务的方式.
-- 例如: 在k8s中的my-ns命名空间中有一个my-service服务, 则一个DNS记录my-service.my-ns会被创建, 在my-ns命名空间中的Pod可以通过对my-service的简单名字查询来找到服务; 其它命名空间中的Pod则需要使用my-service.my-ns来查询; 名字查询的结果是**cluster IP**.
-
-## (4)备注:
-- 参考: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
-- CoreDNS和kube-dns.
-
-# 五 Headless服务:
-## (1)概述:
-- 有时不需要load-balancing和唯一服务IP的场景, 可以通过指定服务的.spec.clusterIP为None来创建"headless"服务.
-- Headless服务减少和K8s系统的耦合, 允许开发者自由选择服务发现机制.
-- 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
-
-## (2)使用selectors:
-- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的**A记录**.
-
-## (3)不使用selectors:
-- **CNAME** records for **ExternalName-type** services.
-- **A records** for any Endpoints that **share a name** with the service, for all other types.
-
-# 六 发布服务:
+# 三 发布服务:
 ## (1)概述:
 - 需要把服务暴露到一个外部(集群外部)ip地址.
 - k8s使用**ServiceTypes**来指定需要的服务类型.
@@ -150,10 +91,50 @@
 - Ingress只需提供一个公网IP地址就可以为多个服务提供访问, 当客户请求到Ingress时会根据路径名将请求转发到对应服务.
 - Ingress是基于HTTP层操作, 提供了其它服务类型不提供的功能, 例如基于cookie的会话黏贴(affinity).
 
-## (5)备注:
+## (5)LoadBalancer:
+- 在支持外部loadbalancer的云提供商上, 可以通过设置type=LoadBalancer来为service提供一个load balancer.
+- Load balancer的创建是异步的, 创建成功后, balancer的信息会在service的status.loadBalancer属性发布出来.
+
+## (6)ExternalName:
+- 需指定spec.externalName.
+
+## (7)备注:
 - 相关:ingress.
 
-# 七 服务和Pod的DNS:
+# 四 Headless服务:
+## (1)概述:
+- 有时不需要load-balancing和唯一服务IP的场景, 可以通过指定服务的.spec.clusterIP为None来创建"headless"服务.
+- Headless服务减少和K8s系统的耦合, 允许开发者自由选择服务发现机制.
+- 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
+
+## (2)使用selectors:
+- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的**A记录**.
+
+## (3)不使用selectors:
+- **CNAME** records for **ExternalName-type** services.
+- **A records** for any Endpoints that **share a name** with the service, for all other types.
+
+# 五 服务发现(discovery):
+## (1)概述:
+- K8s支持两种主要类型的服务发现: **环境变量**和**DNS**(推荐).
+
+## (2)环境变量:
+- 在pod开始运行时, k8s会初始化一系列环境变量指向**已存在的服务**.
+- 环境变量: {SVCNAME}_SERVICE_HOST和{SVCNAME}_SERVICE_HOST.
+
+## (3)DNS:
+- 可以(通常需要)为kubernete集群搭建DNS service, 此时需要安装CoreDNS等.
+- DNS服务器(例如:CoreDNS)watch创建Service的k8s API, 并且创建为每个服务创建一个DNS记录集.
+- 若集群中开启DNS, 则所有Pod可以自动做Service的命名解析.
+- DNS server是唯一的一种访问**ExternalName**类型服务的方式.
+- 例如: 在k8s中的my-ns命名空间中有一个my-service服务, 则一个DNS记录my-service.my-ns会被创建, 在my-ns命名空间中的Pod可以通过对my-service的简单名字查询来找到服务; 其它命名空间中的Pod则需要使用my-service.my-ns来查询; 名字查询的结果是**cluster IP**.
+
+## (4)备注:
+- 参考: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+- https://github.com/kubernetes/dns/blob/master/docs/specification.md
+- CoreDNS和kube-dns.
+
+# 六 服务和Pod的DNS:
 ## (1)概述:
 - Kubernetes DNS schedules a DNS Pod and Service on the cluster, and configures the kubelets to tell individual containers to use the DNS Service’s IP to resolve DNS names.
 
@@ -176,5 +157,5 @@
 - https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 - https://github.com/kubernetes/dns/blob/master/docs/specification.md
 
-# 八 向pod(/etc/hosts)添加entries:
+# 七 向pod(/etc/hosts)添加entries:
 - https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/

@@ -11,12 +11,14 @@
 - **Placement**: defines which **clusters** the resource is intended to appear in.
 - **Overrides**: define **per-cluster field-level** variation to apply to the template.
 
-## (4)High-level API相关概念:
+## (4)High-level API可使用的概念:
 - **Status**: collects the status of resources distributed by KubeFed across all federated clusters.
 - **Policy**: determines which subset of clusters a resource is allowed to be distributed to.
 - **Scheduling**: refers to a decision-making capability that can decide how workloads should be spread across different clusters similar to how a human operator would.
 
 ## (5)相关概念:
+- Federate
+- Kubefed
 - Host Cluster: 用来expose Kubefed API和kubefed控制面板的集群.
 - Cluster Registration: 一个集群通过kubefedctl join到host cluster.
 - ServiceDNSRecord: A resource that associates one or more Kubernetes Service resources and how to access the Service, with a scheme for constructing Domain Name System (DNS) resource records for the Service.

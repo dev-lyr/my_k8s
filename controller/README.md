@@ -15,3 +15,4 @@
 
 ## (4)备注:
 - **支持自定义控制器**: 参考自定义资源文章.
+- https://kubernetes.io/docs/concepts/architecture/controller/

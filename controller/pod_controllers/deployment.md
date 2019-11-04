@@ -38,7 +38,7 @@
 
 # 三 创建:
 ## (1)概述:
-- 创建Deployment时指定的Pod由ReplicaSet负责在后端创建.
+- 创建Deployment时指定的Pod由**ReplicaSet**负责在后端创建.
 
 ## (2)kubectl get deployments:
 - Name: 集群中Deployment的names.
@@ -50,6 +50,8 @@
 
 ## (3)kubectl rollout status:
 - 查看Deployment的rollout状态.
+
+## (4)pod-template-hash label
 
 # 四 更新:
 ## (1)概述:

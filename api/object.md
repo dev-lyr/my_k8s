@@ -38,7 +38,7 @@
 - creationTimestamp: 表示对象创建时server的时间的一个时间戳.
 - deletionGracePeriodSeconds: 对象在被从系统移除之前运行的平滑终止的时间(秒为单位), 只有在deletionTimestamp被设置的时候才设置.
 - deletionTimestamp: 表示资源会被删除日期和时间.
-- finalizers: 对象被删除前必须为空.
+- finalizers: 对象被删除前必须为空, 是一个字符串数组, 格式有要求(以/分隔的多个单词或内置的几个单词(kubernetes, orphan, foregroundDeletion).
 - generateName: 是一个被server使用的可选的prefix, 用来在name属性没设置时产生一个唯一的name.
 - generation
 - ownerReferences: 该对象依赖的对象的列表, 若列表中所有对象都已被删除, 该对象会被gc.

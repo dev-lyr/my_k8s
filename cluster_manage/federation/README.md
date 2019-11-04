@@ -22,3 +22,8 @@
 
 ## (5)相关文档:
 - https://kubernetes.io/docs/concepts/cluster-administration/federation/
+
+## (6)fedv1(已废弃):
+- 联邦集群包含: 一个federated控制面板和多个k8s集群.
+- 控制面板组成: 用于存储联邦API对象的etcd; Federation API服务器; Federation Controller Manager.
+

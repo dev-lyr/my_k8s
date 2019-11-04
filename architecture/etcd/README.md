@@ -33,7 +33,7 @@
 
 # 三 API:
 ## (1)概述:
-- 所有etcd3的API以**gRPC**服务方式定义, 每个AP发送到etcd服务器的请求是一个gRPC rpc.
+- 所有etcd3的API以**gRPC**服务方式定义, 每个API发送到etcd服务器的请求是一个gRPC rpc.
 
 ## (2)API种类:
 - 处理etcd key空间: KV(创建,更新,fetch和删除键值对); watch(监控keys的变化); Lease.

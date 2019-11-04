@@ -61,7 +61,7 @@
 - HTTPGetAction: 在容器IP地址上指定port和路径上执行一个Get请求, 若返回码>=200且<400则表示诊断成功.
 
 ## (4)ReadinessGate(PodSpec):
-- 是一个PodReadinessGate数组, 若指定, 则Pod只有在所有容器都是Ready且所有ReadinessGate中的条件都等于true时候才算是ready的.
+- 是一个PodReadinessGate数组, 若指定, 则Pod只有**在所有容器都是Ready**且**所有ReadinessGate中的条件都等于true**时候才算是ready的.
 - PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
 
 ## (5)使用场景:
