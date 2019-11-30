@@ -9,7 +9,7 @@
 - https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
 - https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 
-# 二 admission controller
+# 二 admission控制器:
 ## (1)概述:
 - An **admission controller** is a piece of code that intercepts requests to the Kubernetes API server **prior to** persistence of the object, but **after** the request is authenticated and authorized. 
 - The admission control process proceeds in **two phases**. In the **first** phase, **mutating** admission controllers are run. In the **second** phase, **validating** admission controllers are run. Note again that some of the controllers are both.
@@ -20,7 +20,7 @@
 - validating and mutating both.
 - 备注: Admission controllers may be “validating”, “mutating”, or both. Mutating controllers may modify the objects they admit; validating controllers may not.
 
-## (3)admission controller种类:
+## (3)admission控制器种类:
 - AlwaysPullImages: 修改每个pod强制image pull策略为Always.
 - DefaultStorageClass
 - DefaultTolerationSeconds

@@ -33,7 +33,7 @@
 
 ## (2)isolated和non-isolated Pods:
 - 默认情况下, Pod是非孤立的, 可以接收任意源的流量.
-- 当Pod被同一namespace下的NetworkPolicy选择时, 就变为独立的, pod会拒绝点NetworkPolicy不允许的连接.
+- 当Pod被同一namespace下的NetworkPolicy选择时, 就变为独立的, pod会拒绝掉NetworkPolicy不允许的连接.
 
 ## (3)NetworkPolicy资源:
 - 参考: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#networkpolicy-v1-networking-k8s-io

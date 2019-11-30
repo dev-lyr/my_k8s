@@ -17,6 +17,7 @@
 # 二 Pod 阶段(phase)
 ## (1)概述:
 - Pod的**status**属性是一个**PodStatus**对象, 该对象有一个**phase**属性.
+- The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status.
 
 ## (2)phase的值:
 - **Pending**: k8s系统已经接受Pod, 但是容器镜像还没有创建, 包含被调度前的时间和通过网络下载镜像花费的时间.
@@ -40,10 +41,7 @@
 - message: transition的细节.
 - reason: transition的原因.
 - status: 字符串, 可能值"True", "False"和"Unknown".
-- type: PodScheduled(Pod已被调度到一个node); Ready(Pod可以接收请求并且可以被添加到负载均衡pool); Initialized(所有init容器已经成功启动); UnSchedulable(调度器当前不能调度Pod, 例如:缺少资源或其它限制); ContainersReady(Pod内所有容器都已经ready); 在ReadinessGate指定的额外的类型.
-
-## (3)备注:
-- You can use the new field **ReadinessGate** in the PodSpec to specify additional conditions to be evaluated for Pod readiness. If Kubernetes cannot find such a condition in the status.conditions field of a Pod, the status of the condition is default to “False”.
+- type: PodScheduled(Pod已被调度到一个node); Ready(Pod可以接收请求并且可以被添加到负载均衡pool); Initialized(所有init容器已经成功启动); UnSchedulable(调度器当前不能调度Pod, 例如:缺少资源或其它限制); ContainersReady(Pod内所有容器都已经ready); 在**ReadinessGate**指定的额外的类型.
 
 # 四 容器probes:
 ## (1)概述:
@@ -59,10 +57,6 @@
 - ExecAction: 在容器内执行一个指定命令, 若退出码为0则表明诊断执行成功.
 - TCPSocketAction: 在容器IP地址上指定Port执行一个TCP检查, 若port是打开则表示诊断成功.
 - HTTPGetAction: 在容器IP地址上指定port和路径上执行一个Get请求, 若返回码>=200且<400则表示诊断成功.
-
-## (4)ReadinessGate(PodSpec):
-- 是一个PodReadinessGate数组, 若指定, 则Pod只有**在所有容器都是Ready**且**所有ReadinessGate中的条件都等于true**时候才算是ready的.
-- PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
 
 ## (5)使用场景:
 - 若希望容器在测探失败时被kill并且重启, 则提供一个liveness probe, 且指定restartPolicy为Always或OnFailure.
@@ -97,3 +91,11 @@
 - Terminated: 表示容器已经完成执行操作且已停止运行, 当容器成功执行完成或由于一些原因失败时候会进入该状态, 在进入Terminated状态之前, PreStop hook(若有)会被执行.
 - Waiting: 容器的默认状态, 若容器不在Running或Terminated状态, 则处于Waiting状态, Waiting状态的容器依旧执行它要求的操作, 例如拉镜像, 应用secrets等.
 
+# 六 Pod readiness gate
+## (1)概述:
+- 是一个PodReadinessGate数组, 若指定, 则Pod只有**在所有容器都是Ready**且**所有ReadinessGate中的condition等于true**时候才算是ready(即PodCondition中type=Ready的值为true).
+- PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
+
+## (2)备注:
+- You can use the new field **ReadinessGate** in the PodSpec to specify additional conditions to be evaluated for Pod readiness. If Kubernetes cannot find such a condition in the status.conditions field of a Pod, the status of the condition is default to "False".
+- https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/0007-pod-ready++.md

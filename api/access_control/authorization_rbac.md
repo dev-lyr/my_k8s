@@ -21,7 +21,7 @@
 - roleRef(RoleRef): 引用一个当前namespace的Role或一个全局namespace的ClusterRole.
 - subjects(Subject数组): 表示Role绑定到的对象的信息.
 - Subject: kind(User,Group或ServiceAccount), apiGroup(kind为ServiceAccount时为"", User和Group时默认为"rabc.authorization.k8s.io"), name, namespaced(若对象kind是非namespace的, 例如:User或Group, 则该值需为空).
-- 备注: RoleBinding的roleRef可以引用当前namespace内的Role或全局namespace内的ClusterRole; 与clusterrolebinding不同, rolebinding即使引用一个clusterrole, 也只能clusterrole当中包含的rolebinding所在ns的资源的访问权限.
+- 备注: RoleBinding的roleRef可以引用当前namespace内的Role或全局namespace内的ClusterRole; 与clusterrolebinding不同, rolebinding即使引用一个clusterrole, 也只是授权clusterrole当中包含的资源在rolebinding所在ns访问权限.
 - 通过将rolebinding ref到一个clusterrole, 适用于管理员需要在整个集群中定义一些公共roles, 并且在多个namespaces中使用.
 
 ## (4)ClusterRoleBinding:

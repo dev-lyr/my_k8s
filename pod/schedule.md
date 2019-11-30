@@ -41,28 +41,28 @@
 - affinity只在调度pod时候有用, 删除或修改node上lable对已被调度的pod无影响.
 
 ## (2)类型:
-- node affinity: 与nodeSelector类似, 但有(3)说的前2个优势.
-- inter-pod affinity/anti-affinity: 通过已经运行在node上的pod的label来调度, 而不是node label来约束.
+- node的affinity: 与nodeSelector类似, 但有(3)说的前2个优势.
+- pod间affinity/anti-affinity: 通过已经运行在node上的pod的label来调度, 而不是node label来约束.
 
-## (3)Affinity/anti-affinity的扩展点:
+## (3)Affinity/anti-affinity的优势:
 - 更强的表达式(不仅仅是AND).
 - 可以设置某rule是soft/preference而不是硬性要求, 当scheduler不能满足时, 该pod仍会被调度.
 - you can constrain against labels **on other pods running on the node** (or other topological domain), rather than against labels on the node itself, which allows rules about which pods can and cannot be co-located.
 
-## (4)Node affinity:
+## (4)Node的affinity:
 - 通过PodSpec的affinity属性的nodeAffinity属性指定; 当前支持两类Node Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
-- 支持operator: In, NotIn, Exists, DoesNotExist, Gt,Lt; 可通过NotIn和DostNotExist来实现Node的anti-affinity.
+- 支持operator: In, NotIn, Exists, DoesNotExist, Gt, Lt; 可通过NotIn和DostNotExist来实现Node的anti-affinity.
 - nodeSelector和NodeAffinity同时使用, 则Pod需要都满足时才能被调度到该节点.
 - 若多个nodeSelectorTerms; 则pod满足任一即可被调度到该节点; 若nodeSelectorTerms包含多个matchExpression, 则pod需满足所有matchExpression.
 
-## (5)Pod Affinity和Ant-Affinity:
+## (5)Pod的Affinity和Ant-Affinity:
 - 通过PodSpec的affinity属性的podAffinity属性指定; 当前支持两类Pod Affinity和Ant-Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
 
 # 四 Taints和Tolerations:
 ## (1)概述:
 - 将一个或多个**taints**应用到一个node, 表示node不接受任何不能tolerate这些taints的pod. 备注: NodeSpec的taints数组.
 - **tolerations**被应用到pods, 允许(但是不是必须)pod调度到匹配taints的node上. 备注: PodSpec的tolerations数组.
-- toleration和tain匹配的条件: key和effect是一样的, operator是exist或者equal且value相等.
+- toleration和taint匹配的条件: key和effect是一样的, operator是exist或者equal且value相等.
 
 ## (2)Taint
 - effect: 可选值:NoSchedule, PreferNoSchedule和NoExecute.

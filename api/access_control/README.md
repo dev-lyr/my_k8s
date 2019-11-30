@@ -17,7 +17,6 @@
 - 当请求通过了认证, 则该请求必须被授权.
 - 请求中必须包含: 请求者的username, 请求action和该action影响的对象.
 - 若存在一个**policy**对象声明user有权限完成请求的action, 则该请求被授权.
-- Kubernetes支持多种授权模块, 例如: ARAC模式,RBAC模式和Webhook模式.
 - 若配置多个授权模块, 则Kubernetes检查每个模块, 只要有一个授权该请求则该请求可被执行; 若所有模块都拒绝该请求, 则该请求被拒绝(HTTP状态码**403**).
 
 ## (5)admission控制:
@@ -34,6 +33,13 @@
 - https://kubernetes.io/docs/reference/access-authn-authz/authentication/
 
 # 三 授权
-## (1)概述
-## (2)备注:
+## (1)概述:
+- Kubernetes支持多种授权模块, 例如: ARAC模式,RBAC模式和Webhook模式.
+
+## (2)授权模式:
+- ABAC
+- RBAC
+- WebHook
+
+## (3)备注:
 - https://kubernetes.io/docs/reference/access-authn-authz/authorization/

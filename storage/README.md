@@ -18,12 +18,21 @@
 - **configMap**: 提供一种将配置数据注入Pods的方式.
 - **dowmwardAPI**: 使downward API数据对应用可见.
 - **secret**: 用于向Pod传送敏感信息, 例如:密码.
-- **persistentVolumeClaim**
+- **persistentVolumeClaim**: 单独介绍.
 - **gitRepo**: 已废弃.
 - **CSI**: 重要, 后续单独介绍.
 - **nfs**: 挂载到Pod中的NFS共享卷.
 - **其它类型网络存储**: glusterfs, iscsi, cephfs等.
 - **云厂商提供**: awsElasticBlockStore, gcePersistentDisk, azureDisk.
+
+## (4)使用:
+- podSpec.volumes(**Volume**数组): 属于pod的可以被挂载到容器里的volumes.
+- 挂载: 在container对象的volumeMounts属性表示.
+- 备注: Volume对应(3)的类型.
+
+## (5)源码:
+- pkg/controller/volume: 各种controller.
+- pkg/volume
 
 # 二 emptyDir
 ## (1)概述:
@@ -31,22 +40,23 @@
 - 和Pod有同样的生命周期, 当Pod被从node上删除时, emptyDir中的数据也被删除.
 - emptyDir卷可以存储在后端node上的任何媒介上, 例如: disk,SSD或网络存储, 也可以设置emptyDir.midium为Memory告诉k8s挂载一个tmpfs使用.
 
-# 三 hostPath
+## (2)EmptyDirVolumeSource:
+- medium: 目录后端存储介质的类型, 可选: 空字符串(默认)或Memory, 空字符串表示使用node默认的介质.
+- sizeLimit: 默认为nil, 无限制.
 
-# 四 configMap:
+# 三 hostPath:
 ## (1)概述:
-- configMap资源提供一种向Pod内注入配置数据的方式.
-- 数据存储在ConfigMap对象中, 可通过configMap类型卷来引用, 被运行在Pod内的容器化应用消费.
+- hostPath卷挂载host node文件系统上的一个文件或者目录到pod中.
 
-## (2)使用方式:
-- 通过环境变量形式传递给容器.
-- 通过configMap卷.
+## (2)HostPathVolumeSource属性:
+- path: 必选.
+- type(可选): DirectoryOrCreate, Directory, FileOrCreate, File, Socket, CharDevice, BlockDevice, 默认为空(表示在挂载卷前不会执行任何check).
 
-## (3)configMap和secret:
-- 采用configMap来存储非敏感的文件配置数据.
-- secret存储敏感的数据, 若配置文件同时包含敏感和不敏感数据, 则该文件应该被存储到secret中.
+## (3)使用场景
 
-# 五 downward API:
+## (4)谨慎使用
+
+# 四 downward API:
 ## (1)使用场景:
 - 使用configMap和secret卷应用传递Pod调度, 运行前的数据是可行的, 但对于不能预先知道的数据, 比如: Pod的Ip,主机名或Pod自身的名字名称等, 则需要使用downward API来解决.
 - downward API允许用户通过**环境变量**或**文件(downward API卷)**来将Pod和容器的元数据传递给它们内部运行的进程.
@@ -58,8 +68,15 @@
 - Pod标签和注解.
 - 备注: Pod标签和注解只能通过downward API**卷**来暴露, 其它的可以使用环境变量或downward API卷来暴露.
 
-# 六 secret:
-## (1)概述:
-- 用于向Pod传送敏感数据, 例如:密码等.
-- secret后端是tmpfs, 只会存储在节点内存中, 不会被持久化.
-- 详细: https://kubernetes.io/docs/concepts/configuration/secret/
+## (3)DownwardAPIVolumeSource:
+- defaultMode: 创建文件使用的mode bits, 默认为0644, 可选范围:0-0777.
+- items(DownwardAPIVolumeFile数组): downward API volume文件的数组.
+
+## (4)DownwardAPIVolumeFile:
+- fieldRef: 选择pod的一个field, 当前支持: 注解,labels, name和namespace.
+- mode: 该文件上使用的mode bits, 若不指定则使用volume上defaultMode.
+- path: 需要创建文件的相对路径, 不能是绝对路径也不能包含..路径.
+- resourceFiledRef(ResourceFiledSelector): 选择容器的一个资源, 当前只支持resource limit和requests.
+
+## (5)备注:
+- https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/

@@ -111,8 +111,8 @@
 - 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的**A记录**.
 
 ## (3)不使用selectors:
-- **CNAME** records for **ExternalName-type** services.
-- **A records** for any Endpoints that **share a name** with the service, for all other types.
+- **CNAME records**: **ExternalName-type** services.
+- **A records**: any Endpoints that **share a name** with the service, for all other types.
 
 # 五 服务发现(discovery):
 ## (1)概述:
@@ -134,11 +134,13 @@
 - https://github.com/kubernetes/dns/blob/master/docs/specification.md
 - CoreDNS和kube-dns.
 
-# 六 服务和Pod的DNS:
+# 六 Service和Pod的DNS:
 ## (1)概述:
 - Kubernetes DNS schedules a DNS Pod and Service on the cluster, and configures the kubelets to tell individual containers to use the DNS Service’s IP to resolve DNS names.
 
-## (2)服务
+## (2)服务:
+- A记录: 普通服务(非headless),解析到服务的ClusterIp; headless服务,解析到服务选择的Pods的IP的集合.
+- SRV记录
 
 ## (3)Pod
 - DNS策略支持Pod级别的配置, Pod可通过Pod Spec的**dnsPolicy**属性来配置DNS策略.
@@ -156,6 +158,3 @@
 ## (6)备注:
 - https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 - https://github.com/kubernetes/dns/blob/master/docs/specification.md
-
-# 七 向pod(/etc/hosts)添加entries:
-- https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
