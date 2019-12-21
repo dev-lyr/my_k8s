@@ -41,7 +41,15 @@
 - message: transition的细节.
 - reason: transition的原因.
 - status: 字符串, 可能值"True", "False"和"Unknown".
-- type: PodScheduled(Pod已被调度到一个node); Ready(Pod可以接收请求并且可以被添加到负载均衡pool); Initialized(所有init容器已经成功启动); UnSchedulable(调度器当前不能调度Pod, 例如:缺少资源或其它限制); ContainersReady(Pod内所有容器都已经ready); 在**ReadinessGate**指定的额外的类型.
+- type
+
+## (3)type:
+- **PodScheduled**: Pod已被调度到一个node. 
+- **Ready**: Pod可以接收请求并且可以被添加到负载均衡pool.
+- **Initialized**: 所有init容器已经成功启动. 
+- **UnSchedulable**: 调度器当前不能调度Pod, 例如:缺少资源或其它限制. 
+- **ContainersReady**: Pod内所有容器都已经ready. 
+- **其它类型**: **ReadinessGate**指定的额外的类型.
 
 # 四 容器probes:
 ## (1)概述:
@@ -93,7 +101,7 @@
 
 # 六 Pod readiness gate
 ## (1)概述:
-- 是一个PodReadinessGate数组, 若指定, 则Pod只有**在所有容器都是Ready**且**所有ReadinessGate中的condition等于true**时候才算是ready(即PodCondition中type=Ready的值为true).
+- 是一个PodReadinessGate数组, 若指定, 则Pod只有在**所有容器都是Ready**且**所有ReadinessGate中的condition等于true**时候才算是ready(即PodCondition中type=Ready的值为true).
 - PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
 
 ## (2)备注:

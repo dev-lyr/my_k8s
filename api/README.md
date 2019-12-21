@@ -61,3 +61,21 @@
 - 背景: 为了防止一些资源类型的集合查询返回数据太大影响client和server, 例如:pod数据太大.
 - k8s 1.9后开始支持将一个大的集合请求划分为多个小的chunks,同时保证一致性, 通过两个参数**limit**和**continue**来支持, 请求时使用limit和continue, 返回时metadata属性中返回continue属性, 当continue为空是表示没有更多资源返回.
 - 在每次分批查询的请求中, resourceVersion不变(一致性读), 在resourceVersion之后的修改并不会返回.
+
+# 六 其它表示形式
+## (1)概述:
+- 默认kube将对象序列化为JSON返回(content type为applicaiton/json).
+
+# 七 资源删除:
+## (1)概述:
+- 资源删除分为两个阶段: finalization和removal.
+- 一些对象是其它对象的owner, 被owner的对象是owner对象的依赖, 每个依赖对象有一个**metadata.ownerReferences**属性指向owner对象, 在一些情况下, 该属性会被kube自动设置, 也可以手动设定.
+
+## (2)流程:
+- 当client删除一个资源时, .metadata.deletionTimestamp被设置为当前时间.
+- Once the .metadata.deletionTimestamp is set, external controllers that act on finalizers may start performing their cleanup work at any time, in any order.
+- 一旦最后的finalizer被删除,该资源才会实际的从etcd中删除.
+
+## (3)控制删除依赖:
+- 级联删除(cascading deletion): 删除对象时自动删除它的依赖, 级联删除分为2种: backgroup和foregroup.
+- 若删除对象时不删除它的依赖, 则依赖会变成孤儿(orphaned).

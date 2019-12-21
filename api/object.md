@@ -128,7 +128,8 @@
 
 ## (3)规范:
 - 注解是键值对.
-- 键的格式为: prefix(可选)/name, name的格式为[a-z0-9A-Z],-_.的组合, 最长63字符. prefix是可选的, 若指定则必须是DNS subdomain: 用.分隔的一些DNS labels, 长度不能超过253字节.
+- 键的格式为: prefix(可选)/name, name的格式为`[a-z0-9A-Z],-_.`的组合, 最长63字符. 
+- prefix是可选的, 若指定则必须是DNS subdomain: 用.分隔的一些DNS labels, 长度不能超过253字节.
 - 若不指定prefix, 则注解key被认为是user私有的.
 - kubernetes.io/和k8s.io/两个prefix是kubernetes核心组件**预留**.
 

@@ -14,7 +14,7 @@
 
 ## (3)Controller:
 - Controller(Interface): Run, HasSynced, LastSyncResourceVersions等方法.
-- controller(struct): config(Config), reflector, reflectorMutex, clock等属性; 实现Controller接口; 提供processLoop方法.
+- controller(struct): config(Config), **reflector**, reflectorMutex, clock等属性; 实现Controller接口; 提供processLoop方法.
 
 ## (4)Config:
 - Queue
@@ -32,7 +32,8 @@
 
 # 三 Reflector.go:
 ## (1)概述:
-- Reflector watches a specified resource and causes all changes to be reflected in     the given store.
+- Reflector watches a specified resource and causes all changes to be reflected in the given store.
+- 属于controller struct的属性.
 
 ## (2)Relector属性:
 - name

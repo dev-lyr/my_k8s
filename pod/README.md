@@ -19,7 +19,10 @@
 - 由于共享相同的网络命名空间, 因此同一pod内容器共享网络接口和端口空间, 各个容器需要注意使用不同的端口.
 - 容器的文件系统来自容器镜像, 因此默认情况下, 容器的文件系统与其它容器完全隔离, 但可以使用volume来共享文件目录.
 
-## (4)备注:
+## (4)PodTemplate:
+- PodTemplate是被include到其它对象的pod规范, controller根据Pod Templates来制造真正的pod.
+
+## (5)备注:
 - https://kubernetes.io/docs/concepts/workloads/pods/pod-overview
 
 # 二 PodSpec
@@ -78,9 +81,9 @@
 - **一个pod和多个需要一起工作的容器**: 一个pod可能封装一个由多个容器组成的应用, 这些容器紧密耦合并且需要共享一些资源, 例如: **sidecar**容器.
 
 ## (3)混合(composite)容器模式:
-- sidecar容器: 用于扩展和加强主容器的功能, 使用场景: 日志轮转和收集器, 数据处理器,通信适配器等.
-- ambassador容器: 用于proxy本地连接到外界. 例如: 一个redis读写分离集群, 可以创建一个Pod, 该Pod包含用户应用和一个redis ambassador容器, ambassador容器负责分离读和写并将它们发送给合适的服务器.
-- adapter容器: 用于标准化和统一输出. 例如: 为了监控N个不通应用, 监控系统期望它监控的数据是一致的数据模型, 但是不通应用有自己export监控数据的方式, 因此可以使用adapter容器将不通应用的监控数据转换为一致统一的表示方式.
+- **sidecar容器**: 用于扩展和加强主容器的功能,使用场景: 日志轮转和收集器,数据处理器,通信适配器等.
+- **ambassador容器**: 是一种特定的sidecar, 隐藏了访问pod外部服务的复杂性并提供统一的接口, 用于proxy本地连接到外界. 
+- **adapter容器**: 用于标准化和统一输出. 例如: 为了监控N个不通应用, 监控系统期望它监控的数据是一致的数据模型, 但是不同应用有自己export监控数据的方式, 因此可以使用adapter容器将不通应用的监控数据转换为一致统一的表示方式.
 
 ## (4)备注:
 - https://www.usenix.org/system/files/conference/hotcloud16/hotcloud16_burns.pdf

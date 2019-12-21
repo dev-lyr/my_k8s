@@ -34,5 +34,8 @@
 ## (1)概述:
 - **Overrides** can be specified for any federated resource and allow varying resource content from the **template** on a per-cluster basis.
 
+## (2)格式:
+- 
+
 # 七 Using Cluster Selector
 

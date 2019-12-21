@@ -4,8 +4,8 @@
 - 调度影响因素包括: 个别和集体资源需要, 硬件/软件/策略约束, affinity/anti-affinity, 数据locality, inter-workload和deadlines.
 
 ## (2)将pod assign给Node的方案:
-- 可以通过一些方法来限制pod只能够或优先运行在特定的node上, 推荐使用**lable selectors**.
-- 其它方案: Affinity/Anti-Affinity, nodeName(最简单,但限制多很少使用).
+- 可以通过一些方法来限制pod只能够或优先运行在特定的node上. 
+- 方案: node selectors, Affinity/Anti-Affinity, nodeName(最简单,但限制多很少使用).
 - 备注: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 
 ## (3)Taints和Tolerations:
@@ -18,7 +18,7 @@
 # 二 nodeSelector:
 ## (1)概述:
 - **nodeSelector**是最简单推荐的node选择约束, nodeSelector是**PodSpec**的一个属性,它指定一个kv对map.
-- 为了让pod能够运行在node上, node必须有所有kv对的labels, 通常是一个kv对.
+- 为了让pod能够运行在node上, node必须有**所有**kv对的labels, 通常是一个kv对.
 - 给node添加label: `kubectl label nodes <node-name> <label-key>=<label-value>`
 
 ## (2)内置的node labels:
@@ -50,13 +50,15 @@
 - you can constrain against labels **on other pods running on the node** (or other topological domain), rather than against labels on the node itself, which allows rules about which pods can and cannot be co-located.
 
 ## (4)Node的affinity:
-- 通过PodSpec的affinity属性的nodeAffinity属性指定; 当前支持两类Node Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
+- 通过PodSpec的affinity属性的nodeAffinity属性指定. 
+- 当前支持两类Node Affinity: **requiredDuringSchedulingIgnoredDuringExecution(硬限制)**和**preferredDuringSchedulingIgnoredDuringExecution(软限制)**.
 - 支持operator: In, NotIn, Exists, DoesNotExist, Gt, Lt; 可通过NotIn和DostNotExist来实现Node的anti-affinity.
 - nodeSelector和NodeAffinity同时使用, 则Pod需要都满足时才能被调度到该节点.
-- 若多个nodeSelectorTerms; 则pod满足任一即可被调度到该节点; 若nodeSelectorTerms包含多个matchExpression, 则pod需满足所有matchExpression.
+- 若多个nodeSelectorTerms, 则pod满足任一即可被调度到该节点; 若nodeSelectorTerms包含多个matchExpression, 则pod需满足所有matchExpression.
 
 ## (5)Pod的Affinity和Ant-Affinity:
-- 通过PodSpec的affinity属性的podAffinity属性指定; 当前支持两类Pod Affinity和Ant-Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
+- 通过PodSpec的affinity属性的**podAffinity**和**podAntiAffinity**属性来配置.
+- 当前支持两类Pod Affinity和Anti-Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
 
 # 四 Taints和Tolerations:
 ## (1)概述:

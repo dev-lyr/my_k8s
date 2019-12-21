@@ -12,6 +12,7 @@
 - customResync
 - informers 
 - startedInformers
+- Start方法: 开始初始化所有请求的informer, 调用所有informer的Run方法, 详情参考cache.md.
 
 ## (3)SharedInformerFactory(interface):
 - internalinterfaces.SharedInformerFactory

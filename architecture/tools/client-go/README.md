@@ -12,3 +12,4 @@
 
 ## (3)备注:
 - https://github.com/kubernetes/client-go
+- https://github.com/kubernetes/code-generator

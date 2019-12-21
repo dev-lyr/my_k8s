@@ -71,7 +71,7 @@
 # 二 基本命令:
 ## (1)get:
 - 功能: 显示一个或多个资源相关信息.
-- 可通过**--selector**来过滤列表; 若查询的资源类型是命名空间化的, 则只能看到当前namespace的, 除非指定--all-namespaces.
+- 可通过`--selector`来过滤列表; 若查询的资源类型是命名空间化的, 则只能看到当前namespace的, 除非指定--all-namespaces.
 - 默认情况, 未初始化的对象不会显示, 除非指定--include-uninitialized.
 - 可通过指定-o [yaml|json|...]等格式来获得详细信息.
 - 可通过**kubectl api-resources**来查询支持资源的完整列表.

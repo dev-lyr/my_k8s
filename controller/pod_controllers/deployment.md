@@ -5,7 +5,8 @@
 
 ## (2)滚动更新(rolling updates)
 
-## (3)Deployments对象属性
+## (3)deployment controller:
+- watch的对象: deployment, rs和pod.
 
 ## (4)使用场景:
 - 金丝雀部署(Canary Deployment).
