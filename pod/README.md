@@ -133,3 +133,7 @@
 
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+
+# 八 静态pod:
+## (1)概述:
+- https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/

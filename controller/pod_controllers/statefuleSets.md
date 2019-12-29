@@ -18,3 +18,5 @@
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 - https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/
+
+# 二 statefulSetSpec

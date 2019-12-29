@@ -1,7 +1,13 @@
 # 一 概述:
-## (1)概述
+## (1)概述:
+- 容器网络接口(CNI)
 
-## (2)备注:
+## (2)常用实现:
+- flannel
+- calico
+- terway: aliyun
+
+## (3)备注:
 - https://github.com/containernetworking/cni
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
 

@@ -10,7 +10,9 @@
 
 ## (3)私有镜像仓库.
 
-# 二 容器环境变量:
+# 二 Container资源
+
+# 三 容器环境变量:
 ## (1)概述:
 - kube容器环境为容器提供一些重要的资源: 一个文件系统(镜像和一个或多个volume的组合); 容器自身相关信息; 集群中其它对象相关信息.
 - https://kubernetes.io/docs/concepts/containers/container-environment-variables/
@@ -24,14 +26,14 @@
 - services: 在容器创建时所有运行中的服务作为容器的环境变量使用.
 - Services have dedicated IP addresses and are available to the Container via DNS, if DNS addon is enabled. 
 
-# 三 运行时类(runtime class):
+# 四 运行时类(runtime class):
 ## (1)概述:
 - RuntimeClass用于选择容器运行时的配置.
 
 ## (2)备注:
 - https://kubernetes.io/docs/concepts/containers/runtime-class/
 
-# 四 容器生命周期:
+# 五 容器生命周期:
 ## (1)概述:
 - kube为容器提供了生命周期hooks, 可以让容器感知它们管理生命周期的事件, 并且hook被执行时运行对应的handler中实现的代码.
 
