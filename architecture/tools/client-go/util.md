@@ -50,7 +50,7 @@
 ## (9)RateLimiter:
 - When
 - Forget: 从rate limiter的failures队列中删除.
-- NumRequests
+- NumRequests: 
 
 ## (10)RateLimiter类型:
 - ItemExponentialFailureRateLimiter: 做了一个baseDelay的2重试次数次方倍数的limit, 当超过maxDelay时以maxDelay为准.

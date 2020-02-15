@@ -23,4 +23,3 @@
 - Namespace控制器
 - PersistentVolume控制器
 - 等等.
-

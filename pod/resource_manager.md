@@ -8,6 +8,9 @@
 - 可压缩资源(compressible resources): 当资源不足时, 只会饥饿, 不会退出, 例如:CPU.
 - 不可压缩资源(incompressible resources): 例如:内存, 当资源不住时, 会OOM被杀死.
 
+## (3)备注:
+- https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
+
 # 二 LimitRange对象:
 ## (1)功能:
 - 限制一个namespace内每个Pod或容器的最小和最大计算资源使用量.
@@ -81,3 +84,9 @@
 
 ## (2)使用场景:
 - 当宿主机资源紧张时, kubelet会对Pod进行Eviction, 此时参考QoS类型.
+
+# 七 扩展资源:
+## (1)概述:
+
+## (2)备注:
+- https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#extended-resources
