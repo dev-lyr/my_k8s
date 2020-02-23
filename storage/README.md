@@ -6,19 +6,18 @@
 - K8s使用卷(volume)来解决上面的问题.
 
 ## (2)k8s的卷:
-- 有显式的生命周期, 被定义为Pod的一部分, 和Pod有同样的生命周期, 当Pod启动是创建卷, 在Pod销毁时销毁.
 - 当容器重启时, 卷内容不变, 新启动容器可以识别前容器写入卷的所有文件.
 - 若Pod包含多个容器, 则这个卷可以被Pod内所有容器**共享使用**.
 - K8s支持多种类型的卷, 且一个pod可以同时使用任意数量卷.
 - 通过spec.volumes属性来指定Pod内容器可以使用的卷; 使用spec.containers.volumeMounts属性来指定容器的挂载点.
 
-## (3)卷的类型:
+## (3)卷的类型(podSpec.volumes):
 - **emptyDir**: 用于存储临时数据的简单空目录.
 - **hostPath**: 挂载host node上的一个文件或目录到Pod内.
 - **configMap**: 提供一种将配置数据注入Pods的方式.
 - **dowmwardAPI**: 使downward API数据对应用可见.
 - **secret**: 用于向Pod传送敏感信息, 例如:密码.
-- **persistentVolumeClaim**: 单独介绍.
+- **persistentVolumeClaim(PVC)**: 单独介绍.
 - **gitRepo**: 已废弃.
 - **CSI**: 重要, 后续单独介绍.
 - **nfs**: 挂载到Pod中的NFS共享卷.
@@ -52,9 +51,11 @@
 - path: 必选.
 - type(可选): DirectoryOrCreate, Directory, FileOrCreate, File, Socket, CharDevice, BlockDevice, 默认为空(表示在挂载卷前不会执行任何check).
 
-## (3)使用场景
+## (3)使用场景:
+- 某些系统级别的Pod(通常是DaemonSet)需要读取节点文件或者使用节点文件系统来访问设备.
 
-## (4)谨慎使用
+## (4)谨慎使用:
+- 和节点绑定, 当pod被调度到其它节点时就访问不到数据.
 
 # 四 downward API:
 ## (1)使用场景:

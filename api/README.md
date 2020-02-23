@@ -42,7 +42,11 @@
 - 特定资源和API组默认是开启的, 可通过在apiserver上设置--runtime-config来开启或关闭.
 - DaemonSets, Deployments, Ingress, Jobs, ReplicaSets, HorizontalPodAutoscalers是默认开启的, 可通过--runtime-config来开启或关闭.
 
-## (4)备注:
+## (4)支持自定义资源的路径:
+- CRD: apiextensions.k8s.io/v1(1.16以上版本)或apiextensions.k8s.io/v1beta1
+- AA: apiregistration.k8s.io/v1
+
+## (5)备注:
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
 
 # 四 资源变更的检测(watch):

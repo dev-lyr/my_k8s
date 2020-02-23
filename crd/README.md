@@ -17,6 +17,7 @@
 ## (4)备注:
 - https://github.com/kubernetes-sigs/kubebuilder
 - https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
+- https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definition-versioning/
 - https://github.com/kubernetes/sample-controller/blob/master/docs/controller-client-go.md
 
 # 二 CRD：

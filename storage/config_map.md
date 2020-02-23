@@ -4,7 +4,7 @@
 - 数据存储在ConfigMap对象中, 可通过configMap类型卷来引用, 被运行在Pod内的容器化应用消费.
 
 ## (2)使用方式:
-- 通过环境变量形式传递给容器.
+- 通过环境变量形式传递给容器(container.env或container.envFrom).
 - 通过configMap卷.
 
 ## (3)属性:
