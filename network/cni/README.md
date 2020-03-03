@@ -14,7 +14,8 @@
 # 二 CNI规范:
 ## (1)概述:
 - 每个CNI插件必须以可执行方式实现, 被容器管理系统(例如:k8s)调用.
-- CNI插件负责向容器网络空间插入一个网络接口(例如: veth pair的一端), 并且可以在host上执行必要的修改(例如: attaching另外一端veth到bridge).`CNI可以通过调用合适的**IPAM**插件来给该网络接口分配IP地址,搭建与IP Address Management一致的路由信息.
+- CNI插件负责向容器网络空间插入一个网络接口(例如: veth pair的一端), 并且可以在host上执行必要的修改(例如: attaching另外一端veth到bridge).
+- CNI可以通过调用合适的**IPAM**插件来给该网络接口分配IP地址,搭建与IP Address Management一致的路由信息.
 
 ## (2)CNI支持的操作:
 - ADD: 添加容器到网络.

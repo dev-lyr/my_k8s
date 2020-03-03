@@ -29,6 +29,9 @@
 - MutatingAdmissionWebhook: calls any mutating webhooks which match the request. Matching webhooks are called in serial; each one may modify the object if it desires.
 - 备注: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#what-does-each-admission-controller-do
 
+## (4)备注:
+- 代码: kubernetes/plugin/pkg/admission
+
 # 三 admission webhooks:
 ## (1)概述:
 - admission webhooks是接收到admission请求的**HTTP callback**.

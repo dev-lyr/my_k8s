@@ -32,7 +32,14 @@
 - validation: 描述CustomResource的validation方法.
 - versions: versions is the list of all API versions of the defined custom resource.
 
-## (3)备注:
+## (3)CRD验证:
+- 目的: APIserver验证对象是否有效, 无效立即拒绝, APIserver会验证apiVersion,kind和meta等常用字段.
+- 备注: https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#specifying-a-structural-schema
+
+## (4)多版本:
+- https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#serving-multiple-versions-of-a-crd
+
+## (5)备注:
 - https://github.com/kubernetes/sample-controller
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definition-versioning/

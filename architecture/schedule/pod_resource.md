@@ -1,15 +1,21 @@
 # 一 概述:
 ## (1)概述:
-- 默认情况下,k8s集群中容器有unbounded计算资源(cpu和mem)可使用, 使用**ResourceQuota**, 集群管理员可以限制一个namespace的资源消费和创建; 使用**LimitRange**可以限制namespace内pod或容器的资源.
+- 默认情况下,k8s集群中容器有unbounded计算资源(cpu和mem)可使用.
+- 使用**ResourceQuota**, 集群管理员可以限制一个namespace的资源消费和创建.
+- 使用**LimitRange**可以限制namespace内每个pod或容器的资源.
 - Pod的内存和cpu资源的request和limit是Pod内所有container的总和.
-- Pod的调度是基于资源的**request**.
 
 ## (2)资源类型:
 - 可压缩资源(compressible resources): 当资源不足时, 只会饥饿, 不会退出, 例如:CPU.
 - 不可压缩资源(incompressible resources): 例如:内存, 当资源不住时, 会OOM被杀死.
 
-## (3)备注:
+## (3)requests和limits：
+- Pod的调度是基于资源的**request**.
+- limits不受可用资源量的约束, 即limits总和可以超过节点资源总量, 即**超卖**.
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
+- k8s允许用户为节点添加自定义资源并支持pod的request来申请.
 
 # 二 LimitRange对象:
 ## (1)功能:
@@ -19,6 +25,7 @@
 - 设置一个namespace内默认的计算资源的request/limit, 并在运行时自动将它们inject到容器.
 
 ## (2)备注:
+- LimitRange只能应用于单个pod或容器, 创建大量的Pod仍然会吃点集群资源, 此时需要ResourceQuota.
 - https://kubernetes.io/docs/concepts/policy/limit-range/
 
 # 三 ResourceQuota对象:
@@ -79,14 +86,22 @@
 # 六 Pod的QoS:
 ## (1)QoS类型:
 - Guaranteed: Pod内的每个容器都必须有内存和cpu请求和限制, 且请求和限制值相等.
-- Busrtable: 不满足Guaranteed, Pod内至少有一个容器有内存或cpu请求.
 - BestEffort: Pod内的容器不能有内存或cpu的请求或限制.
+- Busrtable: 不满足Guaranteed, Pod内至少有一个容器有内存或cpu请求.
 
 ## (2)使用场景:
 - 当宿主机资源紧张时, kubelet会对Pod进行Eviction, 此时参考QoS类型.
 
 # 七 扩展资源:
 ## (1)概述:
+- k8s允许定义自定义资源,同时支持pod资源request中申请该类资源.
+- 扩展的资源的名称不能以kubernetes.io域名开头.
 
-## (2)备注:
+## (2)node级别扩展资源:
+- 方式: 通过HTTP PATCH请求将可用资源数量更新的node的status.capacity属性.
+- 相应实现: device插件等.
+
+## (3)集群级别扩展资源
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#extended-resources

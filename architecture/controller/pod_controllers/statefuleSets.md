@@ -15,8 +15,22 @@
 - 删除或缩小statefuleSet不会删除statefulset关联的volume.
 - 当删除statefuleset被删除时, 不保证pod的终止顺序, 如要获得有序和平滑的pod终止方式, 可通过scale statefulset到0来替换删除.
 
-## (4)备注:
+## (4)创建步骤:
+- 创建存储数据的PVC.
+- 创建一个headless服务.
+- 创建statefulset本身.
+
+## (5)备注:
 - https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
 - https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/
 
 # 二 statefulSetSpec
+## (1)属性:
+- podManagementPolicy
+- replicas
+- selector
+- template
+- serviceName: 管理statefuleset的服务的名字, 服务需在statefuleset之前创建并且负责set的网络唯一标识.
+- volumeClaimTemplates
+- updateStratery
+

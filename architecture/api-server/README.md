@@ -28,3 +28,44 @@
 - --log-flush-frequency: 默认5s, 日志刷新的最大时间.
 - --logtostderr: 默认为true, 将日志写入stderr而不是文件, 默认为true.
 - --alsologtostderr: 将日志同时写入stderr和文件.
+
+## (4)认证相关
+- --enable-bootstrap-token-auth
+- --token-auth-file
+- --authentication-token-webhook-config-file: token认证的webhook配置文件, API server会查询远程服务来认证.
+
+## (5)授权相关:
+- --authorization-mode: 默认AlwaysAllow, 可选: AlwaysAllow, AlwaysDeny, ABAC, Webhook, RBAC, Node.
+- --authorization-webhook-config-file: 当mode为webhook时使用的webhook配置(kubeconfig format), API server会查询远程服务来进行判断.
+
+## (6)admission相关:
+- --admission-control-config-file
+- --enable-admission-plugins stringSlice
+- --disable-admission-plugins stringSlice
+
+## (7)审计(audit)相关:
+- --audit-webhook-config-file
+
+
+# 三 源码:
+## (1)相关代码:
+- kubernetes/cmd/kube-apiserver: 启动入口.
+- https://github.com/kubernetes/apiserver
+- https://godoc.org/k8s.io/apiserver
+
+## (2)apiserver相关目录:
+- admission  
+- apis  
+- audit  
+- authentication  
+- authorization  
+- endpoints  
+- features  
+- registry  
+- server  
+- storage  
+- util
+
+## (3)kubernetes/plugin/pkg:
+- admission
+- auth

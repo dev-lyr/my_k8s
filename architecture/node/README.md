@@ -8,18 +8,26 @@
 - kubelet
 - kubectl
 
-## (3)备注:
+## (3)node.spec:
+- configService
+- podCIDR
+- podCIDRS
+- providerID: cloud provider分配的node ID.
+- taints
+- unschedulable: 控制node为不可调度, 默认是可调度.
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/
 - API: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#node-v1-core
 - 监控: https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health/
 
-# 二 Node State:
-## (1)Addresses:
+# 二 node.status:
+## (1)addresses:
 - HostName: node的内核上报的hostname, 可被kubelet --hostname-override参数覆盖.
 - ExternalIP: node的ip地址, 可被外部路由到(集群外).
 - InternalIP: node的内部ip地址, 只能集群内访问.
 
-## (2)Condition: 
+## (2)conditions: 
 - **OutOfDisk**: True表示没有足够的磁盘空间添加新的pod了, 否则为False.
 - **Ready**: True表示node是健康的且准备好接收pod; False表示node是不健康且不能接收pod; Unknown表示node controller在过去node-monitor-grace-period(默认40s)没有接收到node的心跳.
 - **MemoryPressure**: True表示内存紧张(pressure); False表示内存使用量低.
@@ -27,7 +35,7 @@
 - **DiskPressure**: True表示磁盘紧张, False表示磁盘容量低.
 - **NetworkUnavailable**: True表示node的网络配置不正确; 反之False.
 
-## (3)Capacity:
+## (3)capacity:
 - 描述node上可用的资源, 例如:CPU,memory和可被调度的最大pod数量.
 - 容量(cpus数量和内存总量等)是node对象的一部分, 通常node注册自己并在创建node对象时候报告自己的容量; 若是手动注册, 则需要在添加node时候设置node的容量.
 - kubernete调度器保证node上的pod有足够的资源, 它会检查容器请求的资源不超过node的容量, 但不包括不是kubelet启动的容器.
@@ -35,8 +43,23 @@
 - kubernetes建议集群管理员基于每个node的workload density来配置Node Allocatable.
 - 备注: https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/
 
-## (4)Info:
+## (4)allocatable:
+- Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
+
+## (5)config:
+- Status of the config assigned to the node via the dynamic Kubelet config feature.
+
+## (6)nodeInfo:
 - 包含node的常规信息, 例如:内核版本,kubernerate版本,docker版本等.
+
+## (7)存储相关:
+- node上容器的image列表.
+- images: 
+- volumesAttached: attach到node的卷的列表.
+- volumesInUse: attached列表中已在使用(被mount)的volume列表.
+
+## (8)daemonEndpoints:
+- Endpoints of daemons running on the Node.
  
 # 三 Node管理:
 ## (1)概述:

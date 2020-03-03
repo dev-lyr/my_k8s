@@ -25,3 +25,7 @@
 - --concurrent-endpoint-syncs: 默认5.
 - --concurrent-deployment-syncs: 默认5.
 - 等等.
+
+## (4)网络相关:
+- --cluster-cidr: 集群中Pod的CIDR范围, 需要--allocate-node-cidr=true.
+- --cidr-allocator-type: 默认RangeAllocator.

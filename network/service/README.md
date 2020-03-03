@@ -26,8 +26,8 @@
 # 二 ServiceSpec
 ## (1)clusterIP:
 - 服务的IP地址,通常由master随机分配, 若手动指定IP则需保证没有被其它使用, 该属性不能通过update来改变.
-- 合法值: **None**, 空字符串("")或一个合法ip地址.
-- None: 针对不需要使用代理的headless服务.
+- 合法值: **None**,空字符串("")或一个合法ip地址.
+- None: 针对不需要使用代理的**headless服务**.
 
 ## (2)externalIPs:
 - a list of IP addresses for which nodes in the cluster will also accept traffic for this service.
@@ -54,6 +54,7 @@
 ## (7)selector:
 - 将服务的流量路由到和选择器标签key和值match的pod.
 - 若为空或者不指定, 则k8s会认为服务有有一个外部进程管理它的endpoints, 此时不会做修改.
+- 适用于: type=ClusterIP,NodePort和LoadBanlancer, 若type为ExternalName则忽略.
 
 ## (8)负载平衡相关:
 - loadBalancerIP: 只用于type=LoadBalancer, 部分云厂商支持指定该属性, 则会根据指定的loadbalanerIP来创建load-balancer, 若云提供商不支持, 则该忽略该属性.
@@ -103,7 +104,7 @@
 
 # 四 Headless服务:
 ## (1)概述:
-- 有时不需要load-balancing和唯一服务IP的场景, 可以通过指定服务的.spec.clusterIP为None来创建"headless"服务.
+- 有时不需要load-balancing和虚拟IP(服务clusterIP)的场景, 可以通过指定服务的.spec.clusterIP为None来创建"headless"服务.
 - Headless服务减少和K8s系统的耦合, 允许开发者自由选择服务发现机制.
 - 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
 

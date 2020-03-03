@@ -24,11 +24,18 @@
 - 可配置运行多个admission模块, 每个依序调度; 与认证和授权不同, 若任一admission模块拒绝请求, 则请求立马被拒绝.
 - Once a request passes all admission controllers, it is validated using the validation routines for the corresponding API object, and then written to the object store.
 
-## (6)备注:
+## (6)webhook类型:
+- 认证webhook
+- 授权webhook
+- 准入webhook: 支持动态配置.
+- 审计webhook
+
+## (7)备注:
 - https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/
 
 # 二 认证:
 ## (1)概述
+
 ## (2)备注:
 - https://kubernetes.io/docs/reference/access-authn-authz/authentication/
 
@@ -37,6 +44,7 @@
 - Kubernetes支持多种授权模块, 例如: ARAC模式,RBAC模式和Webhook模式.
 
 ## (2)授权模式:
+- Node 
 - ABAC
 - RBAC
 - WebHook

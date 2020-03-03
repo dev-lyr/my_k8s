@@ -38,7 +38,7 @@
 
 ## (3)PersistentVolumeStatus:
 - message
-- phase: Available(空闲的资源, 还未绑定到claim); Bound(已绑定到claim), Released(claim已删除,但资源还未被集群回收), Failed(the volume has failed its automatic reclamation).
+- phase: Pending(pv当前不可用), Available(空闲的资源, 还未绑定到claim); Bound(已绑定到claim), Released(claim已删除,但资源还未被集群回收), Failed(the volume has failed its automatic reclamation).
 - reason
 
 # 三 PVC
@@ -58,7 +58,7 @@
 - accessModes: PVC对应的volume的实际access mode.
 - capacity: 底层volume的实际资源.
 - conditions: volume claim的当前condition.
-- phase 
+- phase: Pending, Bound, Lost(pvc失去了底层pv, 该pvc bound过但是pv不存在所有数据已丢失).
 
 ## (4)备注:
 - 若想使用已有的PV, 需将storageClassName设置为"", 否则将会动态提供新的PV.
