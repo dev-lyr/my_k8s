@@ -36,7 +36,8 @@
 - 备注: 适用于所有服务type.
 
 ## (3)externalName:
-- externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
+- externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. 
+- No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
 - 为外部服务创建一个别名, Pod可以使用别名而不是外部服务的实际FQDN来访问外部服务, 隐藏了实际服务的名称以及使用该服务的pod的位置, 运行修改服务定义.
 
 ## (4)externalTrafficPolicy
@@ -95,9 +96,11 @@
 ## (5)LoadBalancer:
 - 在支持外部loadbalancer的云提供商上, 可以通过设置type=LoadBalancer来为service提供一个load balancer.
 - Load balancer的创建是异步的, 创建成功后, balancer的信息会在service的status.loadBalancer属性发布出来.
+- LoadBalancer类型服务是一个具有额外基础设施提供的NodePort服务, 会给该类服务随机选择一个NodePort, 也可以通过节点访问服务.
 
 ## (6)ExternalName:
 - 需指定spec.externalName.
+- 为服务创建一个CNAME到指定的externalName.
 
 ## (7)备注:
 - 相关:ingress.

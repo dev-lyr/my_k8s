@@ -9,8 +9,9 @@
 - 运行多个调度器: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 - 实现调度器: https://github.com/kubernetes/kubernetes/tree/master/pkg/scheduler
 - kube-scheduler命令: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
+- https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
 
-# 二 kube-scheduler:
+# 二 kube-scheduler命令:
 ## (1)格式:
 - kube-scheduler [flags]
 
@@ -19,3 +20,9 @@
 - --secure-port: 默认10259, 服务HTTPS.
 - --port: 默认10251, 服务HTTP.
 - --master: API server的地址.
+
+## (3)配置相关:
+- --config
+- --policy-config-file
+- --policy-configmap
+- --policy-configmap-namespace: 默认kube-system.
