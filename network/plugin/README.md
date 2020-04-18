@@ -1,7 +1,7 @@
-# 一 网络插件:
+# 一 概述:
 ## (1)类型:
 - CNI插件: 遵守CNI规范.
-- Kubenet插件: 使用**bridge**实现**cbr0**和**host-local** CNI插件, 一个简单基本的网络插件, 只适用于linux.
+- kubenet插件: 使用**bridge**实现**cbr0**和**host-local** CNI插件, 一个简单基本的网络插件, 只适用于linux.
 
 ## (2)安装:
 - kubelet有单独的默认网络插件, 且默认网络插件全集群通用.
@@ -18,30 +18,31 @@
 - 若配置文件目录下有多个CNI配置文件, 则按字典顺序排序选择第一个.
 - 配置文件中引用的插件必须在**--cni-bin-dir**目录(默认为/opt/cni/bin)存在.
 
-## (5)kubenet插件
+## (5)kubenet插件:
+- kubernetes/pkg/kubelet/dockershim/network/kubenet
 
 ## (6)网络插件种类:
 - --cni-bin-dir目录.
 - https://kubernetes.io/docs/concepts/cluster-administration/addons/
 - https://github.com/dev-lyr/my_docker/blob/master/network/README.md
 
-## (6)备注:
+## (7)备注:
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
 - https://github.com/kubernetes/kubernetes/blob/v1.14.0/pkg/kubelet/dockershim/network/plugins.go
 - https://chrislovecnm.com/kubernetes/cni/choosing-a-cni-provider/
+- kubernetes/pkg/kubelet/dockershim/network
 
-# 二 NetworkPolicy:
+# 二 NetworkPlugin:
 ## (1)概述:
-- 网络策略是一个specification, 用来指定pods组间以及与其它网络endpoints间如何通信.
-- **NetworkPolicy**使用lables来选择pod, 并且为被选择的pods定义rule(指定哪些流量可以到pods).
-- 网络策略是网络插件实现的, 所以必须使用一个支持**NetworkPolicy**的网络方案.
+- kubelet网络插件要实现的接口.
+- kubenet(kubenetNetworkPlugin)和cni(cniNetworkPlugin)都实现该接口.
 
-## (2)isolated和non-isolated Pods:
-- 默认情况下, Pod是非孤立的, 可以接收任意源的流量.
-- 当Pod被同一namespace下的NetworkPolicy选择时, 就变为独立的, pod会拒绝掉NetworkPolicy不允许的连接.
-
-## (3)NetworkPolicy资源:
-- 参考: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#networkpolicy-v1-networking-k8s-io
-
-## (4)备注:
-- https://kubernetes.io/docs/concepts/services-networking/network-policies/
+## (2)方法:
+- Init: 初始化插件.
+- Event: 响应各类事件.
+- Name: 插件名字.
+- Capabilities: 插件能力.
+- SetUpPod: 在infra容器被创建但其他容器启动前调用.
+- TearDownPod: 在infra容器被删除前调用.
+- GetPodNetworkStatus: 获取容器网络状态.
+- Status: 当创建处于error状态时返回error.

@@ -9,13 +9,14 @@
 
 ## (3)备注:
 - https://github.com/containernetworking/cni
+- https://github.com/containernetworking/plugins
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
 
 # 二 CNI规范:
 ## (1)概述:
 - 每个CNI插件必须以可执行方式实现, 被容器管理系统(例如:k8s)调用.
 - CNI插件负责向容器网络空间插入一个网络接口(例如: veth pair的一端), 并且可以在host上执行必要的修改(例如: attaching另外一端veth到bridge).
-- CNI可以通过调用合适的**IPAM**插件来给该网络接口分配IP地址,搭建与IP Address Management一致的路由信息.
+- CNI可以通过调用合适的**IPAM**插件来给该网络接口分配IP地址, 搭建与IP Address Management一致的路由信息.
 
 ## (2)CNI支持的操作:
 - ADD: 添加容器到网络.
@@ -35,3 +36,40 @@
 
 ## (5)备注:
 - https://github.com/containernetworking/cni/blob/master/SPEC.md
+
+# 三 cniNetworkPlugin:
+## (1)概述:
+- 实现NetworkPlugin接口的方法.
+- kubernetes/pkg/kubelet/dockershim/network/cni
+
+## (2)方法:
+- NetworkPlugin接口的方法.
+- addToNetwork: 被SetUpPod方法调用.
+- deleteFromNetwork: 被TearDownPod方法调用.
+
+## (3)属性:
+- network.NoopNetworkPlugin
+- loNetwork: cniNetwork类型指针.
+- defaultNetwork: cniNetwork类型指针.
+- host
+- execer
+- nsenterPath
+- confDir
+- binDirs
+- cacheDir
+- podCidr
+
+## (4)cniNetwork结构:
+- name
+- NetworkConfig: libcni.NetworkConfigList指针.
+- CNIConfig: libcni.CNI类型.
+- Capabilities
+
+# 四 libcni:
+## (1)概述:
+- https://github.com/containernetworking/cni/tree/master/libcni
+
+## (2)CNI接口
+
+## (3)RuntimeConf
+

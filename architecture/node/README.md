@@ -60,6 +60,9 @@
 
 ## (8)daemonEndpoints:
 - Endpoints of daemons running on the Node.
+
+## (9)images:
+- 该node上容器镜像列表.
  
 # 三 Node管理:
 ## (1)概述:
@@ -89,13 +92,20 @@
 - kubelet flag: --system-reserved和--system-reserved-cgroup
 
 ## (5)eviction thresholds:
-- node上的内存压力会导致OOM, 从而星星全部node和上面运行的pod.
+- node上的内存压力会导致OOM.
 - 为了避免系统oom, kubelet提供了**out of resource**管理.
 - eviction只支持mem和ephemeral-storage, 通过kubelet的--eviction-hard来设置.
 
-## (6)经验:
+## (6)经验
 
 # 五 超出资源管理:
 ## (1)概述:
 - 当可用计算资源较低时, kubelet需要保持node的稳定性, 当资源耗尽时, node就会不稳定.
 - https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource
+
+# 六 扩展node资源:
+## (1)概述:
+- 扩展资源允许集群管理员向k8s告知其它节点级别资源.
+
+## (2)备注:
+- https://kubernetes.io/docs/tasks/administer-cluster/extended-resource-node/

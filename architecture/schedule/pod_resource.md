@@ -98,7 +98,7 @@
 - 扩展的资源的名称不能以kubernetes.io域名开头.
 
 ## (2)node级别扩展资源:
-- 方式: 通过HTTP PATCH请求将可用资源数量更新的node的status.capacity属性.
+- 方式: 通过HTTP PATCH请求将可用资源数量更新的node的**status.capacity**属性.
 - 相应实现: device插件等.
 
 ## (3)集群级别扩展资源

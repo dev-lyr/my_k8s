@@ -11,6 +11,7 @@
 
 ## (3)备注:
 - kubernetes/pkg/scheduler
+- https://kubernetes.io/docs/reference/scheduling/policies
 
 # 二 Filtering:
 ## (1)概述:

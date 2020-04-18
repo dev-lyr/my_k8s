@@ -56,7 +56,7 @@
 - --max-open-files: 可被kubelet进程打开的文件的数量, 默认为1000000.
 - --max-pods: 可运行在kubelets上的Pods的数量.
 
-## (7)和apiserver相关:
+## (7)apiserver相关:
 - --register-node: 将node注册到apiserver, 若--kubeconfig未提供, 则该flag不重要, 默认为true.
 - --kube-api-burst: 默认10, 和apiserver交互的burst, 废弃(需通过kubelet --config指定的配置文件来设置).
 - --kube-api-qps: 默认5, 和apiserver交互的qps, 废弃(需通过kubelet --config指定的配置文件来设置).
@@ -72,12 +72,28 @@
 - --container-log-max-size: 默认10Mi, 设置日志文件最大size, 超过会被rotate, 只适用于运行时remote.
 - --docker-endpoint: 和docker交互的endpoint, 默认为unix:///var/run/docker.sock.
 - --redirect-container-streaming
+- --pod-infra-container-image: The image whose network/ipc namespaces containers in each pod will use.
 
 ## (9)CNI相关:
 - --network-plugin
 - --cni-bin-dir
 - --cni-conf-dir
 - 备注: 前三个只适用于运行时为docker.
+
+## (10)image相关:
+- image-gc-high-threshold: 镜像gc执行的磁盘使用水位, 可选值0-100, 默认85, 设置100则会关闭镜像gc.
+- image-gc-low-threshold: 磁盘使用比例小于该值时, 不会运行image的gc, 默认80, 不应高于image-gc-high-threshold.
+- image-pull-progress-deadline: 默认1m, 只适用于docker. 
+- image-service-endpoint
+
+## (11)eviction相关
+
+## (12)cpu:
+- --cpu-cfs-quota: 默认true.
+- --cpu-cfs-quota-period: cpu.cfs_period_us, 默认为linux内核默认(100ms).
+- --cpu-manager-policy: none或static.
+- --cpu-manager-reconcile-period
+- 参考: https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/
 
 # 三 配置文件:
 ## (1)概述:

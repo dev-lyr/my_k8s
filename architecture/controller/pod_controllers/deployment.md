@@ -30,9 +30,10 @@
 - spec.replicas: 可选的属性, 指定期望的pod数量, 默认为1.
 
 ## (2)spec.strategy:
-- 指定替换旧的pod的策略: **RollingUpdate**(默认, 滚动升级)和**Recreate**(所有已存在pod被kill, 然后再新建出来).
-- 滚动升级的maxSurge: 决定了最多允许超出deployment副本期望的pod数量的比例, 默认为25%, 将百分比转换为绝对值时会进行四舍五入, 默认25%.
-- 滚动升级的maxUnAvailable: 决定了在滚动升级期间, 相对于期望副本数, 允许有多少比例的pod处于不可用状态, 默认为25%, 会进行四舍五入, 默认25%.
+- **type**: 指定替换旧的pod的策略,**RollingUpdate**(默认,滚动升级)和**Recreate**(所有已存在pod被kill,然后再新建出来).
+- **rollingUpdate**: 滚动更新的参数, 包含maxSurge和maxUnAvailable.
+- maxSurge: 决定了最多允许超出deployment副本期望的pod数量的比例, 默认为25%, 将百分比转换为绝对值时会进行四舍五入, 默认25%.
+- maxUnAvailable: 决定了在滚动升级期间, 相对于期望副本数, 允许有多少比例的pod处于不可用状态, 默认为25%, 会进行四舍五入, 默认25%.
 - 备注: maxUnAvailable和maxSurge用于决定一次替换多少pod, 控制滚动升级的速率.
 
 ## (3)spec.progressDeadlineSeconds:

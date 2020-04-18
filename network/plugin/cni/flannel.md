@@ -2,7 +2,7 @@
 ## (1)概述:
 - flannel是一个为kubernetes设计的可简单轻松配置三层网络的工具, 在k8s外也有广泛应用.
 - flannel在每个host运行一个单独的agent(**flanneld**), 该agent根据预先配置的地址范围给每个host分配subnet.
-- flannel使用k8s API或etcd直接存储网络配置, 分配的子网和其它辅助网络信息(例如:host的公网IP).
+- flannel使用k8s API或etcd直接存储网络配置,分配的子网和其它辅助网络信息(例如:host的公网IP).
 - 通过使用多个**backend mechinisms**中的一种来转发包, 包括: VXLAN和其它多种云集成.
 
 ## (2)部署方式:

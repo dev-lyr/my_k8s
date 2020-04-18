@@ -61,7 +61,6 @@
 - Ingress控制器包含一些应用于所有Ingress的负载平衡策略(例如: 负载平衡算法, backend权重和其它); 更多高级概念(持久化session, 动态权重)不再通过Ingress暴露, 可以通过使用一个service的load balancer来获得这些特性.
 - 健康检查也不再直接通过ingress暴露, readiness probes可以达到同样效果.
 
-
 # 五 ingress-nginx:
 ## (1)概述:
 

@@ -137,3 +137,6 @@
 # 八 静态pod:
 ## (1)概述:
 - https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
+
+# 九 临时容器:
+- https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers

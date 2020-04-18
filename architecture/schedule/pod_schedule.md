@@ -44,19 +44,19 @@
 - node的affinity: 与nodeSelector类似, 但有(3)说的前2个优势.
 - pod间affinity/anti-affinity: 通过已经运行在node上的pod的label来调度, 而不是node label来约束.
 
-## (3)Affinity/anti-affinity的优势:
+## (3)affinity/anti-affinity的优势:
 - 更强的表达式(不仅仅是AND).
 - 可以设置某rule是soft/preference而不是硬性要求, 当scheduler不能满足时, 该pod仍会被调度.
 - you can constrain against labels **on other pods running on the node** (or other topological domain), rather than against labels on the node itself, which allows rules about which pods can and cannot be co-located.
 
-## (4)Node的affinity:
+## (4)node的affinity:
 - 通过PodSpec的affinity属性的nodeAffinity属性指定. 
 - 当前支持两类Node Affinity: **requiredDuringSchedulingIgnoredDuringExecution(硬限制)**和**preferredDuringSchedulingIgnoredDuringExecution(软限制)**.
 - 支持operator: In, NotIn, Exists, DoesNotExist, Gt, Lt; 可通过NotIn和DostNotExist来实现Node的anti-affinity.
 - nodeSelector和NodeAffinity同时使用, 则Pod需要都满足时才能被调度到该节点.
 - 若多个nodeSelectorTerms, 则pod满足任一即可被调度到该节点; 若nodeSelectorTerms包含多个matchExpression, 则pod需满足所有matchExpression.
 
-## (5)Pod的Affinity和Ant-Affinity:
+## (5)pod的Affinity和Ant-Affinity:
 - 通过PodSpec的affinity属性的**podAffinity**和**podAntiAffinity**属性来配置.
 - 当前支持两类Pod Affinity和Anti-Affinity: requiredDuringSchedulingIgnoredDuringExecution和preferredDuringSchedulingIgnoredDuringExecution.
 
