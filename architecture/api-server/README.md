@@ -19,7 +19,6 @@
 - --bind-address: 监听--secure-port的IP地址, 该接口必须是集群内可达, 以及CLI和web用户可达, 若为空, 则所有接口会被使用(ipv4的0.0.0.0和ipv6的::).
 - --secure-port: 默认**6443**, 用来提供带authentication和authorization的HTTPS服务.
 - --apiserver-count: 集群中apiserver的运行数量, 默认为1.
-- --etcd-servers: 可连接的etcd服务器的地址, 格式:scheme://ip:port, 逗号分隔.
 - --service-cluster-ip-range: 一个分配服务cluster ips的CIDR IP范围, 不能和分配给Pod的ip overlap, 默认为:10.0.0.0/24.
 
 ## (3)日志相关:
@@ -46,6 +45,13 @@
 ## (7)审计(audit)相关:
 - --audit-webhook-config-file
 
+## (8)etcd相关:
+- --etcd-servers: 可连接的etcd服务器的地址, 格式:scheme://ip:port, 逗号分隔.
+- --etcd-prefix: 默认/registry, 在etcd中存储所有资源的prefix.
+- -–storage-backend: 持久化存储的backend, 默认etcd3.
+- --storage-media-type: 默认application/vnd.kubernetes.protobuf.
+- --watch-cache: 默认为true.
+- --watch-cache-sizes
 
 # 三 源码:
 ## (1)相关代码:

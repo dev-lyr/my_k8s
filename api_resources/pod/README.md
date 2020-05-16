@@ -70,7 +70,26 @@
 - automountServiceAccountToken: 表示serviceAccount token是否被自动挂载.
 - securityContext
 
-# 三 Pod管理容器:
+# 三 podStatus
+## (1)状态相关:
+- conditions: pod当前服务状态.
+- phase: pod生命周期所处阶段的高度简单的总结, 可选值: Pending,Running,Successed,Failed,Unkown.
+- message
+- reason: 解释pod为什么处于某种state, 例如:"Evicted".
+- startTime: pod被kubelet认可的时间, 在kubelet pull pod中容器镜像之前.
+- qosClass: Pod的QoS类型.
+
+## (2)容器状态相关(ContainerStatu数组):
+- containerStatuses:每个容器一项,每项是docker inspect的当前输出.
+- ephemeralContainerStatuses: pod中运行的任意临时容器的状态.
+- initContainerStatuses: 每个临时容器一项.
+
+## (3)网络相关:
+- podIP: 分配给Pod的IP地址, 至少在集群内路由,若未分配则为空.
+- podIPs: 包含分配给Pod的IP地址, 若指定则第0项必须是PodIP的值,若未分配则为空.
+- hostIP: pod分配的host的IP地址, 若未被调度则为空.
+
+# 四 容器管理:
 ## (1)概述:
 - Pod为其内部容器提供两种共享资源: **网络**和**存储**.
 - **网络**: 每个Pod被分配一个唯一的IP地址, Pod内的容器共享网络空间, 包括IP地址和网络端口; Pod内的容器可以通过localhost来通信, 当Pod内容器与外界通信时, 需协调怎么使用共享的网络资源(例如:端口).
@@ -90,7 +109,7 @@
 - https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns
 - https://kubernetes.io/blog/2016/06/container-design-patterns.
 
-# 四 Init容器:
+# 五 Init容器:
 ## (1)概述:
 - Init容器是一种在app容器之前运行的, 包含一些在app镜像中不包含的工具(utilities)或启动(setup)脚本.
 - 一个Pod可以有一个或多个Init容器, 当Pod内的一个Init容器失败, 则k8s会重复重启该Pod直至Init容器成功, 除非Pod的restartPolicy设置为Nerver.
@@ -107,7 +126,7 @@
 - 使用Linux Namespace, 所以可以有不同于应用容器的文件系统, 可以用于访问一些app容器不能访问的私有数据.
 - 在app容器启动前执行, app容器是并行运行的, 所以Init容器提供一种block或delay应用容器启动的方法, 直至满足指定preconditions.
 
-# 五 Pause容器:
+# 六 Pause容器:
 ## (1)概述:
 - 扮演pod内容器的"父容器", 两个主要功能: 共享namespace; 当pid空间共享开启时, 作为每个pod的PID 1并且回收僵尸进程.
 - 又叫infra容器.
@@ -115,7 +134,7 @@
 ## (2)备注:
 - https://www.ianlewis.org/en/almighty-pause-container
 
-# 六 Pod Preset:
+# 七 Pod Preset:
 ## (1)概述:
 - Pro Preset是一种用来在Pod创建时inject特定信息的API资源.
 - 使用Pro Preset允许Pod模板的作者不需要为每个Pod显式提供所有信息.
@@ -126,17 +145,29 @@
 ## (4)备注:
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/service-catalog/pod-preset.md
 
-# 七 Disruptions:
-## (1)概述:
-- 介绍Pod会遇到的损坏类型, 指导应用负责人来构建高可用的应用.
-- 也适用于集群管理员, 管理员负责执行自动化集群操作, 例如:升级和扩容.
-
-## (4)备注:
-- https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
-
 # 八 静态pod:
 ## (1)概述:
+- 静态pod被运行node上的kubelet直接管理,与其它workload(deployment等)管理的pod不同, kubelet watch每个静态pod并在crash时候重启.
+- 静态容器通常与给定node上的kubelet绑定, kubelet会自动为每个静态pod创建一个在k8s ApiServer上的mirror pod, 因此通过API server可见但不能通过它修改.
+
+## (2)创建方式:
+- 基于文件系统的配置文件: kubelet的staticPodPath指定的目录, kubelet会定时轮询该目录,创建和删除文件中指定的静态Pods.
+- 基于web的配置文件: kubelet的--manifest-url配置指定, kubelet定时refetch配置文件来执行apply.
+
+## (3)相关行为:
+- kubelet启动时会自动启动所有静态Pod.
+- 删除API server中的mirror pod不会删除静态Pod.
+- 判断是不是静态pod: pod存在kubernetes.io/config.source注解且注解的值不为api.
+
+## (4)使用场景:
+- kubeadm启动API Server和controller-manager等几个管控组件都是使用静态Pod.
+
+## (5)备注:
 - https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
 
 # 九 临时容器:
+## (1)概述:
+- 一种特殊类型的容器, 在一个**已存在**Pod中临时运行的容器, 用来完成一些用户触发的操作, 比如: 问题定位.
+
+## (2)备注:
 - https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers

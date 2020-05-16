@@ -14,10 +14,10 @@
 # 二 Ingress控制器:
 ## (1)概述:
 - 为了Ingress资源能够work, 集群**必须有一个ingress控制器运行**, Ingress控制器不是自动启动的, 需选择集群最佳的ingress控制器实现方案.
-- k8s当前支持和维护GCE和nginx controller,其它见(2).
 - 可以在一个集群中部署多个Ingress控制器.
 
-## (2)其它控制器:
+## (2)控制器类型:
+- ingress-nginx
 - istio
 - haproxy
 - 等等.
@@ -37,7 +37,7 @@
 - tls(IngressTTL): TLS配置.
 
 ## (3)IngressRule信息:
-- host: Host is the fully **qualified domain name** of a network host, as defined by RFC 3986.
+- host: 可选,Host is the fully **qualified domain name** of a network host, as defined by RFC 3986.
 - http: HTTPIngressRuleVaule.
 
 ## (4)默认backend:

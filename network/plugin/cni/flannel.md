@@ -21,5 +21,11 @@
 - host-gw: 适用于希望性能提升的有经验用户, 并且基础设施支持(通常不能在云环境使用).
 - UDP: 用于debug或者一些不支持VXLAN的旧kernel.
 
-## (3)备注:
+## (3)其它实验性:
+- AliVPC
+- AWS VPC
+- IPIP
+- IPSec
+
+## (4)备注:
 - https://github.com/coreos/flannel/blob/master/Documentation/backends.md

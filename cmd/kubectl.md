@@ -24,7 +24,7 @@
 - top: Display Resource (CPU/Memory/Storage) usage.
 - cordon: 标记node为unschedulable.
 - uncordon: 标记node为schedulable.
-- drain: Drain node in preparation for maintenance.
+- drain: Drain node in preparation for maintenance, 安全驱逐node上的所有pods.
 - taint: 更新一个或者多个node上的taints.
 
 ## (5)定位和debug命令:

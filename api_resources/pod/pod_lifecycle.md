@@ -1,5 +1,6 @@
 # 一 概述:
-## (1)概述
+## (1)概述:
+- https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#podstatus-v1-core
 
 ## (2)Restart Policy:
 - Always: 默认.

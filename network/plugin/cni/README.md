@@ -37,39 +37,59 @@
 ## (5)备注:
 - https://github.com/containernetworking/cni/blob/master/SPEC.md
 
-# 三 cniNetworkPlugin:
-## (1)概述:
-- 实现NetworkPlugin接口的方法.
-- kubernetes/pkg/kubelet/dockershim/network/cni
-
-## (2)方法:
-- NetworkPlugin接口的方法.
-- addToNetwork: 被SetUpPod方法调用.
-- deleteFromNetwork: 被TearDownPod方法调用.
-
-## (3)属性:
-- network.NoopNetworkPlugin
-- loNetwork: cniNetwork类型指针.
-- defaultNetwork: cniNetwork类型指针.
-- host
-- execer
-- nsenterPath
-- confDir
-- binDirs
-- cacheDir
-- podCidr
-
-## (4)cniNetwork结构:
-- name
-- NetworkConfig: libcni.NetworkConfigList指针.
-- CNIConfig: libcni.CNI类型.
-- Capabilities
-
-# 四 libcni:
+# 三 libcni
 ## (1)概述:
 - https://github.com/containernetworking/cni/tree/master/libcni
 
-## (2)CNI接口
+## (2)CNI接口:
+- AddNetworkList
+- CheckNetworkList
+- DelNetworkList
+- GetNetworkListCachedResult
+- GetNetworkListCachedConfig
+- AddNetwork(ctx context.Context, net *NetworkConfig, rt *RuntimeConf)
+- CheckNetwork
+- DelNetwork
+- GetNetworkCachedResult
+- GetNetworkCachedConfig
+- ValidateNetworkList
+- ValidateNetwork
 
-## (3)RuntimeConf
+## (3)RuntimeConfig:
+- ContainerID
+- NetNS
+- IfName
+- Args
+- CapabilityArgs
+- CacheDir
 
+## (4)NetworkConfig:
+- Network: types.NetConf指针.
+- Bytes: []byte
+
+# 三 网络配置:
+## (1)概述:
+- https://github.com/containernetworking/cni/blob/master/pkg/types/types.go
+
+## (2)NetConf:
+- Name
+- Type
+- Capabilities
+- IPAM
+- DNS
+- RawPrevResult
+- PreResult
+
+## (3)DNS:
+- NameServers
+- Domain
+- Search
+- Options
+
+## (4)Route
+- Dst net.IPNet
+- GW net.IP
+
+# 四 cnitool:
+## (1)概述:
+- https://github.com/containernetworking/cni/tree/master/cnitool
