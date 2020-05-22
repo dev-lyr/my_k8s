@@ -39,7 +39,10 @@
 - No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
 - 为外部服务创建一个别名, Pod可以使用别名而不是外部服务的实际FQDN来访问外部服务, 隐藏了实际服务的名称以及使用该服务的pod的位置, 运行修改服务定义.
 
-## (4)externalTrafficPolicy
+## (4)externalTrafficPolicy:
+- 功能: denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints.
+- Local: preserves the client source IP and avoids a second hop for LoadBalancer and Nodeport type services, but risks potentially imbalanced traffic spreading.
+- Cluster: obscures the client source IP and may cause a second hop to another node, but should have good overall load-spreading.
 
 ## (5)healthCheckNodePort
 

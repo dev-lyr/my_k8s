@@ -18,15 +18,14 @@
 - validating
 - mutating
 - validating and mutating both.
-- 备注: Admission controllers may be “validating”, “mutating”, or both. Mutating controllers may modify the objects they admit; validating controllers may not.
 
 ## (3)admission控制器种类:
 - AlwaysPullImages: 修改每个pod强制image pull策略为Always.
 - DefaultStorageClass
 - DefaultTolerationSeconds
 - EventRateLimit
-- ValidatingAdmissionWebhook: calls any validating webhooks which match the request. Matching webhooks are called in parallel; if any of them rejects the request, the request fails.
-- MutatingAdmissionWebhook: calls any mutating webhooks which match the request. Matching webhooks are called in serial; each one may modify the object if it desires.
+- **ValidatingAdmissionWebhook**: calls any validating webhooks which match the request. Matching webhooks are called in parallel; if any of them rejects the request, the request fails.
+- **MutatingAdmissionWebhook**: calls any mutating webhooks which match the request. Matching webhooks are called in serial; each one may modify the object if it desires.
 - 备注: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#what-does-each-admission-controller-do
 
 ## (4)备注:
@@ -35,11 +34,21 @@
 # 三 admission webhooks:
 ## (1)概述:
 - admission webhooks是接收到admission请求的**HTTP callback**.
-- 可以定义两种类型admission webhooks: **validating admission webhooks**和**mutating admission webhooks**.
-- Mutating admission Webhooks are invoked **first**, and can modify objects sent to the API server to enforce custom defaults. After all object modifications are complete, and after the incoming object is validated by the API server, validating admission webhooks are invoked and can reject requests to enforce custom policies.
+- 可以定义两种类型admission webhooks: **validating admission webhooks**和**mutating admission webhooks(先被调用)**.
 
 ## (2)API资源:
-- MutatingWebhook
-- MutatingWebhookConfiguration
-- ValidatingWebhook
-- ValidatingWebhookConfiguration
+- MutatingWebhookConfiguration: 重要属性webhooks(webhook列表, 类型为MutatingWebhook).
+- ValidatingWebhookConfiguration: 重要属性webhooks(webhook列表, 类型为ValidatingWebhook).
+
+## (3)MutatingWebhook:
+- clientConfig: 定义与hook的通信方式, 必选, 类型为WebhookClientConfig.
+- 等等.
+
+## (4)ValidatingWebhook:
+- clientConfig: 定义与hook的通信方式, 必选, 类型为WebhookClientConfig.
+- 等等.
+
+## (5)WebhookClientConfig:
+- url: webhook的地址, 标准URL格式(scheme://host:port/path).
+- service: webhook的服务的引用, url或service必须制定一个,若webhook运行在集群内则使用service.
+- 备注: 包含于hook进行TLS连接的信息.

@@ -39,8 +39,9 @@
 
 ## (6)admission相关:
 - --admission-control-config-file
-- --enable-admission-plugins stringSlice
-- --disable-admission-plugins stringSlice
+- --enable-admission-plugins stringSlice: 开启admission controller.
+- --disable-admission-plugins stringSlice: 关闭admission controller.
+- 备注: 查询默认开启的admission controller: kube-apiserver -h | grep enable-admission-plugins
 
 ## (7)审计(audit)相关:
 - --audit-webhook-config-file
@@ -54,24 +55,19 @@
 - --watch-cache-sizes
 
 # 三 源码:
-## (1)相关代码:
+## (1)概述:
 - kubernetes/cmd/kube-apiserver: 启动入口.
+- apiserver: https://godoc.org/k8s.io/apiserver
+- apiextensions: https://github.com/kubernetes/apiextensions-apiserver
+- kube-aggregator: https://github.com/kubernetes/kube-aggregator
 - https://github.com/kubernetes/apiserver
-- https://godoc.org/k8s.io/apiserver
 
-## (2)apiserver相关目录:
-- admission  
-- apis  
-- audit  
-- authentication  
-- authorization  
-- endpoints  
-- features  
-- registry  
-- server  
-- storage  
-- util
+## (2)apiserver:
 
-## (3)kubernetes/plugin/pkg:
-- admission
-- auth
+## (3)apiextensions:
+- 提供注册CRD的API, 在kube-apiserver中作为delegate服务器运行.
+
+## (4)kube-aggregator:
+- Provide an API for registering API servers.
+- Summarize discovery information from all the servers.
+- Proxy client requests to individual servers.
