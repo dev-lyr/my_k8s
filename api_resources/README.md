@@ -57,7 +57,12 @@
 - 该特性允许客户获取当前状态, 并且不会丢失任何修改.
 - 若客户端watch断开, 则可以从最近的resourceVersion重新一个新的watch, 或者执行一个新的连接.
 
-## (2)相关问题:
+## (2)Watch bookmarks:
+- 功能: 减少由于较小历史窗口(resourceVersion过旧)而造成的relist的次数.
+- **bookmark**事件: a special kind of event to mark that all changes up to a given resourceVersion the client is requesting have already been sent.
+- 使用方法: watch请求带上allowWatchBookmarks=true.
+
+## (3)相关问题:
 - k8s只会保存有限时间的历史变更, etcd3默认保存5分钟, 因此watch时候带的resourceVersion太旧就会返回失败, 客户端则必须通过状态码410 Gone识别出来, 清理本地cache, 执行list, 然后根据list返回的resourceVersion重新watch, 多数client库提供该逻辑的, 例如:client-go中的Reflector.
 
 # 五 分批查询:

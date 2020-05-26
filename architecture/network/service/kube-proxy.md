@@ -28,3 +28,19 @@
 # 二 kube-proxy命令:
 ## (1)概述:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/
+
+## (2)常用选项:
+- --bind-addresss: proxy server的服务IP,默认0.0.0.0.
+- --cleanup: 若为true则清理iptables和ipvs规则并退出.
+- --cluster-cidr
+- --config: 配置文件的路径.
+- --config-sync-period
+- --healthz-bind-address: 默认0.0.0.0:10256.
+- --hostname-override
+- --proxy-mode: userspace,iptables或ipvs, 当前默认iptables.
+
+## (3)iptables相关
+
+## (4)ipvs相关
+
+## (5)contrack相关

@@ -21,7 +21,7 @@
 - port
 - protocol: 默认TCP, 可选TCP, UDP, SCTP.
 
-# 二 endpoint controller:
+# 二 endpoint控制器:
 ## (1)EndpointController struct:
 - queue: 存放需要update的service.
 - 等等.
@@ -38,3 +38,9 @@
 - 判断service是否tolerateUnreadyEndpoints(spec指定或使用TolerateUnreadyEndpointsAnnotation注解(已废弃)).
 - 根据list出的pod和tolerateUnreadyEndpoints构造ep对象, 然后查询当前的ep, 比较是需要create还是update.
 - 等等.
+
+# 三 endpointSlice:
+## (1)概述:
+
+## (2)备注:
+- https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/

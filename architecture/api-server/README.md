@@ -10,6 +10,10 @@
 - kubectl proxy命令.
 - Pod内访问: 使用每个容器内挂载的secret目录下的ca.crt,token和namespace来访问(例如:curl); 使用ambassador容器, 在该容器内执行kubectl proxy命令.
 
+## (3)优化点:
+- 自定义list-watch的store来减少存储数据的大小来避免内存占用过多.
+- 分片list-watch, 实现参考: https://github.com/kubernetes/kube-state-metrics
+
 # 二 kube-apiserver命令:
 ## (1)格式:
 - kube-apiserver [flags]

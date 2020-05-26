@@ -3,13 +3,13 @@
 - Resource metrics pipeline
 - Full metrics pipeline
 - CronJob monitor
-- Node problem detector: https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health
+- Node problem detector(npd): https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health
 - kube-state-metrics: https://github.com/kubernetes/kube-state-metrics
 - 备注: k8s中, 应用监控不依赖一个单独的监控方案, 可以使用多个.
 
 ## (2)相关方案:
-- 监控kubernetes节点: node_exporter
-- 监控kuberbetes组件: kube-state-metrics
+- 监控kubernetes节点: node_exporter和npd.
+- 监控kuberbetes对象(deployment等): kube-state-metrics
 - 监控容器: cadvisor
 - 监控应用: 使用sidecar模式部署各种exporter(prometheus相关)或者让应用向外暴露metrics.
 

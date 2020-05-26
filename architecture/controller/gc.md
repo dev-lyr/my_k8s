@@ -1,4 +1,4 @@
-# 一 垃圾回收:
+# 一 概述:
 ## (1)概述:
 - Kubernetes garbage collector: delete certain objects that once had an owner, but no longer have an owner.
 - DeleteOptions资源: 可在删除对象时候提供.
@@ -15,3 +15,4 @@
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/
 - 代码: kubernetes/pkg/controller/garbagecollector
+
