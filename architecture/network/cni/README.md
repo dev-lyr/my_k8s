@@ -47,7 +47,7 @@
 - DelNetworkList
 - GetNetworkListCachedResult
 - GetNetworkListCachedConfig
-- AddNetwork(ctx context.Context, net *NetworkConfig, rt *RuntimeConf)
+- AddNetwork
 - CheckNetwork
 - DelNetwork
 - GetNetworkCachedResult

@@ -8,7 +8,12 @@
 - --cluster-domain=<default-local-domain>
 - --resolv-conf
 
-## (3)备注:
+## (3)docker run:
+- --dns list: 设置自定义DNS服务器.
+- --dns-option list: 设置DNS选项.
+- --dns-search list: 设置自定义DNS搜索域.
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 - https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/
 - https://kubernetes.io/docs/tasks/administer-cluster/dns-horizontal-autoscaling/

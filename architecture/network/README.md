@@ -1,4 +1,14 @@
 # 一 概述:
+## (1)网络通信分类:
+- 高度耦合的容器间: 通过pods和localhost来通信.
+- Pod-Pod间: CNI网络插件.
+- Pod和Service间: 通过kube-porxy和dns等.
+- 外界和Service间: Ingress和LoadBalance等.
+
+## (2)备注:
+- https://kubernetes.io/docs/concepts/cluster-administration/networking/
+
+# 二 插件:
 ## (1)类型:
 - CNI插件: 遵守CNI规范.
 - kubenet插件: 使用**bridge**实现**cbr0**和**host-local** CNI插件, 一个简单基本的网络插件, 只适用于linux.
