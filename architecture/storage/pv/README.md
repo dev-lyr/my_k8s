@@ -2,24 +2,27 @@
 ## (1)概述:
 - 背景: 开发人员不需知道底层使用那些存储技术, 基础设施相关的应该有集群管理员来管理.
 - PersistentVolume子系统提供一个API来抽象storage是怎么提供以及怎么消费的.
-- persistentvolume controller: pkg/controller/volume/persistentvolume.
-- 名字有点误导, 常规的volume也提供持久化能力.
 
 ## (2)相关资源:
 - **PersistentVolume(PV)**: a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using **Storage Classes**.
 - **PersistentVolumeClaim(PVC)**: a request for storage by a user.
 - **StorageClass**: provides a way for administrators to describe the “classes” of storage they offer.
+- **VolumeAttachment**
 
 ## (3)PV的类型:
 - CSI
 - NFS
+- local
+- hostpath: 测试使用.
 - 等等.
 - 备注: PV类型以插件方式实现.
 
 ## (4)备注:
+- persistentvolume controller: pkg/controller/volume/persistentvolume.
 - https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 - https://kubernetes.io/docs/concepts/storage/storage-classes/
 - https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/storage/persistent-storage.md
 
 # 二 PV:
 ## (1)概述:
@@ -38,7 +41,7 @@
 
 ## (3)PersistentVolumeStatus:
 - message
-- phase: Pending(pv当前不可用), Available(空闲的资源, 还未绑定到claim); Bound(已绑定到claim), Released(claim已删除,但资源还未被集群回收), Failed(the volume has failed its automatic reclamation).
+- phase: Pending(pv当前不可用), Available(空闲的资源, 还未绑定到claim); Bound(已绑定到claim), Released(claim已删除,但资源还未被集群回收), Ffailed(the volume has failed its automatic reclamation).
 - reason
 
 # 三 PVC
@@ -67,10 +70,11 @@
 ## (1)概述:
 - StorageClass为管理员提供一种描述他们提供存储资源类型的方式, 非namespaced对象.
 - 不同类型StorageClass可能有不同的QoS或不同的备份策略等等.
-- 若PVC不指定storage class则, 可通过DefaultStorageClass admission设置一个默认的.
+- 若PVC不指定storage class,则可通过DefaultStorageClass admission设置一个默认的.
+- 通过注解(storageclass.kubernetes.io/is-default-class)来标记某StorageClass为default.
 
 ## (2)属性:
-- provisioner: 绝对那个volume插件来提供PV.
+- provisioner: 决定那个volume插件来提供PV.
 - parameters
 - reclaimPolicy
 - mountOptions
@@ -78,7 +82,10 @@
 - allowVolumeExpansion
 - allowedTopologies
 
-## (3)DefaultStorageClass admission
+## (3)DefaultStorageClass admission:
+- 观察PVC的创建, 若未指定storageClass则自动加上默认.
+- 若没有配置默认storageClass则不干活, 配置多个默认storageClass会报错.
+
 
 # 五 volume和claim的lifecycle:
 ## (1)提供(Provisioning):

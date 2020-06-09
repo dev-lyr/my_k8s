@@ -30,9 +30,9 @@
 - None: 针对不需要使用代理的**headless服务**.
 
 ## (2)externalIPs:
-- 若一些外部IP可以路由到集群的Node,kubernete可通过这些外部IP暴露服务.
-- 这些IP不被kubernetes管理, 用户负责确保流量可以通过该IP访问到Node.
-- 备注: 适用于所有服务type.
+- externalIPs is a list of IP addresses for which **nodes in the cluster** will also accept traffic for this service.
+- 这些IP不被kubernetes管理, 用户负责确保流量可以访问到该IP的Node.
+- 备注: 适用于所有服务type, kube-proxy会创建对应listen端口.
 
 ## (3)externalName:
 - externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. 

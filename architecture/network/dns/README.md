@@ -34,7 +34,7 @@
 
 ## (4)Pod DNS策略:
 - Default: Pod继承Pod运行的node上的名字解析配置.
-- ClusterFirst: 所有不match配置的cluster domain suffix的,会被转发给从node上继承的upstream nameserver.
+- ClusterFirst(默认): 所有不match配置的cluster domain suffix的,会被转发给从node上继承的upstream nameserver.
 - ClusterFirstWithHostNet: 使用hostNetwork.
 - None: 允许Pod忽略kubernetes环境中的DNS配置, 使用podSpec.dnsConfig提供的DNS配置.
 

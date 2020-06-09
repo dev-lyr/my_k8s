@@ -11,6 +11,7 @@
 - https://github.com/containernetworking/cni
 - https://github.com/containernetworking/plugins
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
+- https://github.com/containernetworking/cni/tree/master/cnitool
 
 # 二 CNI规范:
 ## (1)概述:
@@ -24,8 +25,9 @@
 - CHECK: 检查容器的网络是否符合预期.
 - VERSION: 查看verison.
 
-## (3)IP分配:
-- IPAM插件.
+## (3)IPAM插件:
+- 被CNI插件调用, 用来生成接口IP/subnet, Gateway和Routes信息.
+- IPAM插件可以通过dbcp,本地文件系统,网络配置文件中的ipam部分等方式来获得信息.
 
 ## (4)错误码：
 - 1: 不兼容CNI版本.
@@ -90,6 +92,4 @@
 - Dst net.IPNet
 - GW net.IP
 
-# 四 cnitool:
-## (1)概述:
-- https://github.com/containernetworking/cni/tree/master/cnitool
+# 四 IPAM插件:

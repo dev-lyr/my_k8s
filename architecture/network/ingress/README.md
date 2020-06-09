@@ -43,7 +43,16 @@
 ## (4)默认backend:
 - 默认backend通常在Ingress控制器中配置, 那些没有match到spec中host和path的请求会被路由到default backend.
 
-# 四 Ingress的类型:
+# 四 IngressClass:
+## (1)概述:
+- Ingress资源可以被不同controller实现, 所以ingress需要指定一个IngressClass资源(通过ingressClassName属性), 该资源包含额外的配置信息(包括实现该类的Ingress Controller的名字).
+- 在IngressClass资源和ingressClassName属性被添加到k8s中之前, ingress控制器通过ingress的注解**kubernetes.io/ingress.class**指定.
+
+## (2)默认IngressClass:
+- 可通过给IngressClass添加注解**ingressclass.kubernetes.io/is-default-class**为true来设置该ingressClass资源作为默认IngressClass, 若新增的Ingress没有指定ingressClassName属性, 则使用默认IngressClass.
+- 备注: 若存在多个默认IngressClass, 则admission controller不允许常见不指定ingressClassName属性的Ingress资源.
+
+# 五 Ingress的类型:
 ## (1)单服务Ingress:
 - 使用一个指定默认backend且无rules的Ingress.
 
@@ -60,10 +69,3 @@
 ## (5)Loadbalancing:
 - Ingress控制器包含一些应用于所有Ingress的负载平衡策略(例如: 负载平衡算法, backend权重和其它); 更多高级概念(持久化session, 动态权重)不再通过Ingress暴露, 可以通过使用一个service的load balancer来获得这些特性.
 - 健康检查也不再直接通过ingress暴露, readiness probes可以达到同样效果.
-
-# 五 ingress-nginx:
-## (1)概述:
-
-## (2)备注:
-- https://kubernetes.github.io/ingress-nginx/
-- https://github.com/kubernetes/ingress-nginx
