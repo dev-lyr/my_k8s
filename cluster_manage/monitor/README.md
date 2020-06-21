@@ -20,7 +20,7 @@
 - https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health/
 - 与prometheus相关: https://github.com/coreos/kube-prometheus
 
-# 二 resource metrics pipeline:
+# 二 资源metrics pipeline:
 ## (1)概述:
 - resource metrics pipeline为集群组件(例如:HorizontalPodAutoscaler控制器)提供有限的metrics集; 用户也可以通过kubectl top命令来直接访问.
 - metrics通过**metrics-server**来收集并通过**metrics.k8s.io** API暴露出来.

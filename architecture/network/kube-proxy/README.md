@@ -2,7 +2,6 @@
 ## (1)概述:
 - k8s集群中**每个node**上都运行一个**kube-proxy**, 它负责为服务实现一种**虚拟IP(即cluster IP)**.
 - Proxy-mode: **userspace**, **iptables**, **ipvs**.
-- 备注: iptables -t nat -L查询规则.
 
 ## (2)userspace模式:
 - kube-proxy观察k8s master对**Service**和**Endpoints**对象的创建和删除.
@@ -24,6 +23,9 @@
 - usernamespace模式性能太差已废弃.
 - iptables适用于中小规模集群.
 - ipvs模式适用于大规模集群.
+
+## (6)备注:
+- iptables -t nat -L查询规则.
 
 # 二 kube-proxy命令:
 ## (1)概述:

@@ -87,7 +87,7 @@
 ## (1)QoS类型:
 - Guaranteed: Pod内的每个容器都必须有内存和cpu请求和限制, 且请求和限制值相等.
 - BestEffort: Pod内的容器不能有内存或cpu的请求或限制.
-- Busrtable: 不满足Guaranteed, Pod内至少有一个容器有内存或cpu请求.
+- Burstable: 不满足Guaranteed, Pod内至少有一个容器有内存或cpu请求.
 
 ## (2)使用场景:
 - 当宿主机资源紧张时, kubelet会对Pod进行Eviction, 此时参考QoS类型.

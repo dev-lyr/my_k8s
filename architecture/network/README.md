@@ -5,7 +5,10 @@
 - Pod和Service间: 通过kube-porxy和dns等.
 - 外界和Service间: Ingress和LoadBalance等.
 
-## (2)备注:
+## (2)proxy类型:
+- https://kubernetes.io/docs/concepts/cluster-administration/proxies/
+
+## (3)备注:
 - https://kubernetes.io/docs/concepts/cluster-administration/networking/
 
 # 二 插件:

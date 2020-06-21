@@ -21,6 +21,10 @@
 - port
 - protocol: 默认TCP, 可选TCP, UDP, SCTP.
 
+## (5)手动创建endpoint:
+- 手动创建ep时, ep的名字需与service名字相同, 并包含服务目标IP地址和端口.
+- 使用场景: 访问外部服务,为service的使用方提供一致的访问方法, 底层目标机器可以是pod或者外部机器, 可用于将外部服务迁入k8s集群或者反向.
+
 # 二 endpoint控制器:
 ## (1)EndpointController struct:
 - queue: 存放需要update的service.

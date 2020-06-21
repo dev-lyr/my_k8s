@@ -23,7 +23,7 @@
 - LoadBalancer
 - Ingress
 
-# 二 ServiceSpec
+# 二 spec
 ## (1)clusterIP:
 - 服务的IP地址,通常由master随机分配, 若手动指定IP则需保证没有被其它使用, 该属性不能通过update来改变.
 - 合法值: **None**,空字符串("")或一个合法ip地址.
@@ -107,20 +107,7 @@
 ## (7)备注:
 - 相关:ingress.
 
-# 四 Headless服务:
-## (1)概述:
-- 有时不需要load-balancing和虚拟IP(服务clusterIP)的场景, 可以通过指定服务的.spec.clusterIP为None来创建"headless"服务.
-- Headless服务减少和K8s系统的耦合, 允许开发者自由选择服务发现机制.
-- 针对Headless服务, clusterIP没有分配, 因此kube-proxy不会处理这些服务, 且没有负载平衡和proxy, 怎么动态配置DNS依赖服务是否定义selector.
-
-## (2)使用selectors:
-- 针对定义了selectors的headless服务, endpoint控制器会创建endpoints记录, 并且会修改DNS配置来返回直接指向服务后端pods的**A记录**.
-
-## (3)不使用selectors:
-- **CNAME records**: **ExternalName-type** services.
-- **A records**: any Endpoints that **share a name** with the service, for all other types.
-
-# 五 服务发现(discovery):
+# 四 服务发现(discovery):
 ## (1)概述:
 - K8s支持两种主要类型的服务发现: **环境变量**和**DNS**(推荐).
 
@@ -139,4 +126,3 @@
 - 参考: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 - https://github.com/kubernetes/dns/blob/master/docs/specification.md
 - CoreDNS和kube-dns.
-

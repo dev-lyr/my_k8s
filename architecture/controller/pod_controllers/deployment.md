@@ -7,6 +7,7 @@
 
 ## (3)deployment controller:
 - watch的对象: deployment, rs和pod.
+- rs的名字格式为:[deployment-name]-[random-string],随机字符串使用pod-template-hash作为seed随机产生.
 
 ## (4)使用场景:
 - 金丝雀部署(Canary Deployment).
@@ -23,11 +24,12 @@
 - 缺点: 会直接修改对象的配置; kubectl客户端负责执行滚动升级的复杂逻辑, 当出现网络断开等情况会处于中间状态.
 - 备注: 已过时, 不建议使用, Deployment首选.
 
-# 二 Deployment的spec:
+# 二 spec:
 ## (1)Pod相关:
 - spec.template: 指定pod模板, 除了Pod必须的属性外, Deployment中的pod模板还需指定合适的label和restart策略.
-- spec.selector: 必选属性, deployment用来选择pod的标签选择器.
+- spec.selector: 必选属性, deployment用来选择pod的标签选择器,必须与spec.template.metadata.labels匹配,否则会被API拒绝.
 - spec.replicas: 可选的属性, 指定期望的pod数量, 默认为1.
+- 备注: 要选择合适的selector和pod模板的label, 不要与其它controller覆盖, kubernetes不阻止overlap, 但是多个controller有覆盖的selectors则可能会冲突并出现非预期行为.
 
 ## (2)spec.strategy:
 - **type**: 指定替换旧的pod的策略,**RollingUpdate**(默认,滚动升级)和**Recreate**(所有已存在pod被kill,然后再新建出来).
@@ -45,11 +47,24 @@
 - 使用正确的就绪探针和minReadySeconds可以预先阻止发布有问题的版本.
 - 默认为0, pod是ready就认为是可用的.
 
-## (5)其它:
-- spec.paused: 表示deployment是不是暂停.
-- spec.revisionHistoryLimit: 保存的用于回滚的rs的数量,默认10.
+## (5)spec.paused:
+- 表示deployment暂停或恢复的一个属性.
 
-# 三 创建:
+## (6)spec.revisionHistoryLimit:
+- 功能: 保存的用于回滚的rs的数量,默认10.
+
+# 三 status:
+## (1)概述:
+- Deployment的状态有: Progressing, Complete和Failed.
+- 可使用kubectl rollout status来查看.
+
+## (2)Progressing
+
+## (3)Complete
+
+## (4)Failed
+
+# 四 创建:
 ## (1)概述:
 - 创建Deployment时指定的Pod由**ReplicaSet**负责在后端创建.
 
@@ -64,11 +79,12 @@
 ## (3)kubectl rollout status:
 - 查看Deployment的rollout状态.
 
-## (4)pod-template-hash label:
+## (4)pod-template-hash标签:
 - deployment控制器会给每个deployment创建的rs添加一个**pod-template-hash** label, 该label的值是rs的PodTemplate的hash值.
+- 该label来确保一个deploy的子rs不会overlap.
 - 该label会被添加到rs selector, pod template labels和rs管理的每个pod中.
 
-# 四 更新:
+# 五 滚动更新:
 ## (1)概述:
 - 只有在Deployment的**pod template(spec.template)**更新时才会触发Deployment的rollout.
 - 通过更新Deployment的PodTemplateSpec来声明Pods的新状态, 此时一个**新的ReplicaSet会被创建**, Deployment以可控的速度将Pods从旧的ReplicaSet移动到新的.
@@ -81,7 +97,7 @@
 ## (3)备注:
 - 旧的replicateset会保留, 可通过设置spec.revisionHistoryLimit来指定多少旧的ReplicaSets希望保存, 其它的会被后台垃圾回收, 默认是10.
 
-# 五 回滚(rolling back):
+# 六 回滚(rolling back):
 ## (1)概述:
 - 默认情况下, Deployment的rollout历史记录被保存在系统中, 所以可以任意时刻rollback.
 - Deployment的revision在Deployment rollout被触发时创建.
@@ -91,11 +107,11 @@
 - kubectl rollout undo xxx: 回滚到上一个版本.
 - kubectl rollout undo xxx --to-revision=n: 回滚到指定版本.
 
-# 六 扩容:
+# 七 扩容:
 ## (1)概述:
 - kubectl scale
 
-# 七 暂停和恢复:
+# 八 暂停和恢复:
 ## (1)功能
 - 通过暂停, 可以同时修改多次deployment, 在修改完毕后再通过恢复了触发一次滚动升级, 而不是每次修改都触发.
 - 可以在滚动升级过程中, 暂停和恢复, 来进行金丝雀发布.
@@ -104,13 +120,3 @@
 - kubectl rollout pause
 - kubectl rollout resume
 
-# 八 Deployment的status:
-## (1)概述:
-- Deployment的状态有: Progressing, Complete和Failed.
-- 可使用kubectl rollout status来查看.
-
-## (2)Progressing
-
-## (3)Complete
-
-## (4)Failed

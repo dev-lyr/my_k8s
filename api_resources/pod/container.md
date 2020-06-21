@@ -10,7 +10,41 @@
 
 ## (3)私有镜像仓库.
 
-# 二 Container资源
+# 二 Container资源:
+## (1)基本信息:
+- command: entrypoint数组, 若未指定,使用docker镜像的ENTRYPOINT.
+- args: entrypoint的参数, 若未指定使用docker镜像的CMD.
+- env: 在容器中设置的环境变量的列表.
+- envFrom: 一个生产容器环境变量的源的列表,例如:ConfigMap,Secret等.
+- image: 镜像.
+- imagePullPolicy: 镜像拉取策略, 可选:Always,Never,IfNotPresent;若指定:latest则默认为Always,其它情况,默认为IfNotPresent.
+- name
+- port
+- terminationMessagePath
+- terminationMessagePolicy
+
+## (2)resources
+
+## (3)存储相关:
+- volumeMounts: 挂载到容器文件系统的pod volumes.
+- volumeDevices: 容器使用的block device列表.
+- workdingDir
+
+## (4)probe相关:
+- startupProbe
+- livenessProbe
+- readinessProbe
+
+## (5)lifecycle:
+- postStart: 在容器创建后立即调用,若handler失败, 则容器被终止并根据重启策略重启. 
+- preStop: 在容器由于API请求或者管理事件(liveness/startup探测失败,抢占或资源竞争等)被终止时调用, 容器crash或exits时不会调用.
+- 备注: 类型为Handler.
+
+## (6)其它:
+- stdin
+- stdinOnce
+- tty
+
 
 # 三 容器环境变量:
 ## (1)概述:

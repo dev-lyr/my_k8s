@@ -58,8 +58,8 @@
 - 每次探测的结果: Success(容器通过诊断), Failure(容器诊断失败), Unknown(诊断失败, 不会执行action).
 
 ## (2)探测类型:
-- livenessProbe: 表示容器是否在运行中, 若探测失败, kubelet会kill容器, 并根据restart policy来决定如何操作, 若容器不提供livenessProbe探测则默认状态为Success.
-- readinessProbe: 表示容器是否准备好接收请求, 若探测失败, 则**endpoint控制器**会从所有服务的endpoints中删除pod的ip地址.readiness在init delay之前的默认状态为Failure, 若不提供readiness探测则默认state为Success.
+- **livenessProbe**: 表示容器是否在运行中, 若探测失败, kubelet会kill容器, 并根据restart policy来决定如何操作, 若容器不提供livenessProbe探测则默认状态为Success.
+- **readinessProbe**: 表示容器是否准备好接收请求, 若探测失败, 则**endpoint控制器**会从所有服务的endpoints中删除pod的ip地址.readiness在init delay之前的默认状态为Failure, 若不提供readiness探测则默认state为Success.
 - 备注: 对应Probe资源.
 
 ## (3)handler类型:
@@ -90,12 +90,22 @@
 ## (8)备注:
 - https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 
-# 五 容器状态:
+# 五 containerStatus:
 ## (1)概述:
 - Pod的status属性包含一个containerStatuses属性表示Pod每个容器的状态, initContainerStatuses表示每个init容器的状态.
 - containerStatuses是一个**ContainerStatus**对象的数组, ContainerStatus对象的state表示容器的状态.
 
-## (2)ContainerState:
+## (2)containerStatus:
+- containerId
+- image
+- imageId
+- name
+- ready: 容器是否通过readiness probe.
+- restartCount
+- started: 容器是否通过startup probe.
+- state ContainerState
+
+## (3)ContainerState:
 - Running: 表示容器正在没问题的执行中, 当容器进入Running状态时, postStart hook(若有)会被执行.
 - Terminated: 表示容器已经完成执行操作且已停止运行, 当容器成功执行完成或由于一些原因失败时候会进入该状态, 在进入Terminated状态之前, PreStop hook(若有)会被执行.
 - Waiting: 容器的默认状态, 若容器不在Running或Terminated状态, 则处于Waiting状态, Waiting状态的容器依旧执行它要求的操作, 例如拉镜像, 应用secrets等.
