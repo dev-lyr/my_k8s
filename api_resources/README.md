@@ -15,15 +15,15 @@
 ## (3)备注:
 - https://kubernetes.io/docs/concepts/overview/kubernetes-api/
 - https://kubernetes.io/docs/reference/using-api/api-concepts/#alternate-representations-of-resources
-- API手册: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
+- https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md
 
 # 二 API version:
 ## (1)概述:
 - 为了删除属性或重构资源表示, k8s支持多个API版本, 每个在不同的API路径, 例如:/api/v1或/apis/extensions/v1beta1.
 
 ## (2)版本类型：
-- Alpha: 例如v1alpha1.
-- Beta: 例如v2beta3
+- Alpha: version名字包含alpha,例如v1alpha1.
+- Beta: version名字包含beta, 例如v2beta3.
 - Stable: 例如vX, X是整数.
 
 ## (3)备注:
@@ -32,6 +32,9 @@
 # 三 API group:
 ## (1)概述:
 - API组使扩展k8s API更加容易, API组在REST path中指定.
+- Group names are typically in **domain name form**. 
+- Kubernetes reserves use of the empty group, all single word names ("extensions", "apps"), and any group name ending in ".k8s.io" for its sole use.
+- 当自定义资源选择group name时, 建议使用你所在组织的子域名, 例如:"xx.mycompany.com"
 
 ## (2)当前使用的API组:
 - 核心组(core): **/api/版本**, 不用组名.

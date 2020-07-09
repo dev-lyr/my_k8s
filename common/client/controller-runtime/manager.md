@@ -1,47 +1,11 @@
 # 一 概述:
-## (1)功能:
-- https://godoc.org/sigs.k8s.io/controller-runtime
-- https://github.com/kubernetes-sigs/controller-runtime.git
-
-## (2)Managers
-- 每个controller和webhook最后都通过一个Manager(pkg/manager)来运行.
-- manager: 追踪所有controller的运行, 同时建立共享caches和到api server的clients; 启动manager时, 它会接着启动所有controller和webhook, manager一直运行直至接收一个graceful shutdown信号.
-
-## (3)Controllers:
-- Controller(pkg/controller)使用事件(pkg/events)来trigger reconcile请求.
-
-## (4)Reconcilers:
-- 控制器的逻辑以Reconcilers(pkg/reconcile)的形式实现.
-- Reconciler实现一个函数, 该函数使用一个包含需要被调和对象的namespace和name的reconcile请求, 调和该对象, 然后返回一个Response或这个错误表示是否重新入队列进行第二轮处理.
-
-## (5)Client和Caches:
-- Reconcilers使用Clients(pkg/client)来访问API对象.
-- manager默认提供的client从local shared cache(pkg/cache)中读取对象且直接写入API Server, 但是client也可以构造成直接访问API Server, 不使用cache.
-
-## (6)Schemes:
-- Clients, Caches, and many other things in Kubernetes use Schemes (pkg/scheme) to associate Go types to Kubernetes API Kinds (Group-Version-Kinds, to be specific).
-- GroupVersionKind(GVK): kind in a particular group-verison.
-
-## (7)webhooks
-
-## (8)Logging和Metrics
-
-## (9)Testing
-
-# 二 Manager
 ## (1)概述:
-- Package manager is required to create Controllers and provides shared dependencies such as clients, caches, schemes, etc. Controllers must be started by calling Manager.Start.
-- 创建方法: manager.New, 参数为rest.Config和Options.
+- Package manager is required to create Controllers and provides shared dependencies such as clients, caches, schemes, etc. 
+- Controllers must be started by calling Manager.Start.
 
-## (2)Manager结构:
-- Start
-- GetConfig
-- GetScheme
-- GetClient: 返回一个config配置好的client, client可能会从cache读, 由Options.NewClient决定.
-- GetCache
-- GetApiReader: 返回一个Reader, 该Reader使用API server, 该对象应该节约使用并且在client不满足场景时使用.
-- GetWebhookServer
-- 等等.
+## (2)创建:
+- manager.New: 创建controllerManager结构.
+- 参数为rest.Config和Options.
 
 ## (3)rest.Config:
 - config.GetConfig: 创建一个和kubernete API server交互的rest.Config, 若--kubeconfig设置, 则会使用在该目录下的kubeconfig文件; 否则假设运行在集群中并使用集群提供的kubeconfig.
@@ -64,6 +28,29 @@
 
 ## (5)备注:
 - https://godoc.org/sigs.k8s.io/controller-runtime/pkg/manager
+
+# 二 controllerManager结构: 
+## (1)概述:
+- 实现Manager接口.
+
+## (2)属性:
+- config: rest.Config指针.
+- scheme
+- cache
+- client: 注入到controller里的client.
+- apiReader: 向api server来查询, 不使用cache.
+- 等等.
+
+## (3)方法:
+- Start
+- GetConfig
+- GetScheme
+- GetClient: 返回一个config配置好的client, client可能会从cache读, 由Options.NewClient决定(若配置,则默认从cache读).
+- GetCache
+- GetApiReader: 返回一个Reader, 该Reader使用API server, 该对象应该节约使用并且在client不满足场景时使用.
+- GetWebhookServer
+- 等等.
+
 
 # 三 Controller:
 ## (1)概述:

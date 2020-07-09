@@ -1,6 +1,7 @@
 # 一 概述:
 ## (1)功能:
 - Kustomize introduces a **template-free** way to customize application configuration that simplifies the use of off-the-shelf applications.
+- kustomize提供一个插件架构允许用户写他们自己的资源generators和transformers.
 
 ## (2)术语
 - Kustomization: 可以指kustomization.yaml文件, 通常是一个包含kustomization.yaml以及其所引用文件的相对路径.
@@ -57,7 +58,6 @@
 
 # 四 插件:
 ## (1)概述:
-- kustomize提供一个插件架构允许用户写他们自己的资源generators和transformers.
 - 备注: https://github.com/kubernetes-sigs/kustomize/tree/master/docs/plugins
 
 # 五 工作流:

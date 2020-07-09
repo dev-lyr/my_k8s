@@ -6,7 +6,7 @@
 
 ## (2)删除类型:
 - **级联删除(cascading deletion)**: 删除对象时自动删除它的依赖, 级联删除分为2种: backgroup和foregroup.
-- 不删除依赖: 若删除对象时不删除它的依赖, 则依赖会变成孤儿(orphaned).
+- **不删除依赖**: 若删除对象时不删除它的依赖, 则依赖会变成孤儿(orphaned).
 
 ## (3)设置删除策略:
 - 当删除对象时, 在删除选项(deleteOptions)参数中设置**propagationPolicy**, 可能值为**Orphan**, **Foreground**或**Background**.
@@ -15,4 +15,3 @@
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/
 - 代码: kubernetes/pkg/controller/garbagecollector
-

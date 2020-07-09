@@ -26,3 +26,4 @@
 - --policy-config-file
 - --policy-configmap
 - --policy-configmap-namespace: 默认kube-system.
+

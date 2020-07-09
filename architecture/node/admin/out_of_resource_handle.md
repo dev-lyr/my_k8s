@@ -1,6 +1,6 @@
 # 一 概述:
 ## (1)概述:
-- 当可用计算资源较低时, kubelet需要保持node的稳定性, 尤其是不可压缩资源(内存,磁盘等),当资源耗尽时,node就会不稳定.
+- 当可用计算资源较少时, kubelet需要保持node的稳定性, 尤其是不可压缩资源(内存,磁盘等),当资源耗尽时,node就会不稳定.
 
 ## (2)备注:
 - https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource
@@ -68,3 +68,4 @@
 ## (3)oom-killer行为:
 - 根据容器使用内存的百分比计算出oom_score, 并加入oom_score_adj计算出一个有效的oom_score, 接着杀死得分最高的容器.
 
+# 五 最佳实践

@@ -45,6 +45,7 @@
 
 ## (4)allocatable:
 - Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
+- 这里是可分配单资源数量, 不是剩余资源数量, 剩余的可通过kubectl describe node查询.
 
 ## (5)config:
 - Status of the config assigned to the node via the dynamic Kubelet config feature.
@@ -68,7 +69,8 @@
 ## (1)概述:
 - 与pod和service等不同, node不是由kubernetes内部创建的, node是通过外部云服务商或者存在于你自己的物理机或虚拟机池.
 - kubernetes创建一个node对象来表示node, 创建后会检查node是否合法.
-- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod, 常用于pod重启前, **kubectl cordon nodename**将node标记为不可用, **kubectl uncordon**解除限制.
+- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod, 常用于pod重启前.
+- **kubectl cordon nodename**将node标记为不可用, **kubectl uncordon**解除限制.
 
 ## (2)node注册方式:
 - 自注册(常用): 通过kubelet --register-node设置为true来实现, kubelet会尝试向api server注册它自己.

@@ -12,7 +12,6 @@
 ## (3)PV的类型:
 - CSI
 - NFS
-- local
 - hostpath: 测试使用.
 - 等等.
 - 备注: PV类型以插件方式实现.

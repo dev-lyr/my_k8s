@@ -67,14 +67,14 @@
 - toleration和taint匹配的条件: key和effect是一样的, operator是exist或者equal且value相等.
 
 ## (2)Taint
-- effect: 可选值:NoSchedule, PreferNoSchedule和NoExecute.
+- effect: 可选值:NoSchedule,PreferNoSchedule和NoExecute.
 - key
 - timeAdded
 - value
-- 备注: 通常,若一个effect为NoExecute的taint添加到node上, 则不能忍受该taint的pod会被立即清除; pod可以通过使用effect为NoExecute且指定tolerationTimeout属性来设置在tained被添加到node多久后再清除该pod.
+- 备注: 若一个effect为NoExecute的taint添加到node上, 则不能忍受该taint的pod会被立即清除; pod可以通过使用effect为NoExecute且指定tolerationTimeout属性来设置在tained被添加到node多久后再清除该pod.
 
 ## (3)Toleration:
-- effect: 空表示match所有taint effects, 若指定, 可选值:NoSchedule, PreferNoSchedule(soft版NoSchedule, 系统会尝试避免将一个pod放在不能忍受taint的node上)和NoExecute.
+- effect: 空表示match所有taint effect; 可选值:NoSchedule, PreferNoSchedule(soft版NoSchedule, 系统会尝试避免将一个pod放在不能忍受taint的node上)和NoExecute.
 - key: toleration应用的taint key, 空的key表示可以容忍所有.
 - operator: 合理是Exists和Equal, 默认为Equal.
 - tolerationSeconds: 表示toleration容忍的taint的时间周期, 默认不设置, 表示永久容忍该taint(不会被evict); 该值只在effect为NoExecute时有效.

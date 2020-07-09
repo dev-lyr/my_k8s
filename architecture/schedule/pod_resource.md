@@ -16,6 +16,7 @@
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
 - k8s允许用户为节点添加自定义资源并支持pod的request来申请.
+- 和docker的映射: kuberuntime_container_linux.go
 
 # 二 LimitRange对象:
 ## (1)功能:
@@ -23,9 +24,19 @@
 - 限制一个namespace内每个PersistentVolumeClaim的最小和最大存储请求.
 - 限制一个namespace内request和limit的ratio.
 - 设置一个namespace内默认的计算资源的request/limit, 并在运行时自动将它们inject到容器.
+- LimitRangeSpec: LimitRangeItem数组.
 
-## (2)备注:
-- LimitRange只能应用于单个pod或容器, 创建大量的Pod仍然会吃点集群资源, 此时需要ResourceQuota.
+## (2)LimitRangeItem:
+- type: 资源类型.
+- default: 资源的默认limit值,若没指定时使用.
+- defaultRequest: 资源默认request值,若没指定时使用.
+- max: 资源最大使用量约束.
+- min: 资源最小使用量约束.
+- maxLimitRequestRatio: 若指定则资源必须指定request和limit且request/limit不能大于该比率.
+
+## (3)备注:
+- LimitRange admission controller.
+- LimitRange只能应用于单个pod或容器, 创建大量的Pod仍然会吃掉集群资源, 此时需要ResourceQuota.
 - https://kubernetes.io/docs/concepts/policy/limit-range/
 
 # 三 ResourceQuota对象:
@@ -41,7 +52,11 @@
 - 若创建或更新一个资源超过quota限制, 则请求会以HTTP 403 FORBIDDEN返回失败.
 - 若在namespace针对计算资源(cpu和mem)开启ResourceQuota, 用户必须指定这些值的request或limit, 否则quota系统将拒绝pod创建.
 
-## (3)备注:
+## (3)ResourceQuotaSpec
+
+## (4)ResourceQuotaStatus
+
+## (5)备注:
 - https://kubernetes.io/docs/concepts/policy/resource-quotas/
 
 # 四 内存资源:
@@ -64,6 +79,10 @@
 - 配置一个小的内存请求, 可以让Pod更多机会被调度.
 - 通过配置大于请求的内存限制, 可以让Pod在burst时有内存可用; 同时又将内存限制在一个合理的数量.
 
+## (5)到docker参数转换:
+- memory: limit.
+- oom-score-adj: 若是critical pod或guaranteed则使用guaranteedOOMScoreAdj(-998), besteffort为besteffortOOMScoreAdj(1000), Burstable根据request进行计算, 保证比besteffortOOMScoreAdj小.
+
 # 五 cpu资源:
 ## (1)概述:
 - resource:request:cpu: 设置一个容器的cpu请求.
@@ -82,6 +101,11 @@
 - 通过配置容器的cpu请求和限制, 可以高效利用集群中节点的cpu资源.
 - 配置一个小的cpu请求, 可以让Pod更多机会被调度.
 - 通过配置大于请求的cpu限制, 可以让Pod在burst时有cpu可用; 同时又将cpu限制在一个合理的数量.
+
+## (5)到docker参数转换:
+- cpu-shares: 若request不为空,使用request; 若request为空且limit不为空使用limit; 若都为空使用minShares(值为2),若计算结果小于minShares也使用minShares.
+- cpu-period: 默认为100000(100ms),若自定义period feature则使用自定义.
+- cpu-quota: 使用limit和cpu-period得出, 若limit为空, 则为0; 若计算结果小于minQuotaPeriod(1000)则使用该值.
 
 # 六 Pod的QoS:
 ## (1)QoS类型:

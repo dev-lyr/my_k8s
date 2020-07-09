@@ -5,7 +5,7 @@
 - scheduler找一个pod的feasible nodes, 随后执行一些函数对node进行打分, 在这些feasible nodes中选择得分最高的node来运行pod.
 - **binding**: scheduler将决定通知API server的过程.
 
-## (2)2阶段:
+## (2)选择node的2阶段:
 - Filtering
 - Scoring
 
@@ -33,7 +33,7 @@
 - CheckVolumeBinding
 
 ## (3)备注:
-- kubernetes/pkg/scheduler/algorithm
+- kubernetes/pkg/scheduler/algorithm/provider
 
 # 三 Scoring:
 ## (1)概述:
@@ -56,5 +56,5 @@
 - EqualPriorityMap
 
 ## (3)备注:
-- kubernetes/pkg/scheduler/algorithm
+- kubernetes/pkg/scheduler/algorithmprovider
 - 每个Priority函数的打分范围0-10,10表示优先级最高.

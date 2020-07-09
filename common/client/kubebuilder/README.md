@@ -40,7 +40,18 @@
 # 四 controller:
 ## (1)概述:
 - controller主要确保对象的实际状态match期望状态, 该过程称为调和(reconciling).
-- controller里实现调和逻辑的是**Reconciler**.
+- controller里实现调和逻辑的是**XXXReconciler**.
 
-## (2)Reconciler
+## (2)XXXReconciler(struct):
+- client.Client
+- Log
+- Scheme
 
+## (3)Reconcile函数:
+- reconcile发生错误尽早返回,成功是返回空的result和error为nil, 失败时返回error不为nil, 会自动入队列重试.
+
+# 五 metrics
+
+# 六 日志
+
+# 七 event

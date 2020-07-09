@@ -6,7 +6,7 @@
 ## (2)滚动更新(rolling updates)
 
 ## (3)deployment controller:
-- watch的对象: deployment, rs和pod.
+- watch的对象: deployment,rs和pod.
 - rs的名字格式为:[deployment-name]-[random-string],随机字符串使用pod-template-hash作为seed随机产生.
 
 ## (4)使用场景:

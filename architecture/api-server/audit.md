@@ -31,7 +31,6 @@
 ## (3)备注:
 - https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apiserver/pkg/apis/audit/v1beta1/types.go
 
-
 # 四 audit backend:
 ## (1)概述:
 - 审计后端将审计事件持久化到外部存储.

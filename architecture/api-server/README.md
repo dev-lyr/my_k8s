@@ -3,7 +3,7 @@
 - 暴露Kubernetes API, 是Kubernetes的**控制面板**的前端.
 - k8s系统组件间只能通过API服务器通信, 它们之间不会直接通信.
 - API服务器是和etcd通信的唯一组件, 其它组件都通过api服务器来修改集群状态.
-- 支持水平扩展(scale horizontally).
+- API server提供一致性的对象访问, 也对对象进行校验(避免存入非法对象), 同时提供支持并发更新的乐观锁.
 
 ## (2)访问方式:
 - 各种client库.
@@ -50,28 +50,11 @@
 ## (7)审计(audit)相关:
 - --audit-webhook-config-file
 
-## (8)etcd相关:
+## (8)storage相关:
 - --etcd-servers: 可连接的etcd服务器的地址, 格式:scheme://ip:port, 逗号分隔.
 - --etcd-prefix: 默认/registry, 在etcd中存储所有资源的prefix.
 - -–storage-backend: 持久化存储的backend, 默认etcd3.
 - --storage-media-type: 默认application/vnd.kubernetes.protobuf.
+- --default-watch-cache-size: 默认watch的cache大小, 默认为100; 0表示disable watch cache.
 - --watch-cache: 默认为true.
-- --watch-cache-sizes
-
-# 三 源码:
-## (1)概述:
-- kubernetes/cmd/kube-apiserver: 启动入口.
-- apiserver: https://godoc.org/k8s.io/apiserver
-- apiextensions: https://github.com/kubernetes/apiextensions-apiserver
-- kube-aggregator: https://github.com/kubernetes/kube-aggregator
-- https://github.com/kubernetes/apiserver
-
-## (2)apiserver:
-
-## (3)apiextensions:
-- 提供注册CRD的API, 在kube-apiserver中作为delegate服务器运行.
-
-## (4)kube-aggregator:
-- Provide an API for registering API servers.
-- Summarize discovery information from all the servers.
-- Proxy client requests to individual servers.
+- --watch-cache-sizes: 指定资源的watch size的配置.
