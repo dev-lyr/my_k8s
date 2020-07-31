@@ -2,6 +2,7 @@
 ## (1)概述:
 - 背景: 开发人员不需知道底层使用那些存储技术, 基础设施相关的应该有集群管理员来管理.
 - PersistentVolume子系统提供一个API来抽象storage是怎么提供以及怎么消费的.
+- PV类型通过插件形式实现.
 
 ## (2)相关资源:
 - **PersistentVolume(PV)**: a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using **Storage Classes**.
@@ -26,6 +27,7 @@
 # 二 PV:
 ## (1)概述:
 - PV是集群级别资源, 不属于任何namespace.
+- PV是volume plugin(与Volumes类似), 但是有独立于使用该pv的pod的生命周期.
 
 ## (2)PersistentVolumeSpec:
 - accessModes: ReadWriteOnce(RWO),ReadOnlyMany(ROM),ReadWriteMany(RWM).
@@ -45,7 +47,7 @@
 
 # 三 PVC
 ## (1)概述:
-- PVC是namespace资源. 
+- PVC是namespace资源, 是用户对存储资源的请求.
 
 ## (2)PersistentVolumeClaimSpec:
 - accessModes
@@ -85,6 +87,8 @@
 - 观察PVC的创建, 若未指定storageClass则自动加上默认.
 - 若没有配置默认storageClass则不干活, 配置多个默认storageClass会报错.
 
+## (4)volume-provision规范:
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/storage/volume-provisioning.md
 
 # 五 volume和claim的lifecycle:
 ## (1)提供(Provisioning):
@@ -94,7 +98,8 @@
 
 ## (2)绑定(binding):
 - A control loop in the master watches for new PVCs, finds a matching PV (if possible), and binds them together.
-- Once bound, PersistentVolumeClaim binds are exclusive, regardless of how they were bound. A PVC to PV binding is a one-to-one mapping, using a ClaimRef which is a bi-directional binding between the PersistentVolume and the PersistentVolumeClaim.
+- Once bound, PersistentVolumeClaim binds are exclusive, regardless of how they were bound. 
+- A PVC to PV binding is a **one-to-one mapping**, using a ClaimRef which is a bi-directional binding between the PersistentVolume and the PersistentVolumeClaim.
 - Claims will remain unbound indefinitely if a matching volume does not exist. Claims will be bound as matching volumes become available. 
 
 ## (3)使用
@@ -102,6 +107,15 @@
 
 ## (4)存储对象保护:
 - 若用户删除一个正在被Pod使用的PVC, 则PVC不会立即被删除, 延缓至在Pod不使用后删除.
-- 若管理员删除一个绑定到PVC的PV, PV不会立即被删除, 延缓至PV不在绑定到PVC再删除.
+- 若管理员删除一个绑定到PVC的PV, PV不会立即被删除, 延缓至PV不再绑定到PVC再删除.
 - PVC被保护: status是Terminating, Finalizer有kubernets.io/pvc-protection.
 - PV被保护: status是Terminating, Finalizer有kubernets.io/pv-protection.
+
+## (5)回收(reclaiming):
+- 当用户用完卷时, 可通过API删除pvc对象来允许回收资源, pv的回收策略决定pv在被pvc释放后如何处理该pv, 策略包括: Retain,Recycle,Delete.
+- Retain: 当PVC删除时, PV依旧存在, 该卷被认为是Released,但是不能被其它pvc使用, 因为还有前个pvc的数据存在.
+- Delete: 对于支持Delete回收策略的volume plugin, 删除会删除pv对象同时存储资源也会被删除.
+- Decycle: 已被废弃, 推荐使用动态provisioning.
+
+## (6)expanding pvc:
+- 部分volume类型支持expanding pvc.

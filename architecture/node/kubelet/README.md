@@ -13,7 +13,7 @@
 
 ## (3)源码:
 - kubernetes/cmd/kubelet
-- kubernetes/pkg/kubelet/
+- kubernetes/pkg/kubelet
 
 ## (4) kubelet结构体:
 - 主要的kubelet实现.
@@ -22,19 +22,46 @@
 
 # 二 Kubelet结构属性:
 ## (1)pod相关:
-- podManager
-- podWorkers
-- evictionManager
-- nodeLister
+- podWorkers: 根据event进行pods的sync.
+- podManager: 存储和管理对pod的访问,以及static pods和mirror pods间的映射.
 - serviceLister
 
-## (2)Node相关:
+## (2)容器相关
+- probeManager
+- livenessManager
+- containerGC: dead容器的gc.
+- containerLogManager: 容器日志管理.
 
-## (3)容器相关
+## (3)Node相关:
+- evictionManager: 观察和响应影响node稳定性的情况.
+- nodeLister
+- imageManager: 管理镜像的gc.
 
-# 三 Kubelet结构方法
-## (1)kubelet.go
-## (2)kubelet_pod.go
-## (3)kubelet_network.go
-## (4)kubelet_volume.go
-## (5)kubelet_resource.go
+# 三 kubelet结构方法:
+## (1)Pod相关
+
+# 四 Kubelet启动:
+## (1)流程:
+- 若cloudResourceSyncmManager不为nil, 则启动.
+- 调用initializeModules初始化不需要容器运行时启动的内部模块.
+- 启动volumeManager.
+- syncNodeStatus.
+- fastStatusUpdateOnce.
+- 启动nodeLeaseController.
+- updateRuntimeUp.
+- 调用initNetworkUtil创建iptables rule.
+- 启动一个goroutime用于kill pod(podKiller).
+- 启动statusManager
+- 启动probeManager
+- 启动runtimeClassManager
+- 启动pod lifecycle event generator.
+- 调用syncLoop: 处理变化的主要loop.
+
+## (2)initializeModules:
+- metrics
+- 调用setupDataDirs创建相关数据目录: root目录, pods目录, plugin目录和pod资源目录.
+- 创建容器日志目录(若不存在).
+- 启动imageManager.
+- 启动ServerCertificateManager.
+- 启动oom watcher.
+- 启动resourceAnalyzer.

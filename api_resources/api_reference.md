@@ -24,7 +24,6 @@
 - **Patch**: Patch will apply a change to a specific field. How the change is merged is defined per field. Lists may either be replaced or merged.
 
 ## (3)读取:
-- 三种形式: Get,List和Watch. 
 - **Get**: 根据name来获取指定资源对象.
 - **List**: 返回在一个namespace内指定类型的所有资源对象.
 - **Watch**: Watch will stream results for an object(s) as it is updated.

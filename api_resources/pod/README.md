@@ -126,7 +126,7 @@
 - 使用Linux Namespace, 所以可以有不同于应用容器的文件系统, 可以用于访问一些app容器不能访问的私有数据.
 - 在app容器启动前执行, app容器是并行运行的, 所以Init容器提供一种block或delay应用容器启动的方法, 直至满足指定preconditions.
 
-# 六 Pause容器:
+# 六 Pause/Infra容器:
 ## (1)概述:
 - 扮演pod内容器的"父容器", 两个主要功能: 共享namespace; 当pid空间共享开启时, 作为每个pod的PID 1并且回收僵尸进程.
 - 又叫infra容器.
@@ -142,7 +142,7 @@
 
 ## (2)工作方式:
 
-## (4)备注:
+## (3)备注:
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/service-catalog/pod-preset.md
 
 # 八 静态pod:

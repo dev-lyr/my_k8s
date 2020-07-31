@@ -18,6 +18,7 @@
 - --healthz-port: 默认10248, localhost healthz endpoint的部分.
 - --node-ip: 节点的IP地址, 若指定kubelet会使用该IP地址.
 - --pod-cidr: 用于Pod IP地址的CIDR, 只能用于standalone模式; 集群模式, 从master获取, 参考controller-manager配置.
+- --node-status-update-frequency: Specifies how often kubelet posts node status to master, 默认10s, Note: be cautious when changing the constant, it must work with nodeMonitorGracePeriod in nodecontroller(controller-manager配置).
 
 ## (4)日志相关:
 - --log-dir: 若非空, 写入该目录下日志文件.

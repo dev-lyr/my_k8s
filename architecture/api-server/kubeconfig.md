@@ -9,7 +9,9 @@
 - 若KUBECONFIG环境变量设置, 则指定kubeconfig文件列表,这些kubeconfig文件会被merge.
 - 最后,使用${HOME}/.kube/config文件, 不会进行merge.
 
-## (3)kubectl config
+## (3)生成方式:
+- kubectl config
+- kubeadm alpha kubeconfig
 
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/

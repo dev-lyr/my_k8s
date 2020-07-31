@@ -6,7 +6,10 @@
 ## (2)工作方式:
 - rs定义一个selector指定如何标记它管理的pod, 一个replicass数量表示应该维护多少pods; 一个pod模板指定新创建pod的数据.
 - rs通过创建和删除pod来达到期望的数量.
-- rs通过pod的ownerReferences属性来连接到它的pods, 若一个pod没有ownerrefence或它的ownerreference不是一个controller且它满足rs的selector, 则改pod会被rs获得.
+- rs通过pod的ownerReferences属性来连接到它的pods, 若一个pod没有ownerrefence或它的ownerreference不是一个controller且它满足rs的selector, 则该pod会被rs获得.
+
+## (3)备注:
+- rs修改镜像不会自动更新已有pod, 此时需使用deploy来支持; 可以手动删除pod, 此时新创建出来的就是新的镜像.
 
 # 二 ReplicaSet资源:
 ## (1)ReplicaSetSpec:
@@ -21,3 +24,17 @@
 - fullyLabledReplicas
 - readyReplicas: ready的副本数量.
 - replicas
+
+
+# 三 ReplicaSetController:
+## (1)功能:
+
+## (2)属性:
+- kubeclient
+- syncHandler
+- queue
+- rsLister
+- podLister
+- expectations
+- podControl
+- burstReplicas

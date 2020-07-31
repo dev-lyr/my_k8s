@@ -119,4 +119,3 @@
 ## (2)命令:
 - kubectl rollout pause
 - kubectl rollout resume
-
