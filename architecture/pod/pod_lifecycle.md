@@ -42,7 +42,7 @@
 - message: transition的细节.
 - reason: transition的原因.
 - status: 字符串, 可能值"True", "False"和"Unknown".
-- type
+- type: 对于(3)的type.
 
 ## (3)type:
 - **PodScheduled**: Pod已被调度到一个node. 
@@ -112,9 +112,9 @@
 
 # 六 Pod readiness gate
 ## (1)概述:
+- 可使用ReadinessGate来指定计算pod readiness的额外的condition条件, 若status.conditions没有某个condition, 则表示该condition状态为false.
 - 是一个PodReadinessGate数组, 若指定, 则Pod只有在**所有容器都是Ready**且**所有ReadinessGate中的condition等于true**时候才算是ready(即PodCondition中type=Ready的值为true).
 - PodReadinessGate: 只有一个conditionType字符串属性, 表示pod的condition list需要match的类型.
 
 ## (2)备注:
-- You can use the new field **ReadinessGate** in the PodSpec to specify additional conditions to be evaluated for Pod readiness. If Kubernetes cannot find such a condition in the status.conditions field of a Pod, the status of the condition is default to "False".
 - https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/0007-pod-ready++.md

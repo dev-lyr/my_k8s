@@ -32,7 +32,7 @@
 - logs: 输出容器在pod中的日志.
 - attach: Attach到一个运行中的container.
 - exec: 在一个container中执行一个命令..
-- port-forward: Forward one or more local ports to a pod.
+- port-forward: Forward one or more local ports to a pod, 用于直接调试pod.
 - proxy: 运行一个proxy到Kubernetes API server.
 - cp: 复制files和directories到containers和从容器中复制files和directories..
 - auth: Inspect authorization.

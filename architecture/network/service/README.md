@@ -1,9 +1,8 @@
 # 一 概述:
 ## (1)概述:
-- Pod是不稳定的, 例如ReplicaSets可以动态的创建和销毁pod(例如:扩容或缩容时), 虽然每个pod可以有自己的IP地址, 但是这些IP地址是不稳定的.
+- 背景: Pod是不稳定的, 例如ReplicaSets可以动态的创建和销毁pod(例如:扩容或缩容时), 虽然每个pod可以有自己的IP地址, 但是这些IP地址是不稳定的.
 - **服务**: 定义了一个逻辑的Pod集合和一个访问它们的策略, Service通常通过**标签选择器**来选择Pod集.
 - Service解耦了前端用户和后端服务, 当后端服务pod集合变化时, 前端用户不需要感知.
-- 对于非Kubernetes-native应用, kubernetes提供一个virtual-IP-based网桥来把服务redirect到后端Pods.
 
 ## (2)Endpoints资源:
 - Service不直接和Pods直接相连, 有一种资源介于两者之间, 即**Endpoints**, Endpoint和Service的name一样.
@@ -35,7 +34,7 @@
 - 备注: 适用于所有服务type, kube-proxy会创建对应listen端口.
 
 ## (3)externalName:
-- externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. 
+- externalName is the external reference that kubedns or equivalent will return as a **CNAME record** for this service. 
 - No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
 - 为外部服务创建一个别名, Pod可以使用别名而不是外部服务的实际FQDN来访问外部服务, 隐藏了实际服务的名称以及使用该服务的pod的位置, 运行修改服务定义.
 
@@ -69,7 +68,7 @@
 - sessionAffinityConfig
 
 ## (10)type:
-- ClusterIP: 默认,以集群内部IP的形式暴露服务, 因此服务只在集群内部(内部pod)可访问.
+- ClusterIP: 默认,以集群内部IP的形式暴露服务, 因此服务只在集群内部可访问.
 - ExternalName: 将服务映射到**externalName**属性的内容, 可用于为外部服务创建别名等.
 - NodePort: 集群中每个节点上都打开一个端口, 并将端口上接收到的流量重定向到后端服务.
 - LoadBalancer: 是NodePort的一种扩展, 使得服务可以通过专门的负载平衡器来访问, 由k8s运行的云基础设施提供, 客户端通过负载均衡器的IP地址来连接到服务, 负载均衡器有一个公开的访问IP地址.

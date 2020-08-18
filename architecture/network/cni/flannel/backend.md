@@ -32,9 +32,6 @@
 - Lease
 - MTU
 
-# 三 配置:
-## (1)概述:
-- https://github.com/coreos/flannel/blob/master/Documentation/configuration.md
 
 # 三 VXLAN:
 ## (1)概述:

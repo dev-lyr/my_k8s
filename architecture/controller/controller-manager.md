@@ -16,16 +16,13 @@
 - kube-controller-manager是一个包含kube核心控制循环的daemon.
 - 用法: kube-controller-manager [flags]
 
-## (2)--controllers:
-- 配置enable的控制器列表, 星号表示开启默认的controller. 其它的例如: foo表示开启,-foo表示关闭.
-- 所有controller列表: attachdetach, bootstrapsigner, cloud-node-lifecycle, clusterrole-aggregation, cronjob, csrapproving, csrcleaner, csrsigning, daemonset, deployment, disruption, endpoint, endpointslice, garbagecollector, horizontalpodautoscaling, job, namespace, nodeipam, nodelifecycle, persistentvolume-binder, persistentvolume-expander, podgc, pv-protection, pvc-protection, replicaset, replicationcontroller, resourcequota, root-ca-cert-publisher, route, service, serviceaccount, serviceaccount-token, statefulset, tokencleaner, ttl, ttl-after-finished
-- 默认关闭: bootstrapsigner, tokencleaner
-
-## (3)controller并发相关:
+## (2)控制器相关:
+- --controllers: 配置enable的控制器列表, 星号表示开启默认的controller. 其它的例如: foo表示开启,-foo表示关闭.
 - --concurrent-endpoint-syncs: 默认5.
 - --concurrent-deployment-syncs: 默认5.
-- 等等.
 
-## (4)网络相关:
+## (3)网络相关:
 - --cluster-cidr: 集群中Pod的CIDR范围, 需要--allocate-node-cidr=true.
 - --cidr-allocator-type: 默认RangeAllocator.
+
+## (4)HA相关

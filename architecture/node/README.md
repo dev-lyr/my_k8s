@@ -1,14 +1,18 @@
 # 一 概述:
 ## (1)概述:
 - node是k8s中的工作节点, node可以是虚拟机或物理机.
-- node包含运行pod和被master组件管理的服务, 包括: 容器运行时, kubelet和kube-proxy.
 
-## (2)和node交互的组件:
+## (2)node上组件:
+- kubelet
+- 容器运行时
+- kube-proxy
+
+## (3)和node交互的组件:
 - node controller
 - kubelet
 - kubectl
 
-## (3)node.spec:
+## (4)nodeSpec:
 - configService
 - podCIDR
 - podCIDRS
@@ -16,12 +20,23 @@
 - taints
 - unschedulable: 控制node为不可调度, 默认是可调度.
 
-## (4)备注:
+## (5)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/
 - API: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.15/#node-v1-core
 - 监控: https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health/
+ 
+# 二 Node管理:
+## (1)概述:
+- 与pod和service等不同, node不是由kubernetes内部创建的, node是通过外部云服务商或者存在于你自己的物理机或虚拟机池.
+- kubernetes创建一个node对象来表示node, 创建后会检查node是否合法.
+- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod, 常用于pod重启前.
+- **kubectl cordon nodename**将node标记为不可用, **kubectl uncordon**解除限制.
 
-# 二 node.status:
+## (2)node注册方式:
+- 自注册(常用): 通过kubelet --register-node设置为true来实现, kubelet会尝试向api server注册它自己.
+- 手动注册: 将kubelet --register-node设置为false, 然后自己创建node对象. 
+
+# 三 node.status:
 ## (1)addresses:
 - HostName: node的内核上报的hostname, 可被kubelet --hostname-override参数覆盖.
 - ExternalIP: node的ip地址, 可被外部路由到(集群外).
@@ -64,17 +79,6 @@
 
 ## (9)images:
 - 该node上容器镜像列表.
- 
-# 三 Node管理:
-## (1)概述:
-- 与pod和service等不同, node不是由kubernetes内部创建的, node是通过外部云服务商或者存在于你自己的物理机或虚拟机池.
-- kubernetes创建一个node对象来表示node, 创建后会检查node是否合法.
-- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod, 常用于pod重启前.
-- **kubectl cordon nodename**将node标记为不可用, **kubectl uncordon**解除限制.
-
-## (2)node注册方式:
-- 自注册(常用): 通过kubelet --register-node设置为true来实现, kubelet会尝试向api server注册它自己.
-- 手动注册: 将kubelet --register-node设置为false, 然后自己创建node对象. 
 
 # 四 资源预留:
 ## (1)概述:
@@ -98,16 +102,19 @@
 - 为了避免系统oom, kubelet提供了**out of resource**管理.
 - eviction只支持mem和ephemeral-storage, 通过kubelet的--eviction-hard来设置.
 
-## (6)经验
-
-# 五 超出资源管理:
+# 五 心跳:
 ## (1)概述:
-- 当可用计算资源较低时, kubelet需要保持node的稳定性, 当资源耗尽时, node就会不稳定.
-- https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource
+- node通过发送心跳来帮助判断node的可用性.
 
-# 六 扩展node资源:
-## (1)概述:
-- 扩展资源允许集群管理员向k8s告知其它节点级别资源.
+## (2)心跳的两种形式:
+- 更新**NodeStatus**
+- 更新Lease Object: Node在**kube-node-lease** namespace内有一个关联的Lease对象, Lease是一个轻量资源, 可以提高node的心跳上报性能.
 
-## (2)备注:
-- https://kubernetes.io/docs/tasks/administer-cluster/extended-resource-node/
+## (3)更新NodeStatus:
+- kubelet在status改变时或者配置的间隔过后会更新NodeStatus.
+
+## (4)更新Lease对象:
+- kubelet会间隔10s(默认更新间隔)更新它关联的lease对象, Lease对象的更新不依赖NodeStatus的更新.
+
+## (5)备注:
+- pkg/kubelet/nodelease

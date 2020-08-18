@@ -30,4 +30,36 @@
 ## (4)备注:
 - https://github.com/coreos/flannel/blob/master/Documentation/backends.md
 
-# 三 subnet
+# 三 配置:
+## (1)概述:
+- 命令行: /opt/bin/flanneld [OPTION]
+- https://github.com/coreos/flannel/blob/master/Documentation/configuration.md
+
+## (2)常用:
+- -kube-api-url: kubernete API server URL, 若flannel运行在pod内则不需要指定.
+- -kubeconfig-file: kubeconfig文件的location, 若运行在pod内不需指定.
+- -kube-subnet-mgr: contact the Kubernetes API for subnet assignment instead of etcd.
+- -net-config-path: path to the network configuration file (default "/etc/kube-flannel/net-conf.json").
+- -healthz-ip: 默认0.0.0.0.
+- -healthz-port: 0则表示disable, 默认是disable.
+- -iface: 用于主机间(inter-host)通信使用的接口(IP或name).
+- -iface-regex
+- -public-ip
+- --subnet-file
+- --subnet-lease-renew-margin
+- -v: V logs的日志级别.
+- -vmodule
+    	
+## (3)iptables相关:
+- -ip-masq: setup IP masquerade rule for traffic destined outside of overlay network.
+- -iptables-forward-rules: add default accept rules to FORWARD chain in iptables (default true).
+- -iptables-resync: resync period for iptables rules, in seconds (default 5).
+    	
+## (4)etcd选项:
+- -etcd-cafile
+- -etcd-certfile
+- -etcd-endpoints
+- -etcd-keyfile
+- -etcd-password
+- -etcd-prefix
+- -etcd-username

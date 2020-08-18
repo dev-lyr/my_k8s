@@ -3,6 +3,7 @@
 - kubeadm [command]
 
 ## (2)命令:
+- alpha: 实验性子命令, 例如:certs,kubeconfig,kubelet等.
 - init: 启动控制面板节点.
 - join: 启动工作/控制面板节点并加入集群.
 - upgrade: 升级集群到新的版本.

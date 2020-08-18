@@ -5,14 +5,10 @@
 
 ## (2)滚动更新(rolling updates)
 
-## (3)deployment controller:
-- watch的对象: deployment,rs和pod.
-- rs的名字格式为:[deployment-name]-[random-string],随机字符串使用pod-template-hash作为seed随机产生.
-
-## (4)使用场景:
+## (3)使用场景:
 - 金丝雀部署(Canary Deployment).
 
-## (5)kubectl rollout:
+## (4)kubectl rollout:
 - history: 显示rollout历史.
 - pause
 - resume
@@ -20,7 +16,7 @@
 - undo
 - 备注: rollout的开始是通过修改pod template来触发的.
 
-## (6)kubectl rolling-update(过时):
+## (5)kubectl rolling-update(过时):
 - 缺点: 会直接修改对象的配置; kubectl客户端负责执行滚动升级的复杂逻辑, 当出现网络断开等情况会处于中间状态.
 - 备注: 已过时, 不建议使用, Deployment首选.
 
@@ -64,7 +60,7 @@
 
 ## (4)Failed
 
-# 四 创建:
+# 五 创建:
 ## (1)概述:
 - 创建Deployment时指定的Pod由**ReplicaSet**负责在后端创建.
 
@@ -83,6 +79,12 @@
 - deployment控制器会给每个deployment创建的rs添加一个**pod-template-hash** label, 该label的值是rs的PodTemplate的hash值.
 - 该label来确保一个deploy的子rs不会overlap.
 - 该label会被添加到rs selector, pod template labels和rs管理的每个pod中.
+
+# 四 deployment controller:
+## (1)概述:
+- watch的对象: deployment,rs和pod.
+- queue: deployment需要同步的队列.
+- rs的名字格式为:[deployment-name]-[random-string],随机字符串使用pod-template-hash作为seed随机产生.
 
 # 五 滚动更新:
 ## (1)概述:

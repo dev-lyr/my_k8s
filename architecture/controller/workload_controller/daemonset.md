@@ -26,7 +26,7 @@
 
 # 三 DaemonSet调度:
 ## (1)概述:
-- DaemonSet pods的创建和调度是通过daemonSet控制器(普通pod调度是通过调度器).
+- DaemonSet pods的**创建和调度**是通过daemonSet控制器(普通pod调度是通过调度器).
 - DaemonSet遵守taints和tolerations, 根据相关特性一些tolerations会被自动添加到ds的pod上.
 
 ## (2)自动添加的tolerations:

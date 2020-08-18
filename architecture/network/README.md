@@ -1,7 +1,7 @@
 # 一 概述:
 ## (1)网络通信分类:
-- 高度耦合的容器间: 通过pod和localhost来通信.
-- 同节点pod: bridge+veth pair.
+- 高度耦合的容器间(pod内容器): 通过pod和localhost来通信.
+- 同节点pod: bridge+veth pair, 部分优化方案会不使用bridge.
 - Pod-Pod间: CNI网络插件.
 - Pod和Service间: 通过kube-porxy和dns等.
 - 外界和Service间: Ingress和LoadBalance等.
