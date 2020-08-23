@@ -22,7 +22,7 @@
 
 ## (2)phase的值:
 - **Pending**: k8s系统已经接受Pod, 但是容器镜像还没有创建, 包含被调度前的时间和通过网络下载镜像花费的时间.
-- **Running**: Pod已经绑定到Node, 所有容器已经被创建, 至少一个容器在运行, 或处于启动或重启过程中.
+- **Running**: Pod已经绑定到Node, 所有容器已经被创建, 至少一个容器在运行或处于启动或重启过程中.
 - **Successed**: Pod内所有容器已经成功结束, 不会被重启.
 - **Failed**: Pod内所有容器已经终止, 且至少一个容器终止失败, 容器以非0退出或被系统终止.
 - **Unknown**: 由于一些原因不能获得Pod的状态, 通常是和Pod的Node通信失败.
@@ -60,6 +60,7 @@
 ## (2)探测类型:
 - **livenessProbe**: 表示容器是否在运行中, 若探测失败, kubelet会kill容器, 并根据restart policy来决定如何操作, 若容器不提供livenessProbe探测则默认状态为Success.
 - **readinessProbe**: 表示容器是否准备好接收请求, 若探测失败, 则**endpoint控制器**会从所有服务的endpoints中删除pod的ip地址.readiness在init delay之前的默认状态为Failure, 若不提供readiness探测则默认state为Success.
+- **startUpProbe**: 可在应用启动时设置.
 - 备注: 对应Probe资源.
 
 ## (3)handler类型:
@@ -75,19 +76,24 @@
 - exec: ExecAction.
 - httpGet: HTTPGetAction.
 - tcpSocket: TCPSocketActon.
-- initialDelaySeconds: 容器启动指定时间后再出发探测.
+- initialDelaySeconds: 容器启动指定时间后再触发**liveness**探测.
 - periodSeconds: 探测间隔, 默认10s, 最小1.
 - failureThreshold: 默认为3,最小为1,经过指定次数的连续probe失败才被认为是失败.
-- successThreshold: 默认是1, 针对liveness必须为1, 经过连续多次探测成功才算成功.
+- successThreshold: 默认是1, 针对liveness和startup必须为1, 经过连续多次探测成功才算成功.
 - timeoutSeconds: 探测的超时时间, 默认1s.
 
-## (7)存活探针经验:
+## (7)startup探针:
+- 在容器启动时间超过**initialDelaySeconds + failureThreshold * periodSeconds**时, 可使用一个与liveness探针同样endpoint的startup探针, startup探针periodSeconds默认为30s, 可指定一个高的failureThreshold从而使得容器有足够的时间启动.
+- 若指定startup探针, **在它成功完成前其他probes不会被执行**.
+- 若探测失败, 则和liveness探针一样, pod会被重启.
+
+## (8)liveness探针经验:
 - 对于生产中的Pod一定要定义一个存活探针, 没有存活探针, kubernete不会知道应用是否还活着, 只要进程还在运行, kubernete就认为Pod是健康的.
 - 存活探针不应该消耗太多计算资源, 且运行时间不应该太长, 默认情况下, 探针的执行比较频繁, 必须在一秒内执行完成.
 - 无需再探针中实现重试循环.
 - 容器崩溃或存活探针失败, Pod所在节点的kubelet会重启容器, k8s的控制面板组件不参与该操作; 若节点崩溃, kubelet则无法执行相关操作, 因此需要使用各种Pod Controller.
 
-## (8)备注:
+## (9)备注:
 - https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
 
 # 五 containerStatus:

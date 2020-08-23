@@ -68,7 +68,7 @@
 - serviceAccountName: 运行该Pod所使用的ServiceAccount的名字.
 - serviceAccount: 已废弃, 使用serviceAccountName.
 - automountServiceAccountToken: 表示serviceAccount token是否被自动挂载.
-- securityContext
+- securityContext: pod级别的安全属性和通用的容器配置,容器也有securityContext,若存在相同的属性则容器内的会覆盖pod级别的.
 
 # 三 podStatus
 ## (1)状态相关:

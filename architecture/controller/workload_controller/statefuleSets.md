@@ -55,3 +55,8 @@
 - volumeClaimTemplates
 - updateStratery
 
+## (2)StatefulSetUpdateStrategy:
+- type: 默认为滚动更新.
+- rolloutUpdate: 类型为RollingUpdateStatefulSetStrategy, 存在一个partition属性, 默认为0, 若指定则只更新ordinal大于partition的pod.
+
+

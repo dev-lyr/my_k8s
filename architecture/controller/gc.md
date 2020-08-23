@@ -24,7 +24,7 @@
 ## (2)foreground
 - root对象先进入"deletion in progress"阶段: 对象通过REST API依旧可见; 对象的deletionTimestamp被设置; metadata.finalizers包含"foregroundDeletions".
 - gc开始删除对象依赖, 一旦gc删除所有blocking依赖(对象的ownerReference.blockOwnerDeletion=true), 此后gc删除root对象.
-- 若对象的ownerReferences被controller设置, 则blockOwnerDeletion会被自动设置.
+- 若对象的ownerReferences设置为controller, 则blockOwnerDeletion会被自动设置.
 
 ## (3)background:
 - k8s直接删除owner对象, gc稍后在后台删除它的依赖.

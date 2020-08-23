@@ -20,6 +20,9 @@
 - **sources**: 上报事件的模块.
 - **type**: 事件类型, 目前有Normal和Warning.
 
+## (4)备注:
+- Event的TTL由kube-apiserver的event-ttl选项控制, 默认为1h.
+
 # 二 EventBroadcaster:
 ## (1)概述:
 - 接收事件并将他们发送到任意EventSink,watcher或log.

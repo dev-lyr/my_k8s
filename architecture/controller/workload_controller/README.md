@@ -1,5 +1,5 @@
 # 一 概述:
-## (1)常见Pod控制器:
+## (1)类型:
 - **ReplicaSet**: 是ReplicationController的继承者, 支持基于set的选择器(Selector).
 - **ReplicationController**: 保证指定数量的pod副本运行, 多了删除, 少了启动.
 - **Deployments**: 优先使用, 提供Pods和ReplicaSets的声明式更新.
@@ -16,6 +16,10 @@
 - Bare Pods: 不建议直接创建Pod, 使用controller创建的Pod在节点失败时候可以在其它节点重新启动, 而直接创建的Pod不支持. 即使应用只需要一个Pod, 此种情况下controller类似进程supervisor.
 - Job: 当期望程序自己执行完终止(例如:批量jobs), 应该使用Job替换ReplicaSet.
 - DaemonSet: 当需要Pod提供一个机器级别功能时使用DaemonSet替换ReplicaSet, 例如: 监控和日志.
+
+## (3)经验:
+- 原生workload缺少合适的分组策略且不支持分组暂停.
+- 原地更新.
 
 # 二 ReplicationController:
 ## (1)功能:

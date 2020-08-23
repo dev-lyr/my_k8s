@@ -34,3 +34,15 @@
 - Rollback.
 - Read/Write Scale.
 - Read/Write Status.
+
+# 三 patch:
+## (1)概述:
+- kubectl patch
+
+## (2)类型:
+- strategic merge patch(默认)
+- JSON merge patch: https://tools.ietf.org/html/rfc7386
+- JSON patch: https://tools.ietf.org/html/rfc6902
+
+## (3)备注:
+- https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/
