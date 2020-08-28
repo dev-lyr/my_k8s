@@ -1,6 +1,6 @@
 # 一 概述:
-## (1)HPA:
-- 横向Pod自动伸缩通过Horizontal控制器来对Pod控制器(replicaSet等)管理的pod的副本数据进行自动伸缩, 基于观察到的CPU利用率或者借助custom metrics支持基于应用级别的metrics.
+## (1)概述:
+- 横向Pod自动伸缩(HPA)通过Horizontal控制器来对Pod控制器(replicaSet等)管理的pod的副本数据进行自动伸缩, 基于观察到的CPU利用率或者借助custom metrics支持基于应用级别的metrics.
 - 通过**HorizontalpodAutoscaler(HPA)资源**和**Horizontal控制器**来实现HPA.
 - Horizontal控制器**周期**性检查Pod性能指标, 计算满足HPA资源所配置指标所需的副本数量, 从而调整对应**Pod控制器的replicas字段**.
 

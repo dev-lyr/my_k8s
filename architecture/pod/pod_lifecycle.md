@@ -6,7 +6,7 @@
 - Always: 默认.
 - OnFailure
 - Never
-- 备注: PodSpect的restartPolicy属性, 针对pod内所有容器.
+- 备注: PodSpec的restartPolicy属性, 针对pod内所有容器.
 
 ## (3)Pod lifetime:
 - 通常, pod只有在被人工或controller销毁时才会消失.
@@ -76,7 +76,7 @@
 - exec: ExecAction.
 - httpGet: HTTPGetAction.
 - tcpSocket: TCPSocketActon.
-- initialDelaySeconds: 容器启动指定时间后再触发**liveness**探测.
+- initialDelaySeconds: 容器启动指定时间后再触发探测(三种类型都适用).
 - periodSeconds: 探测间隔, 默认10s, 最小1.
 - failureThreshold: 默认为3,最小为1,经过指定次数的连续probe失败才被认为是失败.
 - successThreshold: 默认是1, 针对liveness和startup必须为1, 经过连续多次探测成功才算成功.

@@ -35,7 +35,7 @@
 - initContainers
 - imagePullSecrets
 - runtimeClassName: 引用一个RuntimeObject对象, 表示运行该Pod的运行时.
-- restartPolicy: Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always.
+- restartPolicy: pod内所有容器的重启策略, 可选:Always(默认),Never和OnFailure.
 
 ## (3)host相关:
 - hostAliases.

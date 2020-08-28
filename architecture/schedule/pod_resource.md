@@ -107,6 +107,10 @@
 - cpu-period: 默认为100000(100ms),若自定义period feature则使用自定义.
 - cpu-quota: 使用limit和cpu-period得出, 若limit为空, 则为0; 若计算结果小于minQuotaPeriod(1000)则使用该值.
 
+## (6)cpu独占:
+- 满足条件: kubelet的--cpu-manager-policy设置为static&&pod是Guaranteed&&pod的request为整数. 
+- 通过cgroup的cpuset控制器实现.
+
 # 六 Pod的QoS:
 ## (1)QoS类型:
 - Guaranteed: Pod内的每个容器都必须有内存和cpu请求和限制, 且请求和限制值相等.

@@ -1,4 +1,4 @@
-# 一 kubelet命令:
+# 二 kubelet命令:
 ## (1)概述:
 - 用法: kubelet [flags]
 - 选项: kubernetes/cmd/kubelet/app/options
@@ -84,7 +84,7 @@
 - --redirect-container-streaming: 开启容器streaming重定向.若为false,则kubelet会在api-server和容器运行时间proxy streaming数据; 若为true,kubelet会返回一个http重定向给api-server. proxy方式更安全,但是带来性能开销; 直接方式性能更好, 但是安全性较低(因为apiserver和容器运行时间的连接可能没有被验证).
 - --streaming-connection-idle-timeout 
 
-# 二 配置文件:
+# 三 配置文件:
 ## (1)概述:
 - kubelet配置参数的部分可以通过磁盘上的配置文件来指定, 替代通过命令行参数.
 - 基于配置文件是推荐的方式, 因为简化了node的部署以及配置文件的管理.
@@ -98,12 +98,12 @@
 - https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/
 - https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/kubelet/config/v1beta1/types.go
 
-# 三 动态kubelet配置
+# 四 动态kubelet配置
 ## (1)概述:
 - 功能: 允许通过部署一个ConfigMap并配置每个Node使用它来动态改变在线k8s集群的kubelet的配置.
 - 参考: https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/
 
-# 四 认证和授权:
+# 五 认证和授权:
 ## (1)概述:
 
 ## (2)备注:

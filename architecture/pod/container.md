@@ -17,7 +17,7 @@
 - env: 在容器中设置的环境变量的列表.
 - envFrom: 一个生产容器环境变量的源的列表,例如:ConfigMap,Secret等.
 - image: 镜像.
-- imagePullPolicy: 镜像拉取策略, 可选:Always,Never,IfNotPresent;若指定:latest则默认为Always,其它情况,默认为IfNotPresent.
+- imagePullPolicy: 镜像拉取策略,可选:Always,Never,IfNotPresent;若指定:latest则默认为Always,其它情况默认为IfNotPresent.
 - name
 - port
 - terminationMessagePath

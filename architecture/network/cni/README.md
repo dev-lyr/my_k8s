@@ -69,7 +69,7 @@
 - Network: types.NetConf指针.
 - Bytes: []byte
 
-# 三 网络配置:
+# 四 网络配置:
 ## (1)概述:
 - https://github.com/containernetworking/cni/blob/master/pkg/types/types.go
 
@@ -91,5 +91,3 @@
 ## (4)Route
 - Dst net.IPNet
 - GW net.IP
-
-# 四 IPAM插件:

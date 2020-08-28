@@ -11,6 +11,7 @@
 
 ## (3)备注:
 - https://github.com/coreos/flannel
+- flannel CNI插件: https://github.com/containernetworking/plugins/tree/master/plugins/meta/flannel
 
 # 二 backends:
 ## (1)概述:

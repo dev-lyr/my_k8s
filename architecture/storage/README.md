@@ -39,41 +39,24 @@
 - out-of-truee插件包括CSI和FlexVolume, 允许存储供应商创建自定义存储插件, 无需将它们添加到kubernetes仓库.
 - 备注: https://github.com/kubernetes/community/blob/master/sig-storage/volume-plugin-faq.md
 
-## (7)PV使用步骤:
-- Attach
-- Mount
-- 将主机上volume通过Mounts传递给docker.
-
-## (8)备注:
+## (7)备注:
 - pv的在kubelet的主控制循坏之外, 不阻塞主控流程.
 
 # 二 重要接口:
 ## (1)概述:
-- Volume
-- Attacher/Detacher: attach/detach一个volume到node.
-- Mounter/Unmounter: mount/unmount volume.
-- VolumePlugin
-- PersistentVolumePlugin
+- pkg/volume/plugins.go
 
-## (2)Volume:
-- GetPath
-- MetricsProvider
+## (2)类型:
+- **VolumePlugin**: an interface to volume plugins that can be used on a kubernetes node (e.g. by kubelet) to instantiate and manage volumes.
+- **DeviceMountableVolumePlugin** 
+- **AttachableVolumePlugin**
+- **Volume**: represents a directory used by pods or hosts on a node.
+- **Attacher/Detacher**: attach/detach一个volume到node.
+- **Mounter/Unmounter**: mount/unmount volume.
+- **PersistentVolumePlugin**
 
-## (3)Attcher:
-- Attach
-- VolumesAreAttached
-- WaitforAttach
-
-## (4)Detacher:
-- Detach
-- UnmountDevice
-
-## (5)Mounter:
-- CanMount
-- SetUp
-- SetUpAt
-
-## (6)UnMounter:
-- TearDown
-- TearDownAt
-
+## (3)VolumePlugin
+- Init: 初始化该插件.
+- GetPluginName: 获取插件名字.
+- NewMounter
+- NewUnmounter
