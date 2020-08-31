@@ -17,7 +17,12 @@
 - 等等.
 - 备注: PV类型以插件方式实现.
 
-## (4)备注:
+## (4)流程:
+- bind: pv控制器将pvc绑定到一个pv.
+- attach/detach: attachdetach控制器.
+- mount/unmount: kubelet的VolumeManagerReconciler, mount到node上一个目录(注意不是mount到容器里).
+
+## (5)备注:
 - persistentvolume controller: pkg/controller/volume/persistentvolume.
 - https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 - https://kubernetes.io/docs/concepts/storage/storage-classes/
@@ -55,7 +60,7 @@
 - selector: 标签选择器, 只有match的label才可以绑定到该claim.
 - storageClassName: 指定只有特定StorageClass的pv才能绑定到claim; 设置为""则只能绑定没有class的pv; 若不设置, 依赖是否开启DefaultStorageClass admission插件.
 - volumeMode
-- volumeName
+- volumeName: the binding reference to the PersistentVolume backing this claim.
 - dataSource
 
 ## (3)PersistentVolumeClaimStatus
@@ -119,3 +124,5 @@
 
 ## (6)expanding pvc:
 - 部分volume类型支持expanding pvc.
+
+# 六 VolumeAttachment

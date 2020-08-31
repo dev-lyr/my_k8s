@@ -45,4 +45,4 @@
 - plegCh: pleg event.
 - syncCh: periodic sync event.
 - housekeepingCh: trigger clean up of pods.
--liveness manager update channel
+- liveness manager update channel

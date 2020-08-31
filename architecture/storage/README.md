@@ -39,8 +39,7 @@
 - out-of-truee插件包括CSI和FlexVolume, 允许存储供应商创建自定义存储插件, 无需将它们添加到kubernetes仓库.
 - 备注: https://github.com/kubernetes/community/blob/master/sig-storage/volume-plugin-faq.md
 
-## (7)备注:
-- pv的在kubelet的主控制循坏之外, 不阻塞主控流程.
+## (7)备注
 
 # 二 重要接口:
 ## (1)概述:
