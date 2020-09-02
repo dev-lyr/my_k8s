@@ -57,17 +57,12 @@
 - ValidateNetworkList
 - ValidateNetwork
 
-## (3)RuntimeConfig:
-- ContainerID
-- NetNS
-- IfName
-- Args
-- CapabilityArgs
-- CacheDir
+## (3)CNIConfig:
+- Path []string
+- exec invoke.Exec
+- cacheDir string
+- 备注: 实现CNI接口.
 
-## (4)NetworkConfig:
-- Network: types.NetConf指针.
-- Bytes: []byte
 
 # 四 网络配置:
 ## (1)概述:

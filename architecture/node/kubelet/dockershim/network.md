@@ -10,7 +10,7 @@
 - Event: 响应各类事件.
 - Name: 插件名字.
 - Capabilities: 插件能力.
-- SetUpPod: 在infra容器被创建但其他容器启动前调用.
+- SetUpPod: 在infra容器被创建后但其他容器启动前调用.
 - TearDownPod: 在infra容器被删除前调用.
 - GetPodNetworkStatus: 获取容器网络状态.
 - Status: 当创建处于error状态时返回error.

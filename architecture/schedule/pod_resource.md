@@ -16,13 +16,12 @@
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
 - k8s允许用户为节点添加自定义资源并支持pod的request来申请.
-- 和docker的映射: kuberuntime_container_linux.go
 
 # 二 LimitRange对象:
 ## (1)功能:
-- 限制一个namespace内每个Pod或容器的最小和最大计算资源使用量.
-- 限制一个namespace内每个PersistentVolumeClaim的最小和最大存储请求.
-- 限制一个namespace内request和limit的ratio.
+- 限制一个namespace内每个**Pod或容器**的**最小和最大**计算资源使用量.
+- 限制一个namespace内每个**PersistentVolumeClaim的最小和最大**存储请求.
+- 限制一个namespace内request和limit的**ratio(limit/request)**.
 - 设置一个namespace内默认的计算资源的request/limit, 并在运行时自动将它们inject到容器.
 - LimitRangeSpec: LimitRangeItem数组.
 
@@ -32,12 +31,14 @@
 - defaultRequest: 资源默认request值,若没指定时使用.
 - max: 资源最大使用量约束.
 - min: 资源最小使用量约束.
-- maxLimitRequestRatio: 若指定则资源必须指定request和limit且request/limit不能大于该比率.
+- maxLimitRequestRatio: 若指定则资源必须指定request和limit且limit/request不能大于该比率.
 
 ## (3)备注:
 - LimitRange admission controller.
 - LimitRange只能应用于单个pod或容器, 创建大量的Pod仍然会吃掉集群资源, 此时需要ResourceQuota.
+- LimitRange validations occurs only at Pod Admission stage, not on Running Pods.
 - https://kubernetes.io/docs/concepts/policy/limit-range/
+- plugin/pkg/admission/limitranger
 
 # 三 ResourceQuota对象:
 ## (1)功能:
