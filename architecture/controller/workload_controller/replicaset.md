@@ -10,6 +10,7 @@
 
 ## (3)备注:
 - rs修改镜像不会自动更新已有pod, 此时需使用deploy来支持; 可以手动删除pod, 此时新创建出来的就是新的镜像.
+- rs只关注副本, 不关注pod是否存活.
 
 # 二 ReplicaSet资源:
 ## (1)ReplicaSetSpec:

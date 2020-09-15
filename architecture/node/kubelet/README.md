@@ -34,7 +34,7 @@
 - containerLogManager: 容器日志管理.
 
 ## (3)Node相关:
-- evictionManager: 观察和响应影响node稳定性的情况.
+- victionManager: 观察和响应影响node稳定性的情况.
 - nodeLister
 - imageManager: 管理镜像的gc.
 

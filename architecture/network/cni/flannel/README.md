@@ -45,7 +45,7 @@
 - -healthz-port: 0则表示disable, 默认是disable.
 - -iface: 用于主机间(inter-host)通信使用的接口(IP或name).
 - -iface-regex
-- -public-ip
+- -public-ip: IP accessible by other nodes for inter-host communication.
 - --subnet-file
 - --subnet-lease-renew-margin
 - -v: V logs的日志级别.
