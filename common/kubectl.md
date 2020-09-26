@@ -84,6 +84,9 @@
 - 用法: kubectl explain RESOURCE [options]
 - 默认只显示一层属性, 可使用--recursive=true来显示所有层次.
 
+## (4)备注:
+- https://kubernetes.io/docs/reference/kubectl/jsonpath/
+
 # 三 部署命令:
 ## (1)rollout:
 - 管理资源的rollout, 合法的资源类型: deployments, daemonsets和statefulsets.

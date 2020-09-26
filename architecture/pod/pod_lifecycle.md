@@ -85,13 +85,13 @@
 ## (7)startup探针:
 - 在容器启动时间超过**initialDelaySeconds + failureThreshold * periodSeconds**时, 可使用一个与liveness探针同样endpoint的startup探针, startup探针periodSeconds默认为30s, 可指定一个高的failureThreshold从而使得容器有足够的时间启动.
 - 若指定startup探针, **在它成功完成前其他probes不会被执行**.
-- 若探测失败, 则和liveness探针一样, pod会被重启.
+- 若探测失败, 则和liveness探针一样, 容器会被重启.
 
 ## (8)liveness探针经验:
 - 对于生产中的Pod一定要定义一个存活探针, 没有存活探针, kubernete不会知道应用是否还活着, 只要进程还在运行, kubernete就认为Pod是健康的.
 - 存活探针不应该消耗太多计算资源, 且运行时间不应该太长, 默认情况下, 探针的执行比较频繁, 必须在一秒内执行完成.
 - 无需再探针中实现重试循环.
-- 容器崩溃或存活探针失败, Pod所在节点的kubelet会重启容器, k8s的控制面板组件不参与该操作; 若节点崩溃, kubelet则无法执行相关操作, 因此需要使用各种Pod Controller.
+- 容器崩溃或存活探针失败, Pod所在节点的kubelet会**重启容器**, k8s的控制面板组件不参与该操作; 若节点崩溃, kubelet则无法执行相关操作, 因此需要使用各种Pod Controller.
 
 ## (9)备注:
 - https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/

@@ -7,7 +7,9 @@
 - Keeping the node controller's internal list of nodes up to date with the cloud provider's list of available machines.
 - 监控node的健康
 
-## (3)备注:
+## (3)node lease
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/#node-controller
 - pkg/controller/nodelifecycle
 - 配置: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/

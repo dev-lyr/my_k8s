@@ -13,7 +13,7 @@
 ## (3)网络相关:
 - --address: 默认为0.0.0.0, kubelet提供服务的地址.
 - --port: 默认10250, kubelet服务的端口地址.
-- --read-only-port: 只读端口,用于为未验证和授权的请求提供服务, 0表示disable.
+- --read-only-port: 只读端口,用于为未验证和授权的请求提供服务, 0表示disable, 默认端口10255.
 - --healthz-bind-address: 默认127.0.0.1, 0.0.0.0(所有IPv4), ::(所有IPv6).
 - --healthz-port: 默认10248, localhost healthz endpoint的部分.
 - --node-ip: 节点的IP地址, 若指定kubelet会使用该IP地址.

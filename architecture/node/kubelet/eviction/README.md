@@ -1,6 +1,7 @@
 # 一 概述:
 ## (1)概述:
 - 当可用计算资源较少时,kubelet需要保持node的稳定性, 尤其是不可压缩资源(内存,磁盘等),当资源耗尽时,node就会不稳定.
+- kubelet通过evictionManager来实现node资源的监控和响应.
 
 ## (2)驱逐策略:
 - kubelet会主动监控和避免计算资源的starvation.
