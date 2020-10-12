@@ -106,15 +106,17 @@
 ## (1)概述:
 - node通过发送心跳来帮助判断node的可用性.
 
-## (2)心跳的两种形式:
+## (2)两种形式:
 - 更新**NodeStatus**
 - 更新Lease Object: Node在**kube-node-lease** namespace内有一个关联的Lease对象, Lease是一个轻量资源, 可以提高node的心跳上报性能.
 
 ## (3)更新NodeStatus:
-- kubelet在status改变时或者配置的间隔过后会更新NodeStatus.
+- kubelet在**status改变时**或者**超过配置的时间间隔**后更新NodeStatus.
 
 ## (4)更新Lease对象:
 - kubelet会间隔10s(默认更新间隔)更新它关联的lease对象, Lease对象的更新不依赖NodeStatus的更新.
+- kubelet的nodeLeaseController.
 
 ## (5)备注:
 - pkg/kubelet/nodelease
+- https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/0009-node-heartbeat.md

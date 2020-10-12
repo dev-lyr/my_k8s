@@ -20,6 +20,12 @@
 - 主要的kubelet实现.
 - pkg/kubelet/kubelet.go
 
+## (5)对外提供API:
+- /pods
+- /metrics
+- /metrics/cadvisor
+
+
 # 二 Kubelet结构属性:
 ## (1)pod相关:
 - admitHandlers和softAdmitHandlers
@@ -39,7 +45,6 @@
 - nodeLister
 - imageManager: 管理镜像的gc.
 - evictionManager 
-
 
 # 三 kubelet创建:
 ## (1)概述:
@@ -82,7 +87,6 @@
 - HandlerPod(Additions,Reconcile,Updates,Syncs,Removes): 底层都调用dispatchWork.
 - dispatchWork: 开始**异步**sync pod, 使用pod worker(调用podWorkers的UpdatePod).
 - **syncPod**: podWorker的UpdatePod会异步调用syncPod方法.
-
 
 # 六 syncLoopIteration:
 ## (1)概述:

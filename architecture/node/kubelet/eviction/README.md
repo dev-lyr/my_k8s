@@ -2,6 +2,7 @@
 ## (1)概述:
 - 当可用计算资源较少时,kubelet需要保持node的稳定性, 尤其是不可压缩资源(内存,磁盘等),当资源耗尽时,node就会不稳定.
 - kubelet通过evictionManager来实现node资源的监控和响应.
+- 相关: node_lifecycle_controller实现node级别的驱逐.
 
 ## (2)驱逐策略:
 - kubelet会主动监控和避免计算资源的starvation.
@@ -11,7 +12,7 @@
 
 ## (3)调度器:
 - 当node处于压力情况下,调度器避免将其他pod调度到该node.
-- MemoryPressure: 不会有新想BestEffort pod被调度到该node.
+- MemoryPressure: 不会有新BestEffort pod被调度到该node.
 - DiskPressure: 不会有新的pod调度到该节点.
 
 ## (4)备注:

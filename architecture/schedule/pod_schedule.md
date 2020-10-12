@@ -10,7 +10,6 @@
 
 ## (3)Taints和Tolerations:
 - 与Node Affinity相反, Taints和Tolerations一起使用保证pods不会被调度到不合适的node上.
-- 备注: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 
 ## (4)pod priority和preeption:
 - 备注: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
@@ -71,7 +70,6 @@
 - key
 - timeAdded
 - value
-- 备注: 若一个effect为NoExecute的taint添加到node上, 则不能忍受该taint的pod会被立即清除; pod可以通过使用effect为NoExecute且指定tolerationTimeout属性来设置在tained被添加到node多久后再清除该pod.
 
 ## (3)Toleration:
 - effect: 空表示match所有taint effect; 可选值:NoSchedule, PreferNoSchedule(soft版NoSchedule, 系统会尝试避免将一个pod放在不能忍受taint的node上)和NoExecute.
@@ -80,8 +78,19 @@
 - tolerationSeconds: 表示toleration容忍的taint的时间周期, 默认不设置, 表示永久容忍该taint(不会被evict); 该值只在effect为NoExecute时有效.
 - value: toleration需match的taint的值; 若operator是Exists, 该值需为空; 其它operator时, 为普通字符串.
 
-## (4)备注:
+## (4)使用:
+- 若一个effect为NoExecute的taint添加到node上, 则不能忍受该taint的pod会被立即清除.
+- pod可以通过使用effect为NoExecute且指定tolerationTimeout属性的toleration来设置在taint被添加到node多久后再清除该pod, 若在这个时间内taint被移除则pod不用被驱逐.
 - kubectl taint
+
+## (5)使用场景:
+- 专用node(dedicated node)
+- 特定硬件的node(例如:带gpu的node).
+- Taint based Evictions: 详见node_lifecycle_controller.
+
+## (6)备注:
+- https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+- k8s.io/api/core/v1/well_known_taints.go
 
 # 五 Pod优先级和抢占:
 ## (1)概述:

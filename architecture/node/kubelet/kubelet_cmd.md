@@ -1,3 +1,9 @@
+# 一 概述:
+## (1)概述:
+
+## (2)备注:
+- https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
+
 # 二 kubelet命令:
 ## (1)概述:
 - 用法: kubelet [flags]
@@ -18,7 +24,6 @@
 - --healthz-port: 默认10248, localhost healthz endpoint的部分.
 - --node-ip: 节点的IP地址, 若指定kubelet会使用该IP地址.
 - --pod-cidr: 用于Pod IP地址的CIDR, 只能用于standalone模式; 集群模式, 从master获取, 参考controller-manager配置.
-- --node-status-update-frequency: Specifies how often kubelet posts node status to master, 默认10s, Note: be cautious when changing the constant, it must work with nodeMonitorGracePeriod in nodecontroller(controller-manager配置).
 
 ## (4)日志相关:
 - --log-dir: 若非空, 写入该目录下日志文件.
@@ -83,6 +88,11 @@
 ## (13)streaming相关:
 - --redirect-container-streaming: 开启容器streaming重定向.若为false,则kubelet会在api-server和容器运行时间proxy streaming数据; 若为true,kubelet会返回一个http重定向给api-server. proxy方式更安全,但是带来性能开销; 直接方式性能更好, 但是安全性较低(因为apiserver和容器运行时间的连接可能没有被验证).
 - --streaming-connection-idle-timeout 
+
+## (14)心跳相关:
+- nodeStatusUpdateFrequency: 默认10s, 指定kubelet计算node状态的频率, 当node lease特性没有开启时, 该值也是kubelet向master同步node status的时间间隔, 此时需要注意和node-controller的nodeMonitorGracePeriod配合使用.
+- nodeStatusReportFrequency: 默认值为5m, 指定kubelet 将node状态发送给master的频率, 只在node lease特性开启时使用; 为了向后兼容, 当nodeStatusUpdateFrequency显式指定时, nodeStatusReportFrequency的默认值和nodeStatusUpdateFrequency一致.
+- NodeLeaseDurationSeconds: lease的duration, 默认为40s, 更新频率为该值的1/4(代码写死, 目前不支持配置).
 
 # 三 配置文件:
 ## (1)概述:
