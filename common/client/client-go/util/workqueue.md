@@ -1,4 +1,4 @@
-# 一 workqueue:
+# 一 概述:
 ## (1)概述:
 - 目录: client-go/util/workqueue
 - k8s的controller使用的queue为: workqueue.DefaultControllerRateLimiter()返回的队列.

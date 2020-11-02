@@ -25,6 +25,7 @@
 - https://github.com/kubernetes-sigs/scheduler-plugins
 - kubernetes/pkg/scheduler
 - kubernetes/cmd/kube-scheduler
+- https://github.com/kubernetes-sigs/scheduler-plugins
 
 # 二 Scheduler结构:
 ## (1)概述:
@@ -41,7 +42,7 @@
 
 ## (3)方法:
 - NextPod: 一个函数, block直至下个pod可用.
-- scheduleOne: 执行一个pod全部调度流程.
+- **scheduleOne**: 执行一个pod全部调度流程.
 
 ## (4)方法
 

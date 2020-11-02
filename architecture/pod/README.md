@@ -40,7 +40,7 @@
 ## (3)host相关:
 - hostAliases.
 - hostIPC: 使用host的ipc namespace, 默认为false.
-- hostNetwork: 使用host的network namesapce, 默认为false.
+- hostNetwork: 使用host的network namespace, 默认为false.
 - hostPID: 使用host的pid namespace, 默认为false.
 
 ## (4)调度相关:
