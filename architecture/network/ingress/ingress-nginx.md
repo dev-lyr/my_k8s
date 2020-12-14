@@ -4,7 +4,7 @@
 
 ## (2)部署:
 - bare-metal.
-- 各云厂商
+- 各云厂商: 使用load balance类型service.
 - https://kubernetes.github.io/ingress-nginx/deploy/
 
 ## (3)备注:
@@ -12,9 +12,9 @@
 - https://github.com/nginxinc/kubernetes-ingress
 - 备注: 注意不同.
 
-# 二 裸机部署:
+# 二 bare-metal:
 ## (1)概述:
-- 部署: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/baremetal/deploy.yaml, 使用node port来暴露nginx controller.
-
+- 使用node port类型service来暴露nginx controller.
+- kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/baremetal/deploy.yaml 
 ## (2)备注:
 - https://kubernetes.github.io/ingress-nginx/deploy/baremetal/

@@ -39,7 +39,7 @@
 - 若出错, 若错误是没有找到, 则删除同名endpoint; 其它错误则返回由handleErr处理.
 - 若service对象没有selector则不处理, 直接返回(没有selector的service不会自动创建ep).
 - 从pod cache中取出匹配selector的所有pod.
-- 判断service是否tolerateUnreadyEndpoints(spec指定或使用TolerateUnreadyEndpointsAnnotation注解(已废弃)).
+- 对pod list进行过滤: 若没有podIp则过滤; 在不能容忍unreadyEndpoints的情况下pod的DeletionTimestamp不为nil过滤, pod ready不为true也过滤.
 - 根据list出的pod和tolerateUnreadyEndpoints构造ep对象, 然后查询当前的ep, 比较是需要create还是update.
 - 等等.
 

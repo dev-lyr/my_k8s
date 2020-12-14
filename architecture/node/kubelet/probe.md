@@ -13,7 +13,7 @@
 - livenessManager: 管理liveness探测的结果.
 - readinessManager: 管理readiness探测的结果.
 - startupManager: 管理startup探测的结果.
-- prober: 执行探测.
+- prober: 执行探测(prober.go).
 
 ## (3)manager方法:
 - Start
@@ -22,4 +22,6 @@
 - CleanupPods
 - UpdatePodStatus
 
-# 三 prober
+# 三 worker
+
+# 四 prober

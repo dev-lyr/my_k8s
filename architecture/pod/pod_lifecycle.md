@@ -61,3 +61,7 @@
 
 ## (2)备注:
 - https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/0007-pod-ready++.md
+
+# 五 Pod终止:
+## (1)概述:
+- https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination

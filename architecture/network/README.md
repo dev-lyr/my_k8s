@@ -1,21 +1,29 @@
 # 一 概述:
 ## (1)网络通信分类:
 - 高度耦合的容器间(pod内容器): 通过pod和localhost来通信.
-- 同节点pod: bridge+veth pair, 部分优化方案会不使用bridge.
-- Pod-Pod间: CNI网络插件.
+- pod-pod间: CNI插件等.
 - Pod和Service间: 通过kube-porxy和dns等.
-- 外界和Service间: Ingress和LoadBalance等.
+- 外界和Service间: Ingress和LoadBalance,NodePort服务.
 
 ## (2)备注:
 - https://kubernetes.io/docs/concepts/cluster-administration/networking/
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/network/networking.md
 
-# 二 详细网络流程:
-## (1)pod内容器:
-- 共享网络空间(ip和port),可通过localhost进行通信, 同时也需要避免端口冲突.
+# 二 kubernetes网络模型:
+## (1)概述:
+- 每个Pod有自己的IP地址. 
 
-## (2)同节点pod:
-- bridge+veth-pair
-- 其它等等.
+## (2)kubernetes对网络实现的要求:
+- 一个node上的pods可以与所有node上的pods进行通信(不使用nat).
+- node上的agent(例如:kubelet等)可以与该node上的所有pods通信.
+
+## (3)实现:
+- flannel
+- cilium
+- calico
+- linux bridge
+- OpenVSwitch
+- 等等.
 
 # 三 proxy类型:
 ## (1)概述:

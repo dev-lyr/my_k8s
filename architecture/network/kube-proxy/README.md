@@ -4,13 +4,13 @@
 - Proxy-mode: **userspace**, **iptables**, **ipvs**.
 
 ## (2)userspace模式:
-- kube-proxy观察k8s master对**Service**和**Endpoints**对象的创建和删除.
+- kube-proxy**Service**和**Endpoints**对象的创建和删除.
 - 在本地节点上, kube-proxy会为每个Service打开一个端口(随机选择), 任何到该代理端口的连接都会被proxy搭配服务的后端Pods(由EndPoints上报).
 - 选择哪个Pod是基于Service的SessionAffinity.
 - 路径: 客户端->iptables->kube-proxy->pod, kube-proxy配置iptables并通过kube-proxy来重定向.
 
 ## (3)iptables模式:
-- kube-proxy观察k8s master对**Service**和**Endpoints**对象的创建和删除.
+- kube-proxy观察**Service**和**Endpoints**对象的创建和删除.
 - 针对每个服务, 安装iptable规则用来capture到服务ClusterIP和Port的流量, 将这些流量redirect到Service后端集合.
 - 路径: 客户端->iptables->pod, kube-proxy配置iptables, 直接通过pod重定向.
 
@@ -38,6 +38,7 @@
 - --config: 配置文件的路径.
 - --config-sync-period
 - --healthz-bind-address: 默认0.0.0.0:10256.
+- --metrics-bind-address: 默认127.0.0.1:10249.
 - --hostname-override
 - --proxy-mode: userspace,iptables或ipvs, 当前默认iptables.
 

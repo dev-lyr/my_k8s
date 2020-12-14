@@ -9,3 +9,6 @@
 ## (3)使用场景:
 - local卷依赖node的稳定性,当node不健康时,local卷也是不可访问的,使用该卷的pod也不能运行.
 - 使用本地卷的应用必须能够容忍潜在的数据丢失.
+
+## (4)备注:
+- https://kubernetes.io/blog/2019/04/04/kubernetes-1.14-local-persistent-volumes-ga/

@@ -4,3 +4,5 @@
 
 ## (2)备注:
 - https://kubernetes.io/docs/tasks/administer-cluster/extended-resource-node/
+- https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/
+- pod使用扩展资源时, 需指定requests和limits, 否则报错: Limit must be set for non overcommitable resources.
