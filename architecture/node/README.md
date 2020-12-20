@@ -29,7 +29,7 @@
 ## (1)概述:
 - 与pod和service等不同, node不是由kubernetes内部创建的, node是通过外部云服务商或者存在于你自己的物理机或虚拟机池.
 - kubernetes创建一个node对象来表示node, 创建后会检查node是否合法.
-- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod, 常用于pod重启前.
+- 管理员可以修改node属性, 设置label或者标记不可调度等, 标记为不可调度不会影响已存在的pod.
 - **kubectl cordon nodename**将node标记为不可用, **kubectl uncordon**解除限制.
 
 ## (2)node注册方式:

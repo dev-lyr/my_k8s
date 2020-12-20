@@ -4,5 +4,5 @@
 
 # 二 client_config.go:
 ## (1)BuildConfigFromFlags:
-- 根据masterUrl或者kubeconfig文件路径来够一个restclient.config.
+- 根据masterUrl或者kubeconfig文件路径来构造一个restclient.config.
 - 若两者都没指定, 则使用restclient.InClusterConfig, 若InClusterConfig也失败, 则使用默认配置.

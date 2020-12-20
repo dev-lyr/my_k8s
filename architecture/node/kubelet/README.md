@@ -25,6 +25,8 @@
 - /metrics
 - /metrics/cadvisor
 
+## (6)config:
+- pkg/kubelet/config
 
 # 二 Kubelet结构属性:
 ## (1)pod相关:

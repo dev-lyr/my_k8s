@@ -39,6 +39,8 @@
 ## (1)功能:
 - 监听taint和toleration的变化, 并且负责删除有NoExecute Taints的Node上的pods. 
 
+## (2)NoExecuteTaintManager
+
 # 四 doNodeProcessingPassWorker:
 ## (1)功能:
 - reconcile **labels** and/or update **NoSchedule taint** for nodes
@@ -53,8 +55,7 @@
 ## (1)概述:
 - 从podUpdateQueue取变化pod来处理.
 
-## (2)processPod:
-- 根据nodeHealthMap(monitorNodeHealth维护), 判断node的状态, 决定是否将pod的ready condition标记为false.
+## (2)processPod
 
 # 六 doExecuteTaintingPass:
 ## (1)概述:

@@ -66,6 +66,7 @@
 - 将一个或多个**taints**应用到一个node, 表示node不接受任何不能tolerate这些taints的pod. 备注: NodeSpec的taints数组.
 - **tolerations**被应用到pods, 允许(但是不是必须)pod调度到匹配taints的node上. 备注: PodSpec的tolerations数组.
 - toleration和taint匹配的条件: key和effect是一样的, operator是exist或者equal且value相等.
+- node lifecycle控制器根据Node conditions创建对应的taints(effect=NoSchedule), 这样Scheduler不用检查Node Conditions, 只用检查taints.
 
 ## (2)Taint
 - effect: 可选值:NoSchedule,PreferNoSchedule和NoExecute.
@@ -88,9 +89,10 @@
 ## (5)使用场景:
 - 专用node(dedicated node)
 - 特定硬件的node(例如:带gpu的node).
-- Taint based Evictions: 详见node_lifecycle_controller.
+- 基于taint的Evictions: 详见node_lifecycle_controller.
 
 ## (6)备注:
+- k8s自动添加node.kubernetes.io/not-ready和node.kubernetes.io/unreachable(tolerations=300s)到pod上.
 - https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 - k8s.io/api/core/v1/well_known_taints.go
 
