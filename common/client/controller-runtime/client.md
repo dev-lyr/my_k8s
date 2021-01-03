@@ -12,11 +12,13 @@
 - Reader: get和list.
 - Writer: create,update和delete.
 - StatusClient
-- 备注: 实现类typedClient和unstructuredClient. 
+- 备注: 实现类typedClient(typed_client.go)和unstructuredClient(unstructured_client.go). 
 
-## (4)client结构体:
-- typedClient
-- unstructuredClient
+## (4)DelegatingClient(split.go):
+- Reader
+- Writer
+- StatusClient
+- 备注: 读从cache读, 写直接写入api server.
 
 ## (5)备注:
 - https://godoc.org/k8s.io/apimachinery/pkg/apis/meta/v1/unstructured#Unstructured

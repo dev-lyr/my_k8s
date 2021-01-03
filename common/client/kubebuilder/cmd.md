@@ -40,7 +40,8 @@
 
 # 三 kubebuilder create:
 ## (1)概述:
-- 语法: kubebuilder create [command], command: api或webhook.
+- 语法: kubebuilder create [command]; command: api或webhook.
+- 可通过--resource和--controller选择或者生成过程的交互输入来选择是否只生成资源或控制器.
 
 ## (2)create api:
 - --group: 资源组.

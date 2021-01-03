@@ -17,7 +17,7 @@
 - 唯一同时考虑优先级和QoS的是kubelet的out-of-resource eviction.
 
 ## (5)备注:
-- 在kube 1.12+, 当集群资源有压力时, 重要的Pod依赖调取器抢占来调度, 因此不推荐关闭抢占.
+- 在kube 1.12+, 当集群资源有压力时, 重要的Pod依赖调度器抢占来调度, 因此不推荐关闭抢占.
 - https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 
 # 二 PriorityClass:

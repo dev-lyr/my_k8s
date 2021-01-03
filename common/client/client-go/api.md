@@ -31,7 +31,7 @@
 - NewForConfigOrDie
 
 ## (3)typed:
-- 包含对各类API资源的curd.
+- 包含对各类API资源的curd(Get,List等).
 
 # 四 lister:
 ## (1)概述:

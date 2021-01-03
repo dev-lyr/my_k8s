@@ -23,3 +23,4 @@
 ## (4)备注:
 - https://kubernetes.io/docs/reference/access-authn-authz/authentication/
 - https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+- https://kubernetes.io/docs/concepts/cluster-administration/certificates/

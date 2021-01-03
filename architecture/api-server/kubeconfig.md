@@ -19,7 +19,7 @@
 
 # 二 上下文(context):
 ## (1)概述:
-- 使用kubeconfig文件的context袁术可以对访问参数进行分组.
+- 使用kubeconfig文件的context约束可以对访问参数进行分组.
 - kubectl config use-context: 选择上下文.
 
 ## (2)子元素:

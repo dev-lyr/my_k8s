@@ -34,6 +34,7 @@
 ## (5)源码:
 - pkg/controller/volume: 各种controller.
 - pkg/volume
+- pkg/kubelet/volumemanager
 
 ## (6)out-of-tree volume插件:
 - out-of-truee插件包括CSI和FlexVolume, 允许存储供应商创建自定义存储插件, 无需将它们添加到kubernetes仓库.
@@ -46,6 +47,7 @@
 - pkg/volume/plugins.go
 
 ## (2)类型:
+- **VolumePluginMgr**: tracks registered plugins.
 - **VolumePlugin**: an interface to volume plugins that can be used on a kubernetes node (e.g. by kubelet) to instantiate and manage volumes.
 - **DeviceMountableVolumePlugin** 
 - **AttachableVolumePlugin**
@@ -53,8 +55,15 @@
 - **Attacher/Detacher**: attach/detach一个volume到node.
 - **Mounter/Unmounter**: mount/unmount volume.
 - **PersistentVolumePlugin**
+- **VolumeHost**: an interface that plugins can use to access the kubelet.
 
-## (3)VolumePlugin
+## (3)VolumePluginMgr:
+- 创建kubelet时通过NewInitializedVolumePluginMgr函数创建, 并传递给kubelet的volumeManager使用.
+- InitPlugins
+- Run
+- 等等.
+
+## (4)VolumePlugin
 - Init: 初始化该插件.
 - GetPluginName: 获取插件名字.
 - NewMounter

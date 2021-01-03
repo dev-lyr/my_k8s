@@ -1,37 +1,7 @@
-# 一 /pkg/kubelet/container
-## (1)相关类型:
-- Runtime接口: 定义容器运行时必须实现的接口.
-- ImageService
-- StreamingRuntime: 运行时实现用来提供streaming调用(exec,attach和port-forward).
-
-## (2)Runtime接口:
-- ImageService接口(内嵌)
-- Type: 容器运行时的类型.
-- SyncPod
-- KillPod
-- GetPodStatus
-- GetPods
-- UpdatePodCIDR
-- GetContainerLog
-- DeleteContainer
-- GarbageCollect
-
-## (3)ImageService:
-- PullImage
-- RemoveImage
-- ImageStats
-- GetImageRef
-- ListImage
-- 等等.
-
-## (4)StreamingRuntime:
-- GetAttach
-- GetExec
-- GetPortForward
-
-# 二 pkg/kubelet/kuberuntime
-## (1)相关类型:
-- kubeGenericRuntimeManager: 实现Runtime等接口.
+# 一 概述: 
+## (1)概述:
+- kubeGenericRuntimeManager: 实现container目录下的Runtime等接口(支持一些pod操作), 同时包含cri的调用.
+- kubelet调用NewKubeGenericRuntimeManager方法创建.
 
 ## (2)kubeGenericRuntimeManager属性:
 - runtimeName
@@ -42,5 +12,21 @@
 ## (3)kubeGenericRuntimeManager方法:
 - SyncPod
 
-# 三 SyncPod
+## (4)目录下:
+- instrumented_services.go: 对RuntimeService进行了封装, 记录了操作和错误metrics.
+- log
 
+## (5)相关:
+- pkg/kubelet/container: 支持一些pod级别的操作, kubeGenericRuntimeManager会实现相关接口.
+- pkg/kubelet/cri/remote: cri的runtimeService和imageService的grpc实现, 作为kubeGenericRuntimeManager的属性.
+
+## (6)备注:
+- pkg/kubelet/kuberuntime
+
+# 二 cri/remote目录:
+## (1)概述:
+- 包含cri-api的RuntimeService和ImageManagerService的实现, 用来创建到cri实现的client.
+
+# 三 container目录:
+## (1)概述:
+- runtime.go: 定义一些容器运行时需实现的方法, kubeGenericRuntimeManager实现.

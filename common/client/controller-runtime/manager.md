@@ -45,7 +45,7 @@
 - Start
 - GetConfig
 - GetScheme
-- GetClient: 返回一个config配置好的client, client可能会从cache读, 由Options.NewClient决定(若配置,则默认从cache读).
+- GetClient: 返回一个config配置好的client, client可能会从cache读, 由Options.NewClient决定(若配置,默认从cache读).
 - GetCache
 - GetApiReader: 返回一个Reader, 该Reader使用API server, 该对象应该节约使用并且在client不满足场景时使用.
 - GetWebhookServer
