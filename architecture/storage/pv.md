@@ -32,7 +32,7 @@
 # 二 PV:
 ## (1)概述:
 - PV是集群级别资源, 不属于任何namespace.
-- PV是volume plugin(与Volumes类似), 但是有独立于使用该pv的pod的生命周期.
+- PV是volume plugin(与Volumes类似), 但是独立于使用该pv的pod的生命周期.
 
 ## (2)PersistentVolumeSpec:
 - accessModes: ReadWriteOnce(RWO),ReadOnlyMany(ROM),ReadWriteMany(RWM).

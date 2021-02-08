@@ -31,7 +31,7 @@
 - 挂载: 在container对象的volumeMounts属性表示.
 - 备注: Volume对应(3)的类型.
 
-## (5)源码:
+## (5)相关模块:
 - pkg/controller/volume: 各种controller.
 - pkg/volume
 - pkg/kubelet/volumemanager

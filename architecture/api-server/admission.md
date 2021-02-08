@@ -2,10 +2,16 @@
 ## (1)概述
 - admission模块是一个软件模块, 用于修改或拒绝请求, 还可以set complex defaults for fields.
 - 可配置运行多个admission模块, 每个依序调度; 与认证和授权不同, 若任一admission模块拒绝请求, 则请求立马被拒绝.
-- Once a request passes all admission controllers, it is validated using the validation routines for the corresponding API object, and then written to the object store.
 - 除了编译进去的admission插件, admission插件已扩展形式开发并以**webhooks**方式运行, 能够在运行时配置.
+- Once a request passes all admission controllers, it is validated using the validation routines for the corresponding API object, and then written to the object store.
 
-## (2)备注:
+## (2)apiserver相关配置:
+- --admission-control-config-file: File with admission control configuration.
+- --enable-admission-plugins stringSlice: 除了默认开启的admission插件外需开启admission插件.
+- --disable-admission-plugins stringSlice: 需关闭admission插件, 即使在默认开启的列表.
+
+## (3)备注:
+- 查询默认开启的admission controller: kube-apiserver -h | grep enable-admission-plugins
 - https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
 - https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 

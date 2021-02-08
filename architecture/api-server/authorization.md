@@ -1,4 +1,17 @@
-# 一 概述:
+# 一 概述 
+## (1)概述:
+- Kubernetes支持多种授权模块, 例如: ARAC模式,RBAC模式和Webhook模式.
+
+## (2)授权模式:
+- Node 
+- ABAC
+- RBAC
+- WebHook
+
+## (3)备注:
+- https://kubernetes.io/docs/reference/access-authn-authz/authorization/
+
+# 二 RBAC: 
 ## (1)概述:
 - Role-based access control: 是一种基于用户的角色要控制计算或网络等资源访问的方法.
 - RBAC使用**rbac.authorization.k8s.io**API组来进行授权决定, 运行admin通过k8s API动态配置策略.
@@ -6,7 +19,7 @@
 ## (2)备注:
 - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 
-# 二 API:
+# 三 API:
 ## (1)概述:
 - RBAC API声明四个类型资源: **Role**和**ClusterRole**, **RoleBinding**和**ClusterRoleBinding**.
 - 角色: 包含rules, 这些rules代表一些权限(permissions)的集合;permissions是累加的(不存在deny rule); 角色可以通过**Role**定义在一个namespace内, 也可以通过**ClusterRole**定义在集群范围内.

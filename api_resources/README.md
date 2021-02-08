@@ -68,6 +68,9 @@
 ## (3)相关问题:
 - k8s只会保存有限时间的历史变更, etcd3默认保存5分钟, 因此watch时候带的resourceVersion太旧就会返回失败, 客户端则必须通过状态码410 Gone识别出来, 清理本地cache, 执行list, 然后根据list返回的resourceVersion重新watch, 多数client库提供该逻辑的, 例如:client-go中的Reflector.
 
+## (4)备注:
+- https://kubernetes.io/docs/reference/using-api/api-concepts/
+
 # 五 分批查询:
 ## (1)概述:
 - 背景: 为了防止一些资源类型的集合查询返回数据太大影响client和server, 例如:pod数据太大.

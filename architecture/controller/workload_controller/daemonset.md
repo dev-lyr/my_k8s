@@ -10,7 +10,7 @@
 - 在每个node上允许一个集群存储daemon, 例如: glusterd或cepth.
 
 ## (3)labels:
-- controller-revision-hash: 加到到已存在ds的pod上,用于在ds的template更新期间区分旧的和新的pod.
+- controller-revision-hash: 加到已存在ds的pod上,用于在ds的template更新期间区分旧的和新的pod.
 - pod-template-generation: 作用同上,用上替代,已废弃.
 
 
@@ -18,7 +18,7 @@
 ## (1)DaemonSetSpec
 - minReadySeconds
 - revisionHistoryLimit: 需保留的历史版本的数量, 用于回滚, 默认为10.
-- selector: 查询哪些pod match使用的label, 需match pod模板的labels.
+- selector: 查询pod match使用的label, 需match pod模板的labels.
 - template: podTemplateSpec.
 - updateStrategy: 更新策略(RollingUpdate或OnDelete).
 

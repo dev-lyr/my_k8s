@@ -13,6 +13,10 @@
 - Summarize discovery information from all the servers.
 - Proxy client requests to individual servers.
 
+## (4)相关:
+- kubernetes/pkg/apis
+- kubernetes/pkg/controlplane
+
 # 二 apiserver:
 ## (1)概述:
 - https://github.com/kubernetes/apiserver
@@ -30,3 +34,12 @@
 - server
 - storage
 - util
+
+# 三 cmd:
+## (1)概述:
+
+## (2)创建和启动流程:
+- 设置和校验options.
+- CreateServerChain: the apiservers connected via delegation.
+- PrepareRun
+- Run
