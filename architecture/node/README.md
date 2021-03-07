@@ -12,13 +12,12 @@
 - kubelet
 - kubectl
 
-## (4)nodeSpec:
-- configService
-- podCIDR
-- podCIDRS
-- providerID: cloud provider分配的node ID.
-- taints
-- unschedulable: 控制node为不可调度, 默认是可调度.
+## (4)影响pod情况:
+- kubectl drain
+- 资源紧张触发驱逐(kuebelt的evictionManager)
+- node不健康(心跳丢失或者宕机等)触发的驱逐(node controller)
+- node平滑shutdown: https://kubernetes.io/docs/concepts/architecture/nodes/#graceful-node-shutdown
+- 探针
 
 ## (5)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/
@@ -36,7 +35,16 @@
 - 自注册(常用): 通过kubelet --register-node设置为true来实现, kubelet会尝试向api server注册它自己.
 - 手动注册: 将kubelet --register-node设置为false, 然后自己创建node对象. 
 
-# 三 node.status:
+# 三 nodeSpec:
+## (1)概述:
+- configService
+- podCIDR
+- podCIDRS
+- providerID: cloud provider分配的node ID.
+- taints
+- unschedulable: 控制node为不可调度, 默认是可调度.
+
+# 四 node.status:
 ## (1)addresses:
 - HostName: node的内核上报的hostname, 可被kubelet --hostname-override参数覆盖.
 - ExternalIP: node的ip地址, 可被外部路由到(集群外).
@@ -80,7 +88,7 @@
 ## (9)images:
 - 该node上容器镜像列表.
 
-# 四 资源预留:
+# 五 资源预留:
 ## (1)概述:
 - 资源划分: Allocatable, kube-reserved, system-reserved, eviction-threshold.
  
@@ -102,7 +110,7 @@
 - 为了避免系统oom, kubelet提供了**out of resource**管理.
 - eviction只支持mem和ephemeral-storage, 通过kubelet的--eviction-hard来设置.
 
-# 五 心跳:
+# 六 心跳:
 ## (1)概述:
 - node通过发送心跳来帮助判断node的可用性.
 

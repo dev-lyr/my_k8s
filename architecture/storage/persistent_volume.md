@@ -11,10 +11,9 @@
 - **VolumeAttachment**
 
 ## (3)PV的类型:
-- CSI
+- CSI: CSIPersistentVolumeSource.
 - NFS
 - hostpath: 测试使用.
-- 等等.
 - 备注: PV类型以插件方式实现.
 
 ## (4)流程:

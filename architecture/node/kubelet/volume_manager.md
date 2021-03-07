@@ -11,13 +11,13 @@
 - 实现VolumeManager接口.
 
 ## (2)volumeManager属性:
-- kubeClient
+- kubeClient: DesiredStateOfWorldPopulator用它和API服务器通信来fetch PV和PVC对象.
 - volumePluginMgr
 - desiredStateOfWorld
-- actualStateOfWorld
-- operationExecutor
-- reconciler
 - desiredStateOfWorldPopulator
+- actualStateOfWorld
+- reconciler
+- operationExecutor: 用来执行异步的attach, detach, mount和umount操作.
 - csiMigratedPluginManager
 - intreeToCSITranslator
 
@@ -29,4 +29,7 @@
 ## (4)WaitForAttachAndMount方法:
 - kubelet的syncPod方法中调用.
 
-# 三
+# 三 reconciler
+
+
+# 四 desiredStateOfWorldPopulator

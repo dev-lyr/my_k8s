@@ -12,7 +12,12 @@
 - StorageClass
 - SP: storage provider.
 
-## (3)备注:
+## (3)使用方式:
+- 通过pvc(CSIPersistentVolumeSource)
+- CSI ephemeral volume(pod.spec.volume:csi(CSIVolumeSource))
+- generic ephemeral volumes
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/storage/volumes/#csi
 - https://kubernetes-csi.github.io/docs/introduction.html
 - https://github.com/container-storage-interface/spec/blob/master/spec.md

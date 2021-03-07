@@ -20,7 +20,7 @@
 - **secret**: 用于向Pod传送敏感信息, 例如:密码.
 - **persistentVolumeClaim(PVC)**: 单独介绍.
 - **gitRepo**: 已废弃.
-- **csi**: 重要, 后续单独介绍.
+- **csi**: csi-ephemeral-volume.
 - **flexVolume**: csi出现之前的out-of-tree插件机制.
 - **nfs**: 挂载到Pod中的NFS共享卷.
 - **其它类型网络存储**: glusterfs, iscsi, cephfs等.
@@ -37,18 +37,20 @@
 - pkg/kubelet/volumemanager
 
 ## (6)out-of-tree volume插件:
-- out-of-truee插件包括CSI和FlexVolume, 允许存储供应商创建自定义存储插件, 无需将它们添加到kubernetes仓库.
-- 备注: https://github.com/kubernetes/community/blob/master/sig-storage/volume-plugin-faq.md
+- out-of-truee插件包括:**CSI**和**FlexVolume**, 允许存储供应商创建自定义存储插件, 无需将它们添加到kubernetes仓库.
 
 ## (7)备注
+- https://github.com/kubernetes/community/blob/master/sig-storage/volume-plugin-faq.md
 
 # 二 重要接口:
 ## (1)概述:
 - pkg/volume/plugins.go
+- 每类插件都有个ProbeVolumePlugins方法, 在kubelet启动时候调用进行注册.
 
 ## (2)类型:
 - **VolumePluginMgr**: tracks registered plugins.
-- **VolumePlugin**: an interface to volume plugins that can be used on a kubernetes node (e.g. by kubelet) to instantiate and manage volumes.
+- **VolumePlugin**: 被kubelet用来实例化和管理volume的volume plugin接口, 被各类volume实现.
+- **PersistentVolumePlugin**: VolumePlugin接口的扩展, 增加了GetAccessModes方法.
 - **DeviceMountableVolumePlugin** 
 - **AttachableVolumePlugin**
 - **Volume**: represents a directory used by pods or hosts on a node.
@@ -59,12 +61,34 @@
 
 ## (3)VolumePluginMgr:
 - 创建kubelet时通过NewInitializedVolumePluginMgr函数创建, 并传递给kubelet的volumeManager使用.
-- InitPlugins
+- InitPlugins: 调用VolumePlugin列表的Init初始化插件.
 - Run
 - 等等.
 
 ## (4)VolumePlugin
-- Init: 初始化该插件.
+- Init: 初始化该插件, 
 - GetPluginName: 获取插件名字.
+- GetVolumeName
+- CanSupport: 判断插件是否支持指定的volume specification.
+- RequiresRemount
+- ConstructVolumeSpec:
 - NewMounter
 - NewUnmounter
+- SupportsMountOption: 是否支持mount选项.
+- SupportsBulkVolumeVerification
+
+## (5)PersistentVolumePlugin:
+- VolumePlugin
+- GetAccessModes
+
+# 三 临时卷:
+## (1)类型:
+- emptyDir
+- configMap
+- downwardAPI
+- secret
+- CSI ephemeral volumes
+- generic ephemeral volumes
+
+## (2)备注:
+- https://kubernetes.io/docs/concepts/storage/ephemeral-volumes

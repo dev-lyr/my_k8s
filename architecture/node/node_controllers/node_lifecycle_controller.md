@@ -21,25 +21,31 @@
 - https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 
 # 二 实现:
-## (1)Controller属性:
+## (1)概述:
+- 控制器通过给node添加**NoExecute** taints(unreachable或notReady)来驱逐pods.
+- 同时也会加上表示node问题的taints来让调度器不会调度pod到该node.
+
+## (2)Controller属性:
 - taintManager
 - nodeHealthMap
 - nodeEvictionMap
 - podUpdateQueue
 - nodeUpdateQueue
 
-## (2)Run:
+## (3)Run:
 - 若开启taintManager(默认开启), 则启动taintManager.
 - 启动doNodeProcessingPassWorker
 - 启动doPodProcessingWorker
 - 若开启taintManager启动doNoExecuteTaintingPass(给node打上taint, 由taint manager执行驱逐); 否则启动doEvictionPass(直接驱逐).
 - 启动monitorNodeHealth.
 
-# 三 taintManager:
-## (1)功能:
-- 监听taint和toleration的变化, 并且负责删除有NoExecute Taints的Node上的pods. 
+# 三 taint类型:
+## (1)v1.TaintEffectNoExecute:
+- UnreachableTaintTemplate: v1.TaintNodeUnreachable
+- NotReadyTaintTemplate: v1.TaintNodeNotReady
 
-## (2)NoExecuteTaintManager
+## (2)v1.TaintEffectNoSchedule:
+- nodeConditionToTaintKeyStatusMap: node条件到taint的映射.
 
 # 四 doNodeProcessingPassWorker:
 ## (1)功能:
@@ -55,9 +61,11 @@
 ## (1)概述:
 - 从podUpdateQueue取变化pod来处理.
 
-## (2)processPod
+## (2)processPod:
+- 取消NodeReady为true节点上pod的taint驱逐.
+- 对于NodeReady为false或unknow节点pod会被标记为not ready.
 
-# 六 doExecuteTaintingPass:
+# 六 doNoExecuteTaintingPass:
 ## (1)概述:
 - 根据zoneNoExecuteTainter(monitorNodeHealth维护), 判断并对node打taint.
 
@@ -65,3 +73,4 @@
 ## (1)概述:
 - verifies node health are constantly updated by kubelet, and if not, post "NodeReady==ConditionUnknown".
 - taint nodes who are not ready or not reachable for a long period of time.
+- 当nodeReady为true时, 会将node设置为healthy.

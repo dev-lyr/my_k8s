@@ -1,8 +1,8 @@
 # 一 概述:
 ## (1)概述:
 - 当可用计算资源较少时,kubelet需要保持node的稳定性, 尤其是不可压缩资源(内存,磁盘等),当资源耗尽时,node就会不稳定.
-- kubelet通过evictionManager来实现node资源的监控和响应.
-- 相关: node_lifecycle_controller实现node级别的驱逐.
+- kubelet通过**evictionManager**来实现node资源的监控和响应.
+- 相关: node_lifecycle_controller实现**node级别的驱逐**.
 
 ## (2)驱逐策略:
 - kubelet会主动监控和避免计算资源的starvation.
@@ -65,6 +65,7 @@
 ## (2)conditions:
 - MemoryPressure: memory.available
 - DiskPressure: nodefs.available,nodefs.inodesFree,imagesfs.available或imagefs.inodesFree.
+- PIDPressure
 
 ## (3)conditions震荡(oscillation):
 - 若node在软驱逐阀门间震荡, 但有没有超过设置的grace period, 则会导致node的condition在true和false之间经常震荡, 影响调度.

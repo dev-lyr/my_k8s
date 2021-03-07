@@ -9,9 +9,10 @@
 
 ## (3)备注:
 - https://github.com/containernetworking/cni
-- https://github.com/containernetworking/plugins
+- https://github.com/containernetworking/plugins: 实现CNI规范的CNI插件.
 - https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/
 - https://github.com/containernetworking/cni/tree/master/cnitool
+- awk cni: https://github.com/aws/amazon-vpc-cni-k8s
 
 # 二 CNI规范:
 ## (1)概述:

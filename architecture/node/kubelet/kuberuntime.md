@@ -1,6 +1,6 @@
 # 一 概述: 
 ## (1)概述:
-- kubeGenericRuntimeManager: 实现container目录下的Runtime等接口(支持一些pod操作), 同时包含cri的调用.
+- kubeGenericRuntimeManager: 实现container目录下的Runtime等接口(支持pod相关操作), 同时包含cri的调用.
 - kubelet调用NewKubeGenericRuntimeManager方法创建.
 
 ## (2)kubeGenericRuntimeManager属性:
