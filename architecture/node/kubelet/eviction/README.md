@@ -7,7 +7,7 @@
 ## (2)驱逐策略:
 - kubelet会主动监控和避免计算资源的starvation.
 - 当出现饥饿时, kubelet会通过终止一个或多个pods来reclaim饥饿资源.
-- kubelet终止pod的所有容器且pod将PodPhase转换为Failed; 若Pod由controller管理则会另外创建一个pod.
+- kubelet终止pod的所有容器且将PodPhase转换为Failed; 若Pod由controller管理则会另外创建一个pod.
 - 当到达驱逐阀门时, kubelet优先尝试回收node级别资源, 然后才是驱逐pod.
 
 ## (3)调度器:

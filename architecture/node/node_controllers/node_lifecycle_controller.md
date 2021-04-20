@@ -1,10 +1,12 @@
 # 一 概述:
 ## (1)概述:
-- 管理node的lifecycle.
+- 管理node的生命周期.
+- Node控制器会根据Node的condition自动添加一些taint到node上, 包括: NoExecute和NoSchedule.
+- 相关: kubelet的evictionManager实现的是pod级别的驱逐.
 
 ## (2)功能:
+- 监控node的健康并驱逐不健康节点上的pods.
 - Keeping the node controller's internal list of nodes up to date with the cloud provider's list of available machines.
-- 监控node的健康
 
 ## (3)配置:
 - --node-monitor-grace-period: Amount of time which we allow running Node to be unresponsive before marking it unhealthy, 默认是40s, 该值必须是kubelet的nodeStatusUpdateFrequency的N倍.
@@ -63,7 +65,7 @@
 
 ## (2)processPod:
 - 取消NodeReady为true节点上pod的taint驱逐.
-- 对于NodeReady为false或unknow节点pod会被标记为not ready.
+- 对于NodeReady为false或unknow节点pod的taint eviction会发生(不运行taintmanager时)同时pod会被标记为not ready.
 
 # 六 doNoExecuteTaintingPass:
 ## (1)概述:

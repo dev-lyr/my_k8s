@@ -30,10 +30,11 @@
 
 # 二 Kubelet结构属性:
 ## (1)pod相关:
-- admitHandlers和softAdmitHandlers
 - podWorkers: 根据event进行pods的sync.
 - podManager: 存储和管理对pod的访问,以及static pods和mirror pods间的映射.
 - serviceLister
+- admitHandlers
+- softAdmitHandlers
 
 ## (2)容器相关
 - probeManager

@@ -13,7 +13,10 @@
 - Pod的调度是基于资源的**request**.
 - limits不受可用资源量的约束, 即limits总和可以超过节点资源总量, 即**超卖**.
 
-## (4)备注:
+## (4)pod overhead:
+- https://kubernetes.io/docs/concepts/scheduling-eviction/pod-overhead/
+
+## (5)备注:
 - https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
 - k8s允许用户为节点添加自定义资源并支持pod的request来申请.
 
@@ -104,7 +107,7 @@
 - 通过配置大于请求的cpu限制, 可以让Pod在burst时有cpu可用; 同时又将cpu限制在一个合理的数量.
 
 ## (5)到docker参数转换:
-- cpu-shares: 若request不为空,使用request; 若request为空且limit不为空使用limit; 若都为空使用minShares(值为2),若计算结果小于minShares也使用minShares.
+- cpu-shares: 若request不为空,使用request;若request为空且limit不为空使用limit; 若都为空使用minShares(值为2),若计算结果小于minShares也使用minShares.
 - cpu-period: 默认为100000(100ms),若自定义period feature则使用自定义.
 - cpu-quota: 使用limit和cpu-period得出, 若limit为空, 则为0; 若计算结果小于minQuotaPeriod(1000)则使用该值.
 

@@ -8,23 +8,7 @@
 - kube-scheduler命令: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
 - https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
 
-# 二 kube-scheduler命令:
-## (1)格式:
-- kube-scheduler [flags]
-
-## (2)网络相关:
-- --bind-address: 用于监听--secure-port端口的IP地址,该IP地址可被集群内其他部分,外部CLI/WEB用户访问, 若为空, 则所有接口会被使用. 用于替换--address.
-- --secure-port: 默认10259, 服务HTTPS.
-- --port: 默认10251, 服务HTTP.
-- --master: API server的地址.
-
-## (3)配置相关:
-- --config
-- --policy-config-file
-- --policy-configmap
-- --policy-configmap-namespace: 默认kube-system.
-
-# 三 scheduler扩展:
+# 二 scheduler扩展:
 ## (1)实现方式:
 - SchedulerExtender
 - Multiple schedulers
@@ -39,3 +23,4 @@
 ## (4)备注:
 - 运行多个调度器: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 - 实现调度器: https://github.com/kubernetes/kubernetes/tree/master/pkg/scheduler
+

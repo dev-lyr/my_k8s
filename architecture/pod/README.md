@@ -119,7 +119,11 @@
 - Init容器通常运行至完成.
 - 每个Init容器必须成功结束下一个才会开始.
 
-## (3)使用场景:
+## (3)资源相关:
+- 所有init容器中最大的资源request和limit是**effective init request/limit**.
+- pod的effective init request/limit是所有业务容器request/limit和init的effective request/limit的两者间的最大者.
+
+## (4)使用场景:
 - Init容器可以包含和运行由于安全原因不期望包含在应用容器镜像的工具.
 - 可以包含用于setup的工具或自定义代码, 例如:当仅仅想使用sed, awk等工具时, 不需要FROM一个镜像.
 - 应用镜像的builder和deployer可以独立工作, 不需要仅仅构建一个单独的app镜像.

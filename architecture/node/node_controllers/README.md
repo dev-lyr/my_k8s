@@ -8,8 +8,7 @@
 
 ## (3)功能:
 - 当node注册时给它**分配CIDR块**.
-- Keeping the node controller's internal list of nodes up to date with the cloud provider's list of available machines.
-- 监控node的健康
+- 监控node的健康并在Node不可达时平滑驱逐pod.
 
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/architecture/nodes/#node-controller

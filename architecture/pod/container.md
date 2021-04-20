@@ -72,7 +72,6 @@
 - Terminated: 表示容器已经完成执行操作且已停止运行, 当容器成功执行完成或由于一些原因失败时候会进入该状态, 在进入Terminated状态之前, PreStop hook(若有)会被执行.
 - Waiting: 容器的默认状态, 若容器不在Running或Terminated状态, 则处于Waiting状态, Waiting状态的容器依旧执行它要求的操作, 例如拉镜像, 应用secrets等.
 
-
 # 四 容器probes:
 ## (1)概述:
 - kubelet定期在容器上执行诊断性探测(Probe), 为了执行诊断, kubelet调用容器实现的handler.
