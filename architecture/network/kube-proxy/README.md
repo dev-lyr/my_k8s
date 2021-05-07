@@ -27,11 +27,12 @@
 ## (6)备注:
 - iptables -t nat -L查询规则.
 
-# 二 kube-proxy命令:
+# 二 kube-proxy:
 ## (1)概述:
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/
 
 ## (2)常用选项:
+- --proxy-mode: userspace,iptables或ipvs, 当前默认iptables.
 - --bind-addresss: proxy server的服务IP,默认0.0.0.0.
 - --cleanup: 若为true则清理iptables和ipvs规则并退出.
 - --cluster-cidr
@@ -40,10 +41,56 @@
 - --healthz-bind-address: 默认0.0.0.0:10256.
 - --metrics-bind-address: 默认127.0.0.1:10249.
 - --hostname-override
-- --proxy-mode: userspace,iptables或ipvs, 当前默认iptables.
+- --kube-api-burst
 
 ## (3)iptables相关
 
 ## (4)ipvs相关
 
-## (5)contrack相关
+## (5)conntrack相关
+
+## (6)备注:
+- cmd/kube-proxy
+- pkg/proxy
+
+# 三 ProxyServer:
+## (1)概述:
+- 表示启动proxyServer所需要的所有参数.
+- 相关: Options表示创建和运行proxyServer所需的所有信息.
+
+## (2)方法:
+- Run: 运行ProxyServer.
+- CleanupAndExit: 删除iptables规则并退出.
+
+## (3)属性:
+- Proxier(proxy.Provider): 代理的实现, 例如: iptables,ipvs,userspace. 
+
+## (4)Run
+
+# 三 Config:
+## (1)概述:
+- xxConfig对资源xx的informer的eventHandler进行封装.
+
+## (2)EndpointsConfig:
+- 属性: eventHandler []EndpointsHandler
+- 方法: handleAddEndpoints, handleDeleteEndpoints, handleUpdateEndpoints, Run, RegisterEventHandler.
+- EndpointsHandler接口: OnEndpointsAdd,OnEndpointsDelete,OnEndpointsUpdate,OnEndpointsSynced(只调用一次).
+
+## (3)ServiceConfig:
+- eventHandler []ServiceHandler
+- 方法: handleAddService, handleDeleteService, handleUpdateService, Run, RegisterEventHandler.
+
+## (4)NodeConfig:
+- eventHandler []NodeHandler
+- 方法: handleAddNode, handleDeleteNode, handleUpdateNode, Run, RegisterEventHandler.
+
+## (5)EndpointSliceConfig
+
+# 四 types.go:
+## (1)Provider:
+- config.EndpointsHandler
+- config.EndpointSliceHandler
+- config.ServiceHandler
+- config.NodeHandler
+- Sync: synchronizes the Provider's current state to proxy rules.
+- SyncLoop: 执行periodic work.

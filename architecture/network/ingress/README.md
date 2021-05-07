@@ -41,7 +41,7 @@
 - **backend(IngressBackend)**: 不能match任何rule时候使用的默认backend, 可选.
 - **rules(IngressRule数组)**: 一个配置ingress的host rules的列表, 若未指定或没有rule匹配, 则所有流量被发送到backend.
 - **tls(IngressTTL)**: TLS配置.
-- **ingressClassName**: IngressClass资源的name, 表示由那个controller来实现该ingress资源, 用来代替"kubernete.io/ingress.class"直接, 为了向后兼容, 若指定该注解则优先使用该注解.
+- **ingressClassName**: IngressClass资源的name, 表示由那个controller来实现该ingress资源, 用来代替**kubernete.io/ingress.class**注解, 为了向后兼容, 若指定该注解则优先使用该注解.
 
 ## (3)IngressRule:
 - host: 可选,Host is the **fully qualified domain name** of a network host, as defined by RFC 3986.

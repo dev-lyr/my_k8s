@@ -22,5 +22,6 @@
 - 等等.
 
 ## (4)函数:
+- NewSharedInformerFactory: kube-controller-manager调用创建所有namespace使用的sharedInformerFactory.
 - NewSharedInformerFactoryWithOptions: 使用可选的选项来构造一个sharedInformerFactory实例.
 

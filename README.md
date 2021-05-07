@@ -22,6 +22,7 @@
 - CNI(Container Network Interface): 容器网络接口.
 
 ## (5)备注:
+- https://github.com/kubernetes/community: 各个模块.
 - CCNF: https://www.cncf.io/.
 - Knative: https://github.com/knative/
 - k8s API: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/

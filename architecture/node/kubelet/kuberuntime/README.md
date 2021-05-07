@@ -11,22 +11,25 @@
 
 ## (3)kubeGenericRuntimeManager方法:
 - SyncPod
+- computePodActions
+- createPodSandbox
+- startContainer
 
-## (4)目录下:
-- instrumented_services.go: 对RuntimeService进行了封装, 记录了操作和错误metrics.
-- log
-
-## (5)相关:
+## (4)相关:
 - pkg/kubelet/container: 支持一些pod级别的操作, kubeGenericRuntimeManager会实现相关接口.
 - pkg/kubelet/cri/remote: cri的runtimeService和imageService的grpc实现, 作为kubeGenericRuntimeManager的属性.
 
-## (6)备注:
+## (5)备注:
 - pkg/kubelet/kuberuntime
 
-# 二 cri/remote目录:
+# 二 SyncPod:
 ## (1)概述:
-- 包含cri-api的RuntimeService和ImageManagerService的实现, 用来创建到cri实现的client.
+- 被kubelet的syncPod调用.
+- 计算sandbox和容器的改动(新建,杀死等), 然后根据计算结果执行对应操作.
 
-# 三 container目录:
-## (1)概述:
-- runtime.go: 定义一些容器运行时需实现的方法, kubeGenericRuntimeManager实现.
+## (2)pod创建步骤:
+- 创建sandbox
+- 创建临时容器
+- 创建init容器
+- 创建普通容器
+

@@ -34,6 +34,12 @@
 - kubelet-finalize
 - addon: 安装coredns和kube-proxy.
 
+## (3)flags:
+- --pod-network-cidr=10.244.0.0/16: 需要制定pod的cidr, 部分网络插件依赖.
+- --image-repository
+- --kubernetes-version
+- 等等.
+
 # 三 kubeadm join:
 ## (1)概述:
 - 初始化一个工作/控制面板节点并加入集群.

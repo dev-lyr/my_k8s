@@ -45,13 +45,10 @@
 - unschedulable: 控制node为不可调度, 默认是可调度.
 
 # 四 node.status:
-## (1)addresses:
-- HostName: node的内核上报的hostname, 可被kubelet --hostname-override参数覆盖.
-- ExternalIP: node的ip地址, 可被外部路由到(集群外).
-- InternalIP: node的内部ip地址, 只能集群内访问.
+## (1)概述:
+- https://github.com/kubernetes/api/blob/v0.21.0/core/v1/types.go
 
 ## (2)conditions: 
-- **OutOfDisk**: True表示没有足够的磁盘空间添加新的pod了, 否则为False.
 - **Ready**: True表示node是健康的且准备好接收pod; False表示node是不健康且不能接收pod; Unknown表示node controller在过去node-monitor-grace-period(默认40s)没有接收到node的心跳.
 - **MemoryPressure**: True表示内存紧张(pressure); False表示内存使用量低.
 - **PIDPressure**: True表示进程紧张, 表示node上有太多进程.
@@ -87,6 +84,11 @@
 
 ## (9)images:
 - 该node上容器镜像列表.
+
+## (10)addresses:
+- HostName: node的内核上报的hostname, 可被kubelet --hostname-override参数覆盖.
+- ExternalIP: node的ip地址, 可被外部路由到(集群外).
+- InternalIP: node的内部ip地址, 只能集群内访问.
 
 # 五 资源预留:
 ## (1)概述:

@@ -17,16 +17,8 @@
 - kubernetes/pkg/kubelet
 
 ## (4) kubelet结构体:
-- 主要的kubelet实现.
+- 主要的kubelet实现
 - pkg/kubelet/kubelet.go
-
-## (5)对外提供API:
-- /pods
-- /metrics
-- /metrics/cadvisor
-
-## (6)config:
-- pkg/kubelet/config
 
 # 二 Kubelet结构属性:
 ## (1)pod相关:
@@ -49,11 +41,20 @@
 - imageManager: 管理镜像的gc.
 - evictionManager 
 
-# 三 kubelet创建:
-## (1)概述:
-- cmd/kubelet
+# 三 方法:
+## (1)主要:
+- Run: 启动.
+- syncLoop: 处理各种变化的main loop, for循环中调用syncLoopIteration.
+- syncLoopIteration: 从不同channel中读取事件并dispatch pod到指定的handler.
 
-# 四 Kubelet启动(Run):
+## (2)pod相关:
+- canRunPod
+- canAdmitPod
+- HandlerPod(Additions,Reconcile,Updates,Syncs,Removes): 底层都调用dispatchWork.
+- dispatchWork: 开始**异步**sync pod, 使用pod worker(调用podWorkers的UpdatePod).
+- **syncPod**: podWorker的UpdatePod会**异步**调用syncPod方法.
+
+# 四 Run:
 ## (1)流程:
 - 若cloudResourceSyncmManager不为nil, 则启动.
 - 调用initializeModules初始化不需要容器运行时启动的内部模块.
@@ -78,20 +79,7 @@
 - 启动oom watcher.
 - 启动resourceAnalyzer.
 
-# 五 方法:
-## (1)主要:
-- Run: 启动.
-- syncLoop: 处理各种变化的main loop, for循环中调用syncLoopIteration.
-- syncLoopIteration: 从不同channel中读取事件并dispatch pod到指定的handler.
-
-## (2)pod相关:
-- canRunPod
-- canAdmitPod
-- HandlerPod(Additions,Reconcile,Updates,Syncs,Removes): 底层都调用dispatchWork.
-- dispatchWork: 开始**异步**sync pod, 使用pod worker(调用podWorkers的UpdatePod).
-- **syncPod**: podWorker的UpdatePod会异步调用syncPod方法.
-
-# 六 syncLoopIteration:
+# 五 syncLoopIteration:
 ## (1)概述:
 - 从不同channel中读取事件并dispatch pod到指定的handler, handler就是kubelet自己, 它实现了很多方法.
 

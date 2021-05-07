@@ -20,6 +20,7 @@
 
 ## (4)备注:
 - https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+- PDB和pkg/controller/disruption
 
 # 二 非自愿中断:
 ## (1)减轻非自愿中断的方法:
@@ -33,6 +34,11 @@
 - 但是集群管理员或者云提供商可能会导致自愿中断发生, 例如:滚动升级node上的软件. 一些集群(node)自动伸缩会导致自愿中断来进行碎片整理和压缩(compact)node.
 - k8s提供一些features来帮助在频繁发生自愿中断的情况下运行高可用的应用, 将这些特性称作**Disruption Budgets**, 相关资源PodDisruptionBudget(PDB).
 
+# 四 PodDisruptionBudget:
+## (1)概述:
+- Cluster managers and hosting providers should use tools which respect PodDisruptionBudgets by calling the **Eviction API** instead of directly deleting pods or deployments.
+- PDBs cannot prevent involuntary disruptions from occurring, but they do count against the budget.
+
 ## (2)PodDisruptionBudgetSpec:
 - maxUnavailable: 限制最大不可用的pod数量, 设置为0则禁止所有**voluntary** evictions.
 - minAvailable: 限制最小的空的pod数量, 设置为100则禁止所有**voluntary** evictions.
@@ -41,6 +47,3 @@
 ## (3)PodDisruptionBudgetStatus:
 - currentHealthy: 当前健康的pod的数量.
 - 等等.
-
-# 四 Drain Node:
-- https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/

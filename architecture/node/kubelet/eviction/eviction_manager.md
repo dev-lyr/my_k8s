@@ -26,3 +26,5 @@
 ## (1)概述:
 - 功能: main control loop that enforces eviction thresholds.
 - 执行间隔: 10s执行一次, 若有pod需要销毁则等待(最长30s)执行一次.
+
+## (2)执行流程

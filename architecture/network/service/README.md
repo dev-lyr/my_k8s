@@ -14,8 +14,8 @@
 - kubectl create
 
 ## (4)集群内访问外部服务方法:
-- 自定义Endpoint
 - 创建ExternalName类型服务
+- 自定义Endpoint: 有固定IP地址的则直接创建对应EP, 若没有可自己实现controller来不断更新ep的地址.
 
 ## (5)外部访问服务的方法:
 - NodePort
