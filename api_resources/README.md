@@ -84,7 +84,7 @@
 # 七 资源删除:
 ## (1)概述:
 - 资源删除分为两个阶段: finalization和removal.
-- 一些对象是其它对象的owner, 被owner的对象是owner对象的依赖, 每个依赖对象有一个**metadata.ownerReferences**属性指向owner对象, 在一些情况下, 该属性会被kube自动设置, 也可以手动设定.
+- 一些对象是其它对象的owner, 被owner的对象是owner对象的附属, 每个附属对象有一个**metadata.ownerReferences**属性指向owner对象, 在一些情况下, 该属性会被kube自动设置, 也可以手动设定.
 
 ## (2)流程:
 - 当client删除一个资源时, .metadata.deletionTimestamp被设置为当前时间.
@@ -92,5 +92,8 @@
 - 一旦最后的finalizer被删除,该资源才会实际的从etcd中删除.
 
 ## (3)控制删除依赖:
-- 级联删除(cascading deletion): 删除对象时自动删除它的依赖, 级联删除分为2种: backgroup和foregroup.
-- 若删除对象时不删除它的依赖, 则依赖会变成孤儿(orphaned).
+- 级联删除(cascading deletion): 删除对象时自动删除它的附属, 级联删除分为2种: backgroup和foregroup.
+- 若删除对象时不删除它的附属, 则依赖会变成孤儿(orphaned).
+
+## (4)备注:
+- https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/

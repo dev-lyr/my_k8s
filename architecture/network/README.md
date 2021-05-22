@@ -1,5 +1,5 @@
 # 一 概述:
-## (1)网络通信分类:
+## (1)分类:
 - 高度耦合的容器间(pod内容器): 通过pod和localhost来通信.
 - pod-pod间: CNI插件等.
 - Pod和Service间: 通过kube-porxy和dns等.

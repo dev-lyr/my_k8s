@@ -33,7 +33,7 @@
 - namespace: 空的等同于default空间.
 - selfLink: 是一个表示对象的URL.
 - resourceVersion
-- lables
+- labels
 - clusterName: 对象属于的cluster的name, 用于区分在不同cluster内的同一namespace和name的资源.
 - creationTimestamp: 表示对象创建时server的时间的一个时间戳.
 - deletionGracePeriodSeconds: 对象在被从系统移除之前运行的平滑终止的时间(秒为单位), 只有在deletionTimestamp被设置的时候才设置.
@@ -114,10 +114,6 @@
 - "track" : "daily", "track" : "weekly"
 - 备注: 可以自定义.
 
-## (4)使用:
-- 命令: `kubectl get pods -l environment=production,tier=frontend`.
-- API: `?labelSelector=environment%3Dproduction,tier%3Dfrontend`.
-
 # 六 Annotations:
 ## (1)概述:
 - 格式: `metadata:{annotations:{"k1":"v1", "k2":"v2"}}`
@@ -125,6 +121,7 @@
 ## (2)注解和标签对比:
 - 可通过标签(label)和注解(annotation)attach metadata到k8s对象, 标签用来选择对象和找到满足特定条件的对象集合.
 - 注解与标签不同, 不是用来标记和选择资源, 注解中的metadata可以大或小, 结构化或非结构化, 注解中可以包含在标签中不允许的字符.
+- 标签底层会建索引.
 
 ## (3)规范:
 - 注解是键值对.

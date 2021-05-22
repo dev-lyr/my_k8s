@@ -4,6 +4,8 @@
 
 ## (2)备注:
 - pkg/kubelet/volumemanager
+- pkg/kubelet/volume_host.go
+- pkg/volume
 
 # 二 volumeManager:
 ## (1)概述:
@@ -28,8 +30,8 @@
 
 ## (4)WaitForAttachAndMount方法:
 - kubelet的syncPod方法中调用.
+- 代码写死等待2分3秒, 超时则返回失败, 等待重试.
 
 # 三 reconciler
-
-
-# 四 desiredStateOfWorldPopulator
+## (1)功能:
+- reconciler runs an asynchronous periodic loop to reconcile the desiredStateOfWorld with the actualStateOfWorld by triggering attach,detach, mount, and unmount operations using the operationExecutor.

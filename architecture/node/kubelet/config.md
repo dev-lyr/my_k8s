@@ -1,7 +1,20 @@
 # 一 概述:
 ## (1)概述:
+- kubelet配置参数的部分可以通过磁盘上的配置文件来指定, 替代通过命令行参数.
+- 基于配置文件是推荐的方式, 因为简化了node的部署以及配置文件的管理.
+- 命令行参数若指定和配置文件相同的flag, 则会覆盖掉配置文件的值.
 
-## (2)备注:
+## (2)配置文件:
+- kubelet --config来指定, 配置文件需是JSON/YAML格式.
+- 若使用--config, 则未指定的flag的默认值是KubeletConfiguration的默认值.
+
+## (3)动态kubelet配置
+- 功能: 允许通过部署一个ConfigMap并配置每个Node使用它来动态改变在线k8s集群的kubelet的配置.
+- 参考: https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/
+
+## (4)备注:
+- https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/
+- https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/kubelet/config/v1beta1/types.go
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
 
 # 二 kubelet命令:
@@ -24,6 +37,7 @@
 - --healthz-port: 默认10248, localhost healthz endpoint的部分.
 - --node-ip: 节点的IP地址, 若指定kubelet会使用该IP地址.
 - --pod-cidr: 用于Pod IP地址的CIDR, 只能用于standalone模式; 集群模式, 从master获取, 参考controller-manager配置.
+- --cluster-dns: DNS服务器的地址.
 
 ## (4)日志相关:
 - --log-dir: 若非空, 写入该目录下日志文件.
@@ -94,26 +108,7 @@
 - nodeStatusReportFrequency: 默认值为5m, 指定kubelet 将node状态发送给master的频率, 只在node lease特性开启时使用; 为了向后兼容, 当nodeStatusUpdateFrequency显式指定时, nodeStatusReportFrequency的默认值和nodeStatusUpdateFrequency一致.
 - NodeLeaseDurationSeconds: lease的duration, 默认为40s, 更新频率为该值的1/4(代码写死, 目前不支持配置).
 
-# 三 配置文件:
-## (1)概述:
-- kubelet配置参数的部分可以通过磁盘上的配置文件来指定, 替代通过命令行参数.
-- 基于配置文件是推荐的方式, 因为简化了node的部署以及配置文件的管理.
-- 命令行参数若指定和配置文件相同的flag, 则会覆盖掉配置文件的值.
-
-## (2)配置文件:
-- kubelet --config来指定, 配置文件需是JSON/YAML格式.
-- 若使用--config, 则未指定的flag的默认值是KubeletConfiguration的默认值.
-
-## (3)备注:
-- https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/
-- https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/kubelet/config/v1beta1/types.go
-
-# 四 动态kubelet配置
-## (1)概述:
-- 功能: 允许通过部署一个ConfigMap并配置每个Node使用它来动态改变在线k8s集群的kubelet的配置.
-- 参考: https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/
-
-# 五 认证和授权:
+# 三 认证和授权:
 ## (1)概述:
 
 ## (2)备注:
