@@ -8,7 +8,13 @@
 - 监控node的健康并驱逐不健康节点上的pods.
 - Keeping the node controller's internal list of nodes up to date with the cloud provider's list of available machines.
 
-## (3)配置:
+## (3)watch资源:
+- lease
+- node
+- pod 
+- daemonSet
+
+## (4)配置:
 - --node-monitor-grace-period: Amount of time which we allow running Node to be unresponsive before marking it unhealthy, 默认是40s, 该值必须是kubelet的nodeStatusUpdateFrequency的N倍.
 - --node-monitor-period: The period for syncing NodeStatus in NodeController, 默认5s.
 - --node-startup-grace-period: Amount of time which we allow starting Node to be unresponsive before marking it unhealthy, 默认1m.
@@ -18,9 +24,10 @@
 - --secondary-node-eviction-rate
 - --unhealthy-zone-threshold
 
-## (4)备注:
+## (5)备注:
 - pkg/controller/nodelifecycle
 - https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+- https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/
 
 # 二 实现:
 ## (1)概述:
@@ -65,7 +72,8 @@
 
 ## (2)processPod:
 - 取消NodeReady为true节点上pod的taint驱逐.
-- 对于NodeReady为false或unknow节点pod的taint eviction会发生(不运行taintmanager时)同时pod会被标记为not ready.
+- 不运行taintManager时, 对于NodeReady为false或unknow节点pod的直接驱逐.
+- 标记pod为not ready.
 
 # 六 doNoExecuteTaintingPass:
 ## (1)概述:
@@ -73,6 +81,6 @@
 
 # 七 monitorNodeHealth:
 ## (1)概述:
-- verifies node health are constantly updated by kubelet, and if not, post "NodeReady==ConditionUnknown".
+- 验证node监控情况是否不断的被kubelet更新, 若不是则post "NodeReady==ConditionUnknown".
 - taint nodes who are not ready or not reachable for a long period of time.
 - 当nodeReady为true时, 会将node设置为healthy.

@@ -1,7 +1,7 @@
 # 一 概述:
 ## (1)概述:
 - A service account provides an identity for processes that run in a Pod.
-- Pod中进程需要apiserver时, 通过service account来进行校验(authenticated).
+- Pod中进程需要访问apiserver时, 通过service account来进行校验(authenticated).
 - 创建sa时候会自动创建对应的secret.
 
 ## (2)属性:

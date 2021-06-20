@@ -12,7 +12,12 @@
 - 功能: 允许通过部署一个ConfigMap并配置每个Node使用它来动态改变在线k8s集群的kubelet的配置.
 - 参考: https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/
 
-## (4)备注:
+## (4)其它:
+- podLogsRootDirectory = "/var/log/pods": pod日志根目录.
+- /var/log/containers: 容器日志目录.
+- docker根目录: /var/lib/docker
+
+## (5)备注:
 - https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/
 - https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/kubelet/config/v1beta1/types.go
 - https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
@@ -28,6 +33,7 @@
 - --kubeconfig: kubeconfig文件的位置, 指定如何连接到API Server, 若不指定则是standalone模式, 方便调试.
 - --bootstrap-kubeconfig:用于获得client certificate的kubeconfig文件的地址.
 - --feature-gates: A set of key=value pairs that describe feature gates for alpha/experimental features.
+- --root-dir: 管理kubelet文件(volume mounts等)的目录路径, 默认为/var/lib/kubelet.
 
 ## (3)网络相关:
 - --address: 默认为0.0.0.0, kubelet提供服务的地址.

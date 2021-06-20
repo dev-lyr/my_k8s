@@ -37,7 +37,7 @@
 # 四 PodDisruptionBudget:
 ## (1)概述:
 - Cluster managers and hosting providers should use tools which respect PodDisruptionBudgets by calling the **Eviction API** instead of directly deleting pods or deployments.
-- PDBs cannot prevent involuntary disruptions from occurring, but they do count against the budget.
+- PDBs cannot prevent **involuntary disruptions from occurring**, but they do count against the budget.
 
 ## (2)PodDisruptionBudgetSpec:
 - maxUnavailable: 限制最大不可用的pod数量, 设置为0则禁止所有**voluntary** evictions.
@@ -47,3 +47,6 @@
 ## (3)PodDisruptionBudgetStatus:
 - currentHealthy: 当前健康的pod的数量.
 - 等等.
+
+## (4)备注:
+- taint不考虑pdb.

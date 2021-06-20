@@ -13,10 +13,14 @@
 - 关闭抢占: 将PodSpec的preemptionPolicy设置为Nerver; 将kube-schedule的flag disablePreemption设置为true.
 
 ## (4)优先级和QoS:
-- 调度器的抢占逻辑在选择被抢占目标时不考虑QoS,只考虑优先级.
+- 调度器的抢占逻辑在选择被抢占目标时只考虑优先级,不考虑QoS.
 - 唯一同时考虑优先级和QoS的是kubelet的out-of-resource eviction.
 
-## (5)备注:
+## (5)将pod标记为critical:
+- system-cluster-critical: 2000000000
+- system-node-critical: 2000001000
+
+## (6)备注:
 - 在kube 1.12+, 当集群资源有压力时, 重要的Pod依赖调度器抢占来调度, 因此不推荐关闭抢占.
 - https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 

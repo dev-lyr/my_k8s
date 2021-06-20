@@ -2,7 +2,6 @@
 ## (1)分类:
 - Resource metrics pipeline
 - Full metrics pipeline
-- CronJob monitor
 - Node problem detector(npd): https://kubernetes.io/docs/tasks/debug-application-cluster/monitor-node-health
 - kube-state-metrics: https://github.com/kubernetes/kube-state-metrics
 - 备注: k8s中, 应用监控不依赖一个单独的监控方案, 可以使用多个.
@@ -38,23 +37,11 @@
 
 # 三 full metrics pipeline:
 ## (1)概述:
-- 提供更丰富的metrics, k8s可以针对这些metrics进行自动扩容或者调整集群, 例如: Horizontal Pod Autoscaler.
-- 通过kubelet来fetch metrics, 并通过一个实现**custom.metrics.k8s.api**或**external.metrics.k8s.io** API的**adapter**来暴露出来.
+- 提供更丰富的metrics.
 
 ## (2)实现方案:
 - prometheus
 - sysdig
 
 ## (3)备注:
-- https://github.com/DirectXMan12/k8s-prometheus-adapter
-
-# 四 kube-state-metrics:
-## (1)概述:
-- https://github.com/kubernetes/kube-state-metrics
-
-# 五 CronJob monitoring:
-## (1)概述:
-- 管理员可以用来查看那些job是运行中以及完成的job的状态.
-
-## (2)备注:
-- https://github.com/pietervogelaar/kubernetes-job-monitor
+- https://github.com/kubernetes-sigs/prometheus-adapter

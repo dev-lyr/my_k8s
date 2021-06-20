@@ -6,7 +6,7 @@
 
 ## (2)组件:
 - helm client: 是一个命令行工具.
-- tiller server: 是一个在集群内的server, 和helm client交互, 和kube API server交互.
+- helm library
 
 ## (3)备注:
 - https://helm.sh/

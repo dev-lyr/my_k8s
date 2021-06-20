@@ -3,6 +3,7 @@
 - vertical pod autoscaler(VPA): frees the users from necessity of setting up-to-date resource limits and requests for the containers in their pods. 
 - VPA will set the requests automatically based on usage and thus allow proper scheduling onto nodes so that appropriate resource amount is available for each pod. 
 - It can both **down-scale** pods that are over-requesting resources, and also **up-scale** pods that are under-requesting resources based on their usage over time.
+- 依赖metrics server.
 
 ## (2)VPA组件:
 - **Recommender**: monitor当前和过去的资源使用情况, 并基于此提供容器的cpu和内存request的推荐值.
@@ -26,9 +27,9 @@
 
 # 二 VerticalPodAutoscalerSpec:
 ## (1)概述:
-- TargetRef: 指向pod控制器, 例如: deployment,statefuleset等.
-- UpdatePolicy(PodUpdatePolicy): 控制changes apply到pod的规则.
-- ResourcePolicy(PodResourcePolicy): 控制autoscaler如何计算推荐资源, 是一个ContainerResourcePolicy数组.
+- **TargetRef**: 指向pod控制器, 例如: deployment,statefuleset等.
+- **UpdatePolicy(PodUpdatePolicy)**: 控制changes apply到pod的规则.
+- **ResourcePolicy(PodResourcePolicy)**: 控制autoscaler如何计算一个pod内容器的推荐资源, 是一个ContainerResourcePolicy数组.
 
 ## (3)PodUpdatePolicy:
 - Auto: 默认, 目前等同于Recreate.
@@ -38,7 +39,7 @@
 
 ## (4)ContainerResourcePolicy:
 - ContainerName: 容器的名字或者默认容器资源策略(DefaultContainerResourcePolicy).
-- Mode: 控制针对特定容器是否开启autoscaler.
+- Mode: 控制针对特定容器是否开启autoscaler, 可选: Auto或Off.
 - MinAllowed
 - MaxAllowed
 - ControllerdResources
@@ -46,13 +47,18 @@
 
 # 三 VerticalPodAutoscalerStatus:
 ## (1)概述:
-- Recommendation(RecommendedContainerResources): 最近一次autoscaler计算的资源推荐.
+- Recommendation(RecommendedPodResources): 最近一次autoscaler计算的资源推荐.
 - Conditions(VerticalPodAutoscalerCondition数组): Conditions is the set of conditions required for this autoscaler to scale its target and indicates whether or not those conditions are met.
 
-## (2)RecommendedContainerResources
+## (2)RecommendedPodResources:
+- RecommendedContainerResources数组
 
-## (3)VerticalPodAutoscalerCondition
+## (3)RecommendedContainerResources:
+- ContainerName
+- Target: 
+- UncappedTarget: 
+- LowerBound
+- UpperBound
 
-# 四 Recommender:
-## (1)概述:
-- Recommender是vpc系统内核心的binary, 基于pod资源历史和当前的使用情况为pod计算推荐资源requests.
+## (4)VerticalPodAutoscalerCondition
+

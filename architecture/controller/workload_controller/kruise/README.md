@@ -18,12 +18,7 @@
 - https://openkruise.io/
 - https://github.com/openkruise/kruise
 
-# 二 主要特性:
-## (1)本地更新:
-- 流程: 当pod在进行本地更新时, controller首先使用readinessGate来更新pod status使得pod变为not-ready; 然后更新pod spec中的镜像来触发kubelet在node上重建容器.
-- gracePeriodSeconds: 控制器更新pod status和更新pod image的间隔时间, 避免其它控制器(例如:endpoints控制器)还没感知到pod not-ready就更新了镜像, 从而导致请求失败.
-
-# 三 组件:
+# 二 组件:
 ## (1)概述:
 - crds: clonesets等.
 - **kruise-manager**:运行controllers和webhooks的控制面板, 以statefulset部署在**kruise-system**命名空间.

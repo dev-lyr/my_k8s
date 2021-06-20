@@ -14,7 +14,14 @@
 - --timeout=0s
 - --dry-run='none'
 
-## (3)备注:
+## (3)Eviction API:
+- pod的子资源Eviction可认为是pod的**策略控制的删除操作**.
+- 情况一: eviction被批准,则pod会被删除并返回200,就像针对pod发送了一个DELETE请求.
+- 情况二: 当前状态不允许驱逐(不满足pdb)则会返回429 Too Many Requests.
+- 情况三: 其它类型错误配置(例如:多个pdb关联同一pod), 500 Internal Server Error.
+- 备注: pkg/registry/core/pod/storage/eviction.go
+
+## (4)备注:
 - https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/
 - https://github.com/kubernetes/kubectl
 - registry/core/pod/storage/eviction.go

@@ -63,7 +63,7 @@
 
 # 四 创建:
 ## (1)概述:
-- 创建Deployment时指定的Pod由**ReplicaSet**负责在后端创建.
+- 创建Deployment时指定的Pod由**ReplicaSet**负责在后端创建, ReplicaSet的Name为: deploy的name+"-"+podTemplateSpecHash.
 
 ## (2)kubectl get deployments:
 - Name: 集群中Deployment的names.
@@ -80,7 +80,7 @@
 - deployment控制器会给每个deployment创建的rs添加一个**pod-template-hash** label, 该label的值是rs的PodTemplate的hash值.
 - 该label来确保一个deploy的子rs不会overlap.
 - 该label会被添加到rs selector, pod template labels和rs管理的每个pod中.
-
+- 计算: controller.ComputeHash
 
 # 五 滚动更新:
 ## (1)概述:
@@ -90,7 +90,6 @@
 ## (2)修改方式:
 - kubectl set
 - kubectl edit
-- 备注: --record
 
 ## (3)备注:
 - 旧的replicateset会保留, 可通过设置spec.revisionHistoryLimit来指定多少旧的ReplicaSets希望保存, 其它的会被后台垃圾回收, 默认是10.

@@ -28,7 +28,6 @@
 ## (2)Role和ClusterRole:
 - Role: 只能在单个namespace内对资源进行访问授权.
 - ClusterRole: 集群范围的访问授权, 除了Role可以干的外, 它还可以进行其他访问授权: 对集群范围资源(例如:nodes); non-resources endpoints(例如:/healthz); 跨所有namespaces的namespaced资源.
-- PolicyRule: apiGroups, resources, resourceNames, verbs.
 
 ## (3)RoleBinding:
 - roleRef(RoleRef): 引用一个当前namespace的Role或一个全局namespace的ClusterRole.

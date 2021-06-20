@@ -128,5 +128,5 @@
 - kubelet的nodeLeaseController.
 
 ## (5)备注:
-- pkg/kubelet/nodelease
+- https://github.com/kubernetes/component-helpers/blob/v0.21.1/apimachinery/lease/controller.go
 - https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/0009-node-heartbeat.md
