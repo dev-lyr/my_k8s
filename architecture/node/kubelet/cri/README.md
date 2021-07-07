@@ -18,11 +18,13 @@
 - 备注: containerd-cri性能更好, 占用资源更少, docker生态更丰富点.
 
 ## (5)备注:
+- https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md
 - https://github.com/kubernetes/cri-api
 - https://kubernetes.io/docs/setup/cri/
 - https://godoc.org/k8s.io/cri-api
 - https://github.com/containerd/containerd/tree/master/pkg/cri
 - kubelet代码:/pkg/kubelet/cri
+- https://github.com/kubernetes/cri-api/blob/master/pkg/apis/services.go
 
 # 二 RuntimeService
 ## (1)子接口和方法:

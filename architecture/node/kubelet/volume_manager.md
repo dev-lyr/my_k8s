@@ -32,6 +32,21 @@
 - kubelet的syncPod方法中调用.
 - 代码写死等待2分3秒, 超时则返回失败, 等待重试.
 
-# 三 reconciler
+# 三 desiredStateOfWorldPopulator:
+## (1)概述:
+- monitor and keep the states of the caches in sync with the "ground truth.
+- 间隔100ms执行一次populatorLoop.
+- 被reconciler使用.
+
+## (2)populatorLoop:
+- findAndAddNewPods: Iterate through all pods and add to desired state of world.
+- findAndRemoveDeletedPods: calls out to the container runtime to determine if the containers for a given pod are terminated.
+
+# 四 reconciler
 ## (1)功能:
 - reconciler runs an asynchronous periodic loop to reconcile the desiredStateOfWorld with the actualStateOfWorld by triggering attach,detach, mount, and unmount operations using the operationExecutor.
+
+## (2)reconcile:
+- unmountVolumes
+- mountAttachVolumes
+- unmountDetachDevices

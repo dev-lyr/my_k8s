@@ -1,6 +1,6 @@
 # 一 概述:
 ## (1)概述:
-- kube-state-metrics是一个服务, 它监听apiserver并生成对象状态的metrics, 例如: deployments, nodes, pods等.
+- kube-state-metrics**监听apiserver**并生成对象状态的metrics, 例如: deployments, nodes, pods等.
 - metrics在HTTP endpoint /metrics和端口8080(默认)暴露出来.
 
 ## (2)kube-state-metrics和metrics-server:

@@ -18,6 +18,7 @@
 - https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/
 - https://kubernetes.io/docs/tasks/administer-cluster/dns-horizontal-autoscaling/
 - https://github.com/kubernetes/dns/blob/master/docs/specification.md
+- https://www.weave.works/blog/racy-conntrack-and-dns-lookup-timeouts
 
 # 二Service和Pod的DNS:
 ## (1)概述:

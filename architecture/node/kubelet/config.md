@@ -76,8 +76,8 @@
 - --cloud-config: cloud provider的配置文件路径.
 
 ## (8)容器相关:
-- --container-runtime: 使用的运行时, 可能值: docker(默认), remote, rkt(废弃).
-- --container-runtime-endpoint: 远程运行时服务的endpoint.
+- --container-runtime: 使用的运行时, 可能值: docker(默认), remote.
+- --container-runtime-endpoint: 远程运行时服务的endpoint, 默认为unix:///var/run/dockershim.sock.
 - --container-log-max-files: 一个容器最大保存的日志文件数, 值必须>=2, 只适用于运行时为remote.
 - --container-log-max-size: 默认10Mi, 设置日志文件最大size, 超过会被rotate, 只适用于运行时remote.
 - --docker-endpoint: 和docker交互的endpoint, 默认为unix:///var/run/docker.sock.

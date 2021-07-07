@@ -1,6 +1,6 @@
 # 一 概述:
 ## (1)概述:
-- coredns是个模块化和插件化的DNS服务器.
+- coredns是个**模块化和插件化**的DNS服务器.
 - coredns的配置文件为Corefile, 在kubernetes中可通过修改Corefile对应的configMap来修改服务发现的工作方式.
 
 ## (2)备注:

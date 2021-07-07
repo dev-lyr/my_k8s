@@ -142,12 +142,21 @@
 - kube为容器提供了生命周期hooks, 可以让容器感知它们管理生命周期的事件, 并且hook被执行时运行对应的handler中实现的代码.
 
 ## (2)hook类型:
-- PostStart: 当容器被创建后立即执行, 不保证会在容器的ENTRYPOINT前执行.
-- PreStop
+- **PostStart**: 当容器被创建后立即执行, 不保证会在容器的ENTRYPOINT前执行.
+- **PreStop**
 
 ## (3)hook handler实现类型:
 - Exec: 执行一个指定命令, 例如: pre-stop.sh.
 - HTTP: 执行一个HTTP请求.
 
-## (4)备注:
+## (4)PostStart:
+- PostStart操作是个blocking调用, 容器状态会保持Waiting(pod状态为Pending)直至postStart操作完成. 
+- This nature of postStart can be used to delay the startup state of the container while giving time to the main container process to initialize.
+- Another use of postStart is to prevent a container from starting when the Pod does not fulfill certain preconditions. For example, when the postStart hook indicates an error by returning a nonzero exit code, the main container process gets killed by Kubernetes.
+
+## (5)PreStop:
+- Even though preStop is blocking, holding on it or returning a nonsuccessful result does not prevent the container from being deleted and the process killed. 
+- PreStop is only a convenient alternative to a SIGTERM signal for graceful application shutdown
+
+## (6)备注:
 - https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/

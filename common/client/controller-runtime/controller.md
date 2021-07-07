@@ -32,4 +32,4 @@
 
 ## (4)Result:
 - Requeue bool: 告诉controller重新入队, 默认为false.
-- RequeueAfter time.Duration
+- RequeueAfter time.Duration: 若大于0则表示告诉controller等待对应时间后重新入队,隐含表示Requeue为true(不用再指定Requeue).

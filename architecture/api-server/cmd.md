@@ -48,3 +48,17 @@
 - --min-request-timeout: 默认1800, 目前只适用于watch handler.
 - --request-timeout
 
+# 二 实现:
+## (1)概述:
+
+## (2)组成:
+- Aggregator: 负责整个APIServer的路由.
+- kubeAPIServer: 处理内建资源的REST请求.
+- APIExtensionServer: 主要处理crd和cr的rest请求.
+- 备注: Aggregator和APIExtensionServer对应两种扩展APIServer的方式: AA和CRD.
+
+## (3)创建和启动流程:
+- 设置和校验options.
+- CreateServerChain: the apiservers connected via delegation.
+- PrepareRun
+- Run

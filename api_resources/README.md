@@ -12,8 +12,14 @@
 - 等等.
 - 备注:https://kubernetes.io/docs/reference/using-api/client-libraries
 
-## (3)备注:
+## (3)资源类型:
+- 集群范围资源
+- 命名空间内的资源
+- 子资源: 一些资源类型可能有1个或多个子资源, 格式: /apis/GROUP/VERSION/namespaces/NAMESPACE/RESOURCETYPE/NAME/SUBRESOURCE, 例如: eviction,scale等.
+
+## (4)备注:
 - https://kubernetes.io/docs/concepts/overview/kubernetes-api/
+- https://kubernetes.io/docs/reference/using-api/api-concepts/
 - https://kubernetes.io/docs/reference/using-api/api-concepts/#alternate-representations-of-resources
 - https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md
 

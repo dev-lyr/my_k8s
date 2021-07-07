@@ -1,9 +1,9 @@
 # 一 概述:
 ## (1)概述:
 - kubernetes/cmd/kube-apiserver: 启动入口.
-- apiserver: https://godoc.org/k8s.io/apiserver
-- apiextensions: https://github.com/kubernetes/apiextensions-apiserver
-- kube-aggregator: https://github.com/kubernetes/kube-aggregator
+- apiserver(内置资源): https://godoc.org/k8s.io/apiserver
+- apiextensions(CRD): https://github.com/kubernetes/apiextensions-apiserver
+- kube-aggregator(AA): https://github.com/kubernetes/kube-aggregator
 
 ## (2)apiextensions:
 - 提供注册CRD的API, 在kube-apiserver中作为delegate服务器运行.
@@ -34,12 +34,3 @@
 - server
 - storage
 - util
-
-# 三 cmd:
-## (1)概述:
-
-## (2)创建和启动流程:
-- 设置和校验options.
-- CreateServerChain: the apiservers connected via delegation.
-- PrepareRun
-- Run

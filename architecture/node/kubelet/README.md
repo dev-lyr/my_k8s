@@ -89,3 +89,30 @@
 - syncCh: periodic sync event.
 - housekeepingCh: trigger clean up of pods.
 - liveness manager update channel
+
+## (3)configCh
+- ADD(HandlePodAdditions): pods that are new to this source.
+- DELETE(HandlePodUpdates): pods that are gracefully deleted from this source.
+- REMOVE(HandlePodRemoves): pods that have been removed from this source.
+- UPDATE(HandlePodUpdates): pods have been updated in this source.
+- RECONCILE(HandlePodReconcile): pods that have unexpected status in this source,kubelet should reconcile status with this source.
+- 备注: kubelet/type/pod_update.go, kubelet/config/config.go
+- 备注: merges many sources of pod configuration.
+
+## (4)plegCh:
+- ContainerStarted
+- ContainerDied: 调用cleanUpContainersInPod.
+- ContainerRemoved
+- ContainerChanged
+- PodSync
+- 备注: kubelet/pleg/pleg.go
+
+## (5)syncCh:
+- 写死1s触发一次事件, 叫醒kubelet来检查是否有pod workers(调用getPodsToSync查询)需要sync(调用HandlePodSyncs).
+
+## (6)housekeepingCh:
+- 触发pod的cleanup, 写死2s触发一次.
+- 调用HandlePodCleanups方法.
+
+## (7)liveness manager:
+- liveness探测失败则调用HandlePodSyncs来sync pod.

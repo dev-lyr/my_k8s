@@ -48,7 +48,7 @@
 - Scheme
 
 ## (3)Reconcile函数:
-- reconcile发生错误尽早返回,成功是返回空的result和error为nil, 失败时返回error不为nil, 会自动入队列重试.
+- reconcile发生错误尽早返回,成功是返回空的result和error为nil; 失败时返回error不为nil, 会自动入队列重试.
 
 # 五 metrics
 

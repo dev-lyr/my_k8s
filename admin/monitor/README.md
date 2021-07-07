@@ -38,6 +38,7 @@
 # 三 full metrics pipeline:
 ## (1)概述:
 - 提供更丰富的metrics.
+- custom.metrics.k8s.io和external.metrics.k8s.io API
 
 ## (2)实现方案:
 - prometheus

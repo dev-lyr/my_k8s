@@ -39,7 +39,12 @@
 ## (4)多版本:
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#serving-multiple-versions-of-a-crd
 
-## (5)备注:
-- https://github.com/kubernetes/sample-controller
+## (5)访问crd方式:
+- kubectl
+- kubernetes dynamic client
+- 用户自己实现的REST client
+- 使用code-generator生成的client
+
+## (6)备注:
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definition-versioning/
