@@ -1,7 +1,7 @@
 # 一 概述:
 ## (1)功能:
 - Job创建一个或多个Pod来执行并确保它们中的指定数量成功终止, 当pod成功运行结束时Job也完成.
-- 删除pod会清除它创建的pod.
+- 删除od会清除它创建的pod.
 - Job中Pod模板的RestartPolicy只能为Never或OnFailure, 防止容器正常结束时重启容器.
 
 ## (2)JobSpec:
